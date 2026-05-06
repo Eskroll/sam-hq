@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sam's HQ — v4</title>
+<title>Sam's HQ — v5</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
@@ -22,6 +22,7 @@
   --purple: #b388ff;
   --green: #69f0ae;
   --red: #ff5252;
+  --yellow: #ffca28;
   --t1: #f4f4f2;
   --t2: #a0a0aa;
   --t3: #5a5a65;
@@ -138,6 +139,7 @@ nav {
 .bb { background: rgba(64,196,255,0.1); color: var(--blue); border: 1px solid rgba(64,196,255,0.2); }
 .bp { background: rgba(179,136,255,0.1); color: var(--purple); border: 1px solid rgba(179,136,255,0.2); }
 .br { background: rgba(255,82,82,0.1); color: var(--red); border: 1px solid rgba(255,82,82,0.2); }
+.bw { background: rgba(255,202,40,0.1); color: var(--yellow); border: 1px solid rgba(255,202,40,0.2); }
 
 /* ── DATA STATES ── */
 .loading-state {
@@ -282,21 +284,141 @@ nav {
 .goal-track { height: 3px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden; }
 .goal-fill { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
 
-/* ── PROJECT CARDS ── */
-.proj-card {
+/* ══════════════════════════════════════════
+   v5 PROJECT CARDS — full redesign
+   ══════════════════════════════════════════ */
+.proj-count-bar {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--t3); margin-bottom: 16px;
+  padding-bottom: 12px; border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.proj-count-bar .pcs { display: flex; align-items: center; gap: 5px; }
+.proj-count-bar .pcs span { color: var(--t1); font-weight: 600; }
+.proj-count-bar .pcs-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+
+/* v5 project card */
+.v5-proj-card {
   background: var(--s2); border: 1px solid var(--border);
-  border-radius: 10px; padding: 14px; margin-bottom: 9px;
+  border-radius: 10px; padding: 15px;
+  margin-bottom: 10px; transition: all 0.15s;
+}
+.v5-proj-card:last-child { margin-bottom: 0; }
+.v5-proj-card:hover { border-color: var(--border2); }
+.v5-proj-card.status-in-progress { border-left: 3px solid var(--accent); }
+.v5-proj-card.status-waiting { border-left: 3px solid var(--yellow); }
+.v5-proj-card.status-completed { border-left: 3px solid var(--green); }
+.v5-proj-card.status-paused { border-left: 3px solid var(--t3); }
+
+.v5-proj-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.v5-proj-name { font-size: 14px; font-weight: 700; line-height: 1.2; }
+.v5-proj-priority {
+  font-family: var(--mono); font-size: 8px; letter-spacing: 1px;
+  padding: 2px 6px; border-radius: 3px; flex-shrink: 0;
+}
+.v5-proj-priority.high { color: var(--orange); border: 1px solid rgba(255,112,67,0.3); background: rgba(255,112,67,0.08); }
+.v5-proj-priority.medium { color: var(--blue); border: 1px solid rgba(64,196,255,0.3); background: rgba(64,196,255,0.08); }
+.v5-proj-priority.low { color: var(--t3); border: 1px solid var(--border); background: transparent; }
+
+.v5-proj-goal {
+  font-size: 12px; color: var(--t2); line-height: 1.5;
+  margin-bottom: 9px;
+}
+.v5-proj-next {
+  display: flex; align-items: flex-start; gap: 7px;
+  background: rgba(200,255,87,0.04);
+  border: 1px solid rgba(200,255,87,0.1);
+  border-radius: 6px; padding: 7px 10px;
+  margin-bottom: 9px;
+}
+.v5-proj-next-label {
+  font-family: var(--mono); font-size: 8px; letter-spacing: 1.5px;
+  color: var(--accent); flex-shrink: 0; margin-top: 1px;
+}
+.v5-proj-next-text { font-size: 12px; color: var(--t1); line-height: 1.4; }
+
+.v5-proj-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px;
+}
+.v5-proj-updated { font-family: var(--mono); font-size: 9px; color: var(--t3); }
+.v5-proj-drive {
+  font-family: var(--mono); font-size: 9px; color: var(--blue);
+  text-decoration: none;
+  padding: 2px 6px; border: 1px solid rgba(64,196,255,0.2);
+  border-radius: 4px; transition: all 0.15s;
+}
+.v5-proj-drive:hover { background: rgba(64,196,255,0.08); }
+
+/* Status pill styles */
+.status-pill {
+  font-family: var(--mono); font-size: 8px; letter-spacing: 1px;
+  padding: 3px 8px; border-radius: 99px;
+}
+.status-pill.in-progress { background: rgba(200,255,87,0.1); color: var(--accent); border: 1px solid rgba(200,255,87,0.2); }
+.status-pill.waiting { background: rgba(255,202,40,0.1); color: var(--yellow); border: 1px solid rgba(255,202,40,0.2); }
+.status-pill.completed { background: rgba(105,240,174,0.1); color: var(--green); border: 1px solid rgba(105,240,174,0.2); }
+.status-pill.paused { background: rgba(90,90,101,0.15); color: var(--t3); border: 1px solid var(--border); }
+
+/* Waiting On section */
+.waiting-on-section {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.waiting-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 6px 0; border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.waiting-item:last-child { border-bottom: none; }
+.waiting-item-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--yellow); flex-shrink: 0; margin-top: 4px;
+}
+.waiting-item-text { color: var(--t2); line-height: 1.4; }
+.waiting-item-proj { font-family: var(--mono); font-size: 9px; color: var(--t3); margin-top: 2px; }
+
+/* Quick capture box */
+.quick-capture {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.qc-row { display: flex; gap: 8px; align-items: center; }
+.qc-input {
+  flex: 1; background: var(--s3); border: 1px solid var(--border2);
+  border-radius: 7px; color: var(--t1); font-family: var(--mono);
+  font-size: 12px; padding: 8px 12px; outline: none;
+  transition: border-color 0.15s;
+}
+.qc-input:focus { border-color: var(--accent); }
+.qc-input::placeholder { color: var(--t3); }
+.qc-select {
+  background: var(--s3); border: 1px solid var(--border2);
+  border-radius: 7px; color: var(--t2); font-family: var(--mono);
+  font-size: 11px; padding: 8px 10px; outline: none;
+  transition: border-color 0.15s; cursor: pointer;
+}
+.qc-select:focus { border-color: var(--accent); }
+
+/* ── Dashboard project strip — v5 mini cards ── */
+.dash-proj-mini {
+  background: var(--s2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 13px;
   cursor: pointer; transition: all 0.15s;
 }
-.proj-card:last-child { margin-bottom: 0; }
-.proj-card:hover { border-color: var(--border2); background: var(--s3); }
-.proj-card.active { border-color: rgba(200,255,87,0.25); background: rgba(200,255,87,0.04); }
-.ph { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.pn { font-size: 14px; font-weight: 700; }
-.pd { font-family: var(--mono); font-size: 9px; color: var(--t3); margin-top: 8px; }
-.pp { font-size: 12px; color: var(--t2); line-height: 1.5; }
-.ptags { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
-.ptag { font-family: var(--mono); font-size: 9px; padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border2); color: var(--t3); }
+.dash-proj-mini:hover { border-color: var(--border2); }
+.dash-proj-mini.status-in-progress { border-left: 3px solid var(--accent); }
+.dash-proj-mini.status-waiting { border-left: 3px solid var(--yellow); }
+.dash-proj-mini.status-completed { border-left: 3px solid var(--green); }
+.dash-proj-mini.status-paused { border-left: 3px solid var(--t3); }
+.dpm-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 6px; }
+.dpm-name { font-size: 13px; font-weight: 700; }
+.dpm-next { font-size: 11px; color: var(--t2); line-height: 1.4; margin-bottom: 6px; }
+.dpm-footer { display: flex; align-items: center; justify-content: space-between; }
+.dpm-updated { font-family: var(--mono); font-size: 9px; color: var(--t3); }
 
 /* ── MARKDOWN VIEWER ── */
 .md-viewer { font-size: 13px; line-height: 1.75; color: var(--t2); }
@@ -417,13 +539,21 @@ nav {
 .dem { font-family: var(--mono); font-size: 10px; color: var(--t3); margin-top: 2px; }
 .der { font-family: var(--mono); font-size: 11px; color: var(--t3); }
 
-/* ── OBSIDIAN STATUS CARDS (dashboard) ── */
-.obs-proj-card {
-  background: var(--s2); border: 1px solid var(--border);
-  border-radius: 10px; padding: 13px; cursor: pointer;
-  transition: all 0.15s;
+/* Projects loading state in projects tab */
+.proj-loading {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--t3); padding: 24px 0; text-align: center;
+  animation: pulse 1.5s ease infinite;
 }
-.obs-proj-card:hover { border-color: var(--border2); }
+
+/* Projects base URL config */
+.proj-base-config {
+  background: var(--s2); border: 1px solid rgba(200,255,87,0.15);
+  border-radius: 10px; padding: 16px; margin-bottom: 16px;
+}
+.proj-base-config .pbc-title { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--accent); margin-bottom: 8px; }
+.proj-base-config .pbc-desc { font-size: 12px; color: var(--t2); line-height: 1.6; margin-bottom: 10px; }
+.proj-base-config .pbc-desc code { font-family: var(--mono); font-size: 11px; color: var(--accent); background: var(--s3); padding: 1px 5px; border-radius: 3px; }
 
 @media (max-width: 900px) {
   nav { width: 58px; }
@@ -445,7 +575,7 @@ nav {
 <nav>
   <div class="nav-logo">
     <div class="wm">SAM<em>'s</em><br>HQ</div>
-    <div class="tg">PERSONAL OS · v4</div>
+    <div class="tg">PERSONAL OS · v5</div>
   </div>
   <div class="nav-links">
     <div class="ngl">MAIN</div>
@@ -484,7 +614,6 @@ nav {
 
   <div class="slabel">HEALTH DATA — FROM LOSE IT! VIA GOOGLE SHEET</div>
   <div class="grid g12">
-
     <!-- CALORIES -->
     <div class="card c3" id="dash-cal-card">
       <div class="ct">CALORIES TODAY <span class="badge bb" id="dash-cal-badge">LOADING</span></div>
@@ -504,17 +633,17 @@ nav {
         <div class="empty-state">Open the Workout tab to start logging.<span class="hint">Sets logged there will appear here.</span></div>
       </div>
       <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn btn-accent" onclick="finishWorkout(this)">💪 Finish &amp; Send Email</button>
-        <button class="btn btn-ghost" onclick="showPage('workout',document.querySelectorAll('.nl')[1])">Open Logger →</button>
+        <button class="btn btn-accent" id="dash-finish-btn">💪 Finish &amp; Send Email</button>
+        <button class="btn btn-ghost" id="dash-open-logger-btn">Open Logger →</button>
       </div>
     </div>
   </div>
 
-  <!-- PROJECT STATUS from Obsidian/GitHub -->
+  <!-- PROJECT STATUS — v5 real cards -->
   <div class="slabel">PROJECT STATUS — FROM OBSIDIAN (VIA GITHUB)</div>
   <div class="grid g12" id="dash-projects-strip">
     <div class="card c12">
-      <div class="empty-state">Connect your Obsidian vault on the <strong style="color:var(--accent)">Projects</strong> page to see status here.<span class="hint">→ Go to Projects tab and enter your GitHub raw URL</span></div>
+      <div class="empty-state">Connect your Obsidian vault on the <strong style="color:var(--accent)">Projects</strong> page to see status here.<span class="hint">→ Go to Projects tab and enter your GitHub raw base URL</span></div>
     </div>
   </div>
 
@@ -540,7 +669,6 @@ nav {
     </div>
   </div>
   <div class="grid g12">
-
     <div class="card c7">
       <div class="ct">EXERCISE LOG <span id="wkt-day-badge" class="badge by">PUSH</span></div>
       <div class="tabs" id="wkt-tabs">
@@ -550,11 +678,10 @@ nav {
       </div>
       <div id="exercise-log-list"></div>
       <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn btn-accent" id="finish-btn" onclick="finishWorkout(this)">💪 Finish &amp; Send Email</button>
-        <button class="btn btn-ghost btn-sm" onclick="clearDay()">Clear Day</button>
+        <button class="btn btn-accent" id="finish-btn">💪 Finish &amp; Send Email</button>
+        <button class="btn btn-ghost btn-sm" id="clear-day-btn">Clear Day</button>
       </div>
     </div>
-
     <div class="card c5">
       <div class="ct">EMAIL PREVIEW <span class="badge by">SENDS ON FINISH</span></div>
       <div class="email-preview-box">
@@ -579,7 +706,6 @@ nav {
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -597,28 +723,26 @@ nav {
   <div class="grid g12">
     <div class="card c5">
       <div class="ct">PRE-SHOWER</div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Water bottle → brush teeth</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Electric shaver → nose shaver</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Contacts → shower</div></div>
-
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Water bottle → brush teeth</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Electric shaver → nose shaver</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Contacts → shower</div></div>
       <div class="ct" style="margin-top:16px;">POST-SHOWER</div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Towel dry → sea salt spray (top + roots) → scrunch</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Lotion → underwear → face → hair oil</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Sunscreen tint (eye-bags, face)</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Dry hair → comb → eyelash curl → men pen → chapstick</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Outfit</div></div>
-
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Towel dry → sea salt spray (top + roots) → scrunch</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Lotion → underwear → face → hair oil</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Sunscreen tint (eye-bags, face)</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Dry hair → comb → eyelash curl → men pen → chapstick</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Outfit</div></div>
       <div class="ct" style="margin-top:16px;">LEAVE + MORNING</div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Light breakfast (protein / debloat / carbs)</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Caffeine — Monster or double espresso</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Grab: water, airpods, phone, wallet, keys</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Light breakfast (protein / debloat / carbs)</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Caffeine — Monster or double espresso</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Grab: water, airpods, phone, wallet, keys</div></div>
     </div>
     <div class="card c4">
       <div class="ct">NIGHT ROUTINE</div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Teeth whitening strips</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Shower</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Lotion</div></div>
-      <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Minoxidil</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Teeth whitening strips</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Shower</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Lotion</div></div>
+      <div class="ck-item"><div class="ck-box"></div><div class="ck-text">Minoxidil</div></div>
     </div>
     <div class="card c3">
       <div class="ct">TODAY</div>
@@ -660,47 +784,61 @@ nav {
   </div>
 </div>
 
-<!-- ═══════════════ PROJECTS ═══════════════ -->
+<!-- ═══════════════ PROJECTS v5 ═══════════════ -->
 <div class="page" id="page-projects">
   <div class="topbar">
     <div>
-      <h1>PROJECT <span>NOTES</span></h1>
-      <div class="sub">OBSIDIAN → GITHUB → DASHBOARD · AUTO-SYNCED</div>
+      <h1>PROJECT <span>TRACKER</span></h1>
+      <div class="sub">OBSIDIAN → GITHUB → LIVE · AUTO-SYNCED VIA FRONTMATTER</div>
     </div>
   </div>
 
-  <div class="gh-config" id="gh-config-box">
-    <div class="gh-title">GITHUB RAW URL — YOUR OBSIDIAN VAULT REPO</div>
-    <div style="font-size:12px;color:var(--t2);margin-bottom:10px;line-height:1.7;">
-      Enter the raw GitHub URL to your project notes index file. Format:<br>
-      <code style="font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">https://raw.githubusercontent.com/USERNAME/VAULT/main/Projects/index.md</code>
+  <!-- Base URL config -->
+  <div class="proj-base-config" id="proj-base-config-box">
+    <div class="pbc-title">GITHUB RAW BASE URL — OBSIDIAN VAULT</div>
+    <div class="pbc-desc">
+      Enter the raw GitHub base URL for your <code>Mersen - ToDo/Projects/</code> folder.<br>
+      Format: <code>https://raw.githubusercontent.com/Eskroll/sam-vault/master/Mersen%20-%20ToDo/Projects</code>
     </div>
-    <div class="gh-row">
-      <input class="gh-input" id="gh-url-input" placeholder="https://raw.githubusercontent.com/..." />
-      <button class="btn btn-accent btn-sm" onclick="loadObsidian()">Load</button>
-      <button class="btn btn-ghost btn-sm" onclick="loadObsidianDemo()">Demo</button>
+    <div class="gh-row" style="margin-bottom:8px;">
+      <input class="gh-input" id="proj-base-url-input" placeholder="https://raw.githubusercontent.com/Eskroll/sam-vault/master/Mersen%20-%20ToDo/Projects" />
+      <button class="btn btn-accent btn-sm" id="proj-load-btn">Load Projects</button>
     </div>
-    <div id="gh-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:8px;"></div>
+    <div id="proj-load-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:6px;"></div>
   </div>
 
   <div class="grid g12">
-    <div class="card c4">
-      <div class="ct">PROJECTS <span class="badge bp" id="proj-count-badge">0 FILES</span></div>
-      <div id="proj-list-panel">
-        <div class="empty-state">Enter your GitHub URL above and click Load.<span class="hint">Or click Demo to see how it works.</span></div>
+    <!-- Left: Project cards list -->
+    <div class="card c5" id="proj-cards-panel">
+      <div class="ct">ACTIVE PROJECTS <span class="badge bp" id="proj-count-badge">— FILES</span></div>
+      <!-- Count bar -->
+      <div class="proj-count-bar" id="proj-count-bar" style="display:none"></div>
+      <div id="proj-list-inner">
+        <div class="empty-state">Enter your GitHub base URL above and click Load.<span class="hint">Fetches each project note and reads frontmatter.</span></div>
       </div>
     </div>
-    <div class="card c8">
-      <div class="ct">SESSION NOTES <span class="badge bb" id="proj-active-badge">NONE SELECTED</span></div>
-      <div id="proj-detail-panel">
-        <div class="obs-connect-msg">
-          <div class="obs-title">HOW OBSIDIAN → DASHBOARD WORKS</div>
-          1. Install the <code>Obsidian Git</code> plugin in your vault<br>
-          2. Point it to a private GitHub repo — it auto-commits on save<br>
-          3. Paste the raw GitHub URL to your notes index above<br>
-          4. Dashboard fetches and renders the markdown live<br><br>
-          After a session with Claude, ask: <em style="color:var(--accent)">"Generate a project status markdown for today"</em> — paste it into Obsidian, and it syncs here automatically.
+
+    <!-- Right: Waiting On + Quick Capture -->
+    <div class="card c7" id="proj-right-panel">
+      <div class="ct">WAITING ON <span class="badge bw" id="waiting-count-badge">—</span></div>
+      <div id="waiting-on-list">
+        <div class="empty-state">Load projects to see what's blocked.<span class="hint">Pulled from each project's Waiting On section.</span></div>
+      </div>
+
+      <!-- Quick Capture -->
+      <div class="quick-capture">
+        <div class="ct" style="margin-bottom:8px;">QUICK CAPTURE → OBSIDIAN INBOX</div>
+        <div style="font-size:11px;color:var(--t3);font-family:var(--mono);margin-bottom:8px;line-height:1.7;">
+          Appends to <code style="color:var(--accent);background:var(--s3);padding:1px 4px;border-radius:3px;">01 - Inbox Task Dump.md</code> via GitHub API (requires write token in Setup).
         </div>
+        <div class="qc-row">
+          <input class="qc-input" id="qc-task-input" placeholder="Quick task or note..." />
+          <select class="qc-select" id="qc-proj-select">
+            <option value="inbox">Inbox</option>
+          </select>
+          <button class="btn btn-accent btn-sm" id="qc-send-btn">+ Add</button>
+        </div>
+        <div id="qc-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:6px;"></div>
       </div>
     </div>
   </div>
@@ -715,34 +853,29 @@ nav {
     </div>
   </div>
 
-
   <div class="slabel">GITHUB PAGES HOSTING — LIVE URL FOR PHONE + PC</div>
   <div class="card" style="margin-bottom:13px;">
     <div class="ct">DEPLOY DASHBOARD TO GITHUB PAGES (one-time, 5 minutes)</div>
     <div style="font-size:12.5px;color:var(--t2);line-height:2;margin-bottom:14px;">
       <strong style="color:var(--t1);">1.</strong> Go to <a href="https://github.com/new" target="_blank" style="color:var(--accent)">github.com/new</a> → create a repo named <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">sam-hq</code> (public or private)<br>
-      <strong style="color:var(--t1);">2.</strong> Upload <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">dashboard_v4.html</code> → rename it to <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">index.html</code><br>
-      <strong style="color:var(--t1);">3.</strong> Settings → Pages → Branch: main → folder: / (root) → Save<br>
-      <strong style="color:var(--t1);">4.</strong> Your live URL: <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">https://USERNAME.github.io/sam-hq/</code><br>
+      <strong style="color:var(--t1);">2.</strong> Upload <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">dashboard_v5.html</code> → rename it to <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">index.html</code><br>
+      <strong style="color:var(--t1);">3.</strong> Settings → Pages → Branch: master → folder: / (root) → Save<br>
+      <strong style="color:var(--t1);">4.</strong> Your live URL: <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">https://Eskroll.github.io/sam-hq/</code><br>
       <strong style="color:var(--t1);">5.</strong> Bookmark that URL on your phone + PC — all config saves via localStorage per device
-    </div>
-    <div style="background:rgba(200,255,87,0.05);border:1px solid rgba(200,255,87,0.15);border-radius:8px;padding:12px 14px;font-family:var(--mono);font-size:10px;color:var(--t3);line-height:2;">
-      WHY GITHUB PAGES: Enables fetch() for Sheet data + Obsidian notes. The file:// protocol blocks all cross-origin requests.<br>
-      PRIVATE REPO OK: GitHub Pages works with private repos on free plans (repo is private, Pages URL is public unless you add auth).
     </div>
   </div>
 
-  <div class="slabel">OBSIDIAN + GITHUB SYNC — LIVE PROJECT NOTES</div>
+  <div class="slabel">OBSIDIAN + GITHUB — PROJECT BASE URL</div>
   <div class="card" style="margin-bottom:13px;">
-    <div class="ct">OBSIDIAN GIT PLUGIN SETUP (one-time)</div>
+    <div class="ct">v5 MULTI-FILE PROJECT SETUP</div>
     <div style="font-size:12.5px;color:var(--t2);line-height:2;margin-bottom:14px;">
-      <strong style="color:var(--t1);">1.</strong> In Obsidian: Settings → Community plugins → Browse → install <strong style="color:var(--t1);">Obsidian Git</strong><br>
-      <strong style="color:var(--t1);">2.</strong> Create a <em>separate</em> private GitHub repo for your vault (e.g. <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">sam-vault</code>)<br>
-      <strong style="color:var(--t1);">3.</strong> In Obsidian Git settings: set auto-push interval to 5 minutes<br>
-      <strong style="color:var(--t1);">4.</strong> Create a file <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">Projects/index.md</code> in your vault with links to your project notes<br>
-      <strong style="color:var(--t1);">5.</strong> Paste the raw GitHub URL below in the Projects tab:<br>
-      <code style="color:var(--accent);background:var(--s3);padding:2px 8px;border-radius:3px;display:block;margin-top:6px;">https://raw.githubusercontent.com/YOUR_USERNAME/sam-vault/main/Projects/index.md</code><br>
-      <strong style="color:var(--t1);">6.</strong> After any Claude session: ask "Generate a project status markdown" → paste into Obsidian → it syncs to dashboard in 5 min
+      <strong style="color:var(--t1);">v5 change:</strong> Instead of one index file, the dashboard fetches each project note individually.<br>
+      <strong style="color:var(--t1);">Base URL:</strong> <code style="color:var(--accent);background:var(--s3);padding:2px 8px;border-radius:3px;">https://raw.githubusercontent.com/Eskroll/sam-vault/master/Mersen%20-%20ToDo/Projects</code><br>
+      <strong style="color:var(--t1);">Files fetched:</strong> Varian%20Shipping%20Report.md, PostgreSQL%20Learning.md, Run%20Cycle%20Standardization.md, General%20Work%20Tasks.md<br>
+      <strong style="color:var(--t1);">Parsed fields:</strong> name, status, goal, next_action, priority, drive_url, last_updated
+    </div>
+    <div style="background:rgba(200,255,87,0.05);border:1px solid rgba(200,255,87,0.15);border-radius:8px;padding:12px 14px;font-family:var(--mono);font-size:10px;color:var(--t3);line-height:2;">
+      Set the base URL in the Projects tab. The dashboard will fetch all 4 project notes and parse their frontmatter automatically.
     </div>
   </div>
 
@@ -754,7 +887,7 @@ nav {
       <strong style="color:var(--t1);">2.</strong> In the Google Apps Script (Digests script): go to Project Settings → Script Properties → add <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">SHEET_ID</code> = your Sheet's ID (from the URL)<br>
       <strong style="color:var(--t1);">3.</strong> Add a trigger for <code style="color:var(--accent);background:var(--s3);padding:1px 5px;border-radius:3px;">writeLoseItToSheet</code> → Time-driven → Daily → 8:30–9:00 AM (after Lose It email arrives)<br>
       <strong style="color:var(--t1);">4.</strong> In Google Sheet: File → Share → Publish to web → Sheet1 → CSV → copy the link<br>
-      <strong style="color:var(--t1);">5.</strong> Paste that CSV link in the Calorie Data field above<br>
+      <strong style="color:var(--t1);">5.</strong> Paste that CSV link in the Calorie Data field below<br>
     </div>
     <div style="font-family:var(--mono);font-size:10px;color:var(--t3);line-height:1.9;background:var(--bg);border:1px solid var(--border2);border-radius:8px;padding:10px 14px;">
       EXPECTED SHEET COLUMNS (row 1 = header, row 2 = yesterday data):<br>
@@ -762,39 +895,35 @@ nav {
     </div>
   </div>
 
-  <!-- LOSE IT / GOOGLE SHEET -->
   <div class="slabel">CALORIE + WEIGHT DATA</div>
   <div class="loseit-config">
     <div class="li-title">LOSE IT! → GOOGLE SHEET BRIDGE</div>
     <div class="li-desc">
       Lose It! doesn't have a public API. The bridge works like this:<br>
-      Your existing calorie report Google Script <strong>already parses the Lose It! email</strong>. 
-      Add 2 lines to that script to also <strong>write the data to a Google Sheet</strong> 
+      Your existing calorie report Google Script <strong>already parses the Lose It! email</strong>.
+      Add 2 lines to that script to also <strong>write the data to a Google Sheet</strong>
       (Sheet ID below). The dashboard reads that Sheet via its published CSV URL — no auth needed.
     </div>
     <div class="gh-row" style="margin-bottom:8px;">
       <input class="gh-input" id="sheet-url-input" placeholder="Google Sheet published CSV URL..." />
-      <button class="btn btn-accent btn-sm" onclick="saveSheetURL()">Save</button>
+      <button class="btn btn-accent btn-sm" id="save-sheet-btn">Save</button>
     </div>
     <div style="font-family:var(--mono);font-size:10px;color:var(--t3);line-height:1.9;">
-      In your Google Sheet: File → Share → Publish to web → Sheet1 → CSV → Copy link<br>
-      Add to your calorie script: <code style="color:var(--accent);background:var(--s3);padding:1px 4px;border-radius:3px;">sheet.getRange("A1").setValue(calories); sheet.getRange("B1").setValue(weight);</code>
+      In your Google Sheet: File → Share → Publish to web → Sheet1 → CSV → Copy link
     </div>
   </div>
 
-  <!-- APPS SCRIPT URL -->
   <div class="slabel">POST-WORKOUT EMAIL — SCRIPT 3</div>
   <div class="loseit-config" style="border-color:rgba(200,255,87,0.15);">
     <div class="li-title" style="color:var(--accent);">APPS SCRIPT WEB APP URL</div>
     <div class="li-desc">Deploy Script 3 as a Web App (see instructions below). Paste the URL here. The "Finish & Send Email" button will POST your workout data to it.</div>
     <div class="gh-row" style="margin-bottom:8px;">
       <input class="gh-input" id="script-url-input" placeholder="https://script.google.com/macros/s/..." />
-      <button class="btn btn-accent btn-sm" onclick="saveScriptURL()">Save</button>
+      <button class="btn btn-accent btn-sm" id="save-script-btn">Save</button>
     </div>
     <div id="script-url-saved" style="font-family:var(--mono);font-size:10px;color:var(--t3);"></div>
   </div>
 
-  <!-- STRENGTH GOALS -->
   <div class="slabel">STRENGTH + HABIT GOALS (MANUAL)</div>
   <div class="card" style="margin-bottom:13px;">
     <div class="ct">ENTER YOUR CURRENT NUMBERS</div>
@@ -821,12 +950,11 @@ nav {
       </div>
     </div>
     <div style="margin-top:12px;">
-      <button class="btn btn-accent" onclick="saveGoals()">Save Goals</button>
+      <button class="btn btn-accent" id="save-goals-btn">Save Goals</button>
     </div>
     <div id="goals-saved-msg" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:8px;"></div>
   </div>
 
-  <!-- SCRIPT 3 INSTRUCTIONS -->
   <div class="slabel">SCRIPT 3 — FULL SETUP INSTRUCTIONS</div>
   <div class="card">
     <div class="ct">DEPLOY THE WORKOUT EMAILER (one-time)</div>
@@ -844,9 +972,6 @@ nav {
   var html = '&lt;div style="font-family:sans-serif;max-width:480px"&gt;';
   html += '&lt;h2 style="color:#1a1a1a"&gt;💪 ' + day + ' Complete — ' + new Date().toDateString() + '&lt;/h2&gt;';
   html += '&lt;table style="width:100%;border-collapse:collapse"&gt;';
-  html += '&lt;tr&gt;&lt;th align="left" style="padding:6px 0;border-bottom:2px solid #eee"&gt;Exercise&lt;/th&gt;';
-  html += '&lt;th align="left" style="padding:6px 0;border-bottom:2px solid #eee"&gt;Sets&lt;/th&gt;';
-  html += '&lt;th align="right" style="padding:6px 0;border-bottom:2px solid #eee"&gt;Top Set&lt;/th&gt;&lt;/tr&gt;';
 
   sets.forEach(function(s) {
     html += '&lt;tr style="border-bottom:1px solid #f0f0f0"&gt;';
@@ -861,12 +986,9 @@ nav {
   html += '&lt;p style="margin-top:16px;color:#666"&gt;Streak: &lt;strong&gt;' + (data.streak||0) + ' days 🔥&lt;/strong&gt;&lt;/p&gt;';
   html += '&lt;/div&gt;';
 
-  GmailApp.sendEmail(
-    Session.getActiveUser().getEmail(),
+  GmailApp.sendEmail(Session.getActiveUser().getEmail(),
     "💪 " + day + " Complete — " + new Date().toDateString(),
-    day + " complete. " + sets.length + " exercises logged.",
-    { htmlBody: html }
-  );
+    day + " complete.", { htmlBody: html });
 
   return ContentService
     .createTextOutput(JSON.stringify({status:"ok"}))
@@ -887,20 +1009,15 @@ const CFG = {
   set: function(k,v) { localStorage.setItem('samhq_'+k, JSON.stringify(v)); }
 };
 
-// ═══════════════════════════════════════════
-// FILE:// PROTOCOL DETECTION
-// ═══════════════════════════════════════════
 const IS_FILE_PROTOCOL = location.protocol === 'file:';
 
 function safeFetch(url) {
-  if (IS_FILE_PROTOCOL) {
-    return Promise.reject(new Error('FILE_PROTOCOL'));
-  }
-  return fetch(url);
+  if (IS_FILE_PROTOCOL) return Promise.reject(new Error('FILE_PROTOCOL'));
+  return fetch(url + (url.indexOf('?') === -1 ? '?' : '&') + '_t=' + Date.now());
 }
 
 // ═══════════════════════════════════════════
-// NAVIGATION — uses data-page attrs, no inline onclick
+// NAVIGATION
 // ═══════════════════════════════════════════
 function showPage(id, el) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
@@ -911,19 +1028,50 @@ function showPage(id, el) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Wire nav links via data-page attribute (avoids file:// CSP blocking inline onclick)
   document.querySelectorAll('.nl[data-page]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      showPage(el.getAttribute('data-page'), el);
-    });
+    el.addEventListener('click', function() { showPage(el.getAttribute('data-page'), el); });
   });
-  // Wire workout tabs
   document.querySelectorAll('#wkt-tabs .tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
       var day = tab.getAttribute('data-day');
       if (day) switchDay(day, tab);
     });
   });
+  document.querySelectorAll('.ck-item').forEach(function(item) {
+    item.addEventListener('click', function() { ck(item); });
+  });
+
+  // Setup button wiring
+  var projLoadBtn = document.getElementById('proj-load-btn');
+  if (projLoadBtn) projLoadBtn.addEventListener('click', loadProjectsV5);
+
+  var saveSheetBtn = document.getElementById('save-sheet-btn');
+  if (saveSheetBtn) saveSheetBtn.addEventListener('click', saveSheetURL);
+
+  var saveScriptBtn = document.getElementById('save-script-btn');
+  if (saveScriptBtn) saveScriptBtn.addEventListener('click', saveScriptURL);
+
+  var saveGoalsBtn = document.getElementById('save-goals-btn');
+  if (saveGoalsBtn) saveGoalsBtn.addEventListener('click', saveGoals);
+
+  var finishBtn = document.getElementById('finish-btn');
+  if (finishBtn) finishBtn.addEventListener('click', function() { finishWorkout(finishBtn); });
+
+  var dashFinishBtn = document.getElementById('dash-finish-btn');
+  if (dashFinishBtn) dashFinishBtn.addEventListener('click', function() { finishWorkout(dashFinishBtn); });
+
+  var dashOpenLoggerBtn = document.getElementById('dash-open-logger-btn');
+  if (dashOpenLoggerBtn) dashOpenLoggerBtn.addEventListener('click', function() {
+    var link = document.querySelector('.nl[data-page="workout"]');
+    showPage('workout', link);
+  });
+
+  var clearDayBtn = document.getElementById('clear-day-btn');
+  if (clearDayBtn) clearDayBtn.addEventListener('click', clearDay);
+
+  var qcSendBtn = document.getElementById('qc-send-btn');
+  if (qcSendBtn) qcSendBtn.addEventListener('click', quickCapture);
+
   init();
 });
 
@@ -938,7 +1086,6 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('live-day').textContent = DAYS[d.getDay()];
   document.getElementById('live-date').textContent = MONTHS[d.getMonth()] + ' ' + String(d.getDate()).padStart(2,'0') + ' · ' + d.getFullYear();
   document.getElementById('greeting-word').textContent = hr < 12 ? 'MORNING' : hr < 17 ? 'AFTERNOON' : 'EVENING';
-
   var wktMap = { 1:'PULL', 2:'LEGS', 3:'PUSH', 4:'PULL', 5:'LEGS', 6:'PUSH', 0:'REST' };
   var todayWkt = wktMap[d.getDay()] || 'REST';
   document.getElementById('dash-day-sub').textContent = todayWkt + ' DAY · ' + DAYS[d.getDay()].toUpperCase() + ' · ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
@@ -1004,7 +1151,6 @@ function renderLog() {
       return '<div class="set-chip' + (s.pr ? ' pr' : '') + '" title="click to remove" data-day="' + currentDay + '" data-ex="' + i + '" data-set="' + si + '">' + s.w + '×' + s.r + (s.pr ? ' PR' : '') + '</div>';
     }).join('');
     var isOpen = openExIdx === i;
-
     var topSetHtml = topSet
       ? '<div class="ex-top-set"><strong>' + topSet.w + ' × ' + topSet.r + (topSet.pr ? ' PR' : '') + '</strong>' + ex.sets.length + ' set' + (ex.sets.length > 1 ? 's' : '') + '</div>'
       : '<div style="font-family:var(--mono);font-size:11px;color:var(--t3)">+ log</div>';
@@ -1012,19 +1158,14 @@ function renderLog() {
     html += '<div class="ex-block">';
     html += '<div class="ex-header" data-exidx="' + i + '">';
     html += '<div><div class="ex-name">' + ex.name + '</div><div class="ex-scheme">' + ex.scheme + '</div></div>';
-    html += '<div class="ex-right">';
-    html += topSetHtml;
-    html += '<div class="ex-chevron' + (isOpen ? ' open' : '') + '">▼</div>';
-    html += '</div></div>';
+    html += '<div class="ex-right">' + topSetHtml + '<div class="ex-chevron' + (isOpen ? ' open' : '') + '">▼</div></div></div>';
     html += '<div class="ex-panel' + (isOpen ? ' open' : '') + '">';
     html += '<div class="set-row">';
     html += '<div class="set-field"><label>WEIGHT (lbs)</label><input class="set-input" id="w-' + i + '" type="number" placeholder="lbs" step="5" min="0"></div>';
     html += '<div class="set-field"><label>REPS</label><input class="set-input" id="r-' + i + '" type="number" placeholder="reps" min="1" max="50"></div>';
     html += '<div class="set-field"><label>NOTE (opt)</label><input class="note-input" id="n-' + i + '" placeholder="e.g. felt strong"></div>';
     html += '<button class="btn btn-accent btn-sm" data-logset="' + i + '" style="align-self:flex-end">Log Set</button>';
-    html += '</div>';
-    html += '<div class="logged-chips">' + chips + '</div>';
-    html += '</div></div>';
+    html += '</div><div class="logged-chips">' + chips + '</div></div></div>';
   });
 
   if (CARDIO_DAYS.indexOf(currentDay) !== -1) {
@@ -1033,7 +1174,6 @@ function renderLog() {
 
   list.innerHTML = html;
 
-  // Wire event listeners for dynamically rendered elements
   list.querySelectorAll('.ex-header[data-exidx]').forEach(function(el) {
     el.addEventListener('click', function() { toggleEx(parseInt(el.getAttribute('data-exidx'))); });
   });
@@ -1053,10 +1193,7 @@ function renderLog() {
   updateDashWorkout();
 }
 
-function toggleEx(i) {
-  openExIdx = (openExIdx === i) ? null : i;
-  renderLog();
-}
+function toggleEx(i) { openExIdx = (openExIdx === i) ? null : i; renderLog(); }
 
 function logSet(i) {
   var w = document.getElementById('w-'+i) ? document.getElementById('w-'+i).value.trim() : '';
@@ -1084,8 +1221,7 @@ function clearDay() {
 
 function updateEmailPreview() {
   var exs = WORKOUTS[currentDay];
-  var html = '';
-  var total = 0;
+  var html = ''; var total = 0;
   exs.forEach(function(ex) {
     if (!ex.sets.length) return;
     var top = ex.sets.reduce(function(a,b) { return +b.w > +a.w ? b : a; });
@@ -1163,8 +1299,7 @@ function finishWorkout(btn) {
 
 // ═══════════════════════════════════════════
 // LOSE IT DATA — reads Google Sheet CSV
-// Sheet columns (row 1 = headers, row 2 = latest data):
-// date | calories | calGoal | protein | proteinGoal | carbs | fat | weight | steps
+// Columns: date|calories|calGoal|protein|proteinGoal|carbs|fat|weight|steps
 // ═══════════════════════════════════════════
 async function fetchLoseItData() {
   var sheetUrl = CFG.get('sheetUrl');
@@ -1173,33 +1308,26 @@ async function fetchLoseItData() {
 
   if (IS_FILE_PROTOCOL) {
     var msg = '<div class="empty-state">Open via GitHub Pages to enable live data.<span class="hint">See Setup tab for deployment instructions.</span></div>';
-    calCard.innerHTML = msg;
-    wtCard.innerHTML = msg;
+    calCard.innerHTML = msg; wtCard.innerHTML = msg;
     document.getElementById('dash-cal-badge').textContent = 'FILE://';
     return;
   }
 
   if (!sheetUrl) {
     var placeholder = '<div class="empty-state">Not connected.<span class="hint">Add your Google Sheet URL in Setup</span></div>';
-    calCard.innerHTML = placeholder;
-    wtCard.innerHTML = placeholder;
+    calCard.innerHTML = placeholder; wtCard.innerHTML = placeholder;
     document.getElementById('dash-cal-badge').textContent = 'NOT SET';
     return;
   }
 
   try {
-    // Add cache-buster to get fresh data
     var fetchUrl = sheetUrl + (sheetUrl.indexOf('?') === -1 ? '?' : '&') + '_t=' + Date.now();
     var resp = await fetch(fetchUrl);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     var csv = await resp.text();
-
     var lines = csv.trim().split('\n');
     if (lines.length < 2) throw new Error('Sheet has no data rows');
 
-    // Skip header row (row 1), read data row (row 2)
-    // Parse CSV row properly — handles quoted fields containing commas
-    // e.g. "Tue, May 5" must stay as one field, not be split into two pieces
     function parseCSVRow(line) {
       var fields = [], current = '', inQuote = false;
       for (var ci = 0; ci < line.length; ci++) {
@@ -1211,18 +1339,18 @@ async function fetchLoseItData() {
       fields.push(current.trim());
       return fields;
     }
-    var vals = parseCSVRow(lines[1]);
 
-    // Column order: date(0) calories(1) calGoal(2) protein(3) proteinGoal(4) carbs(5) fat(6) weight(7) steps(8)
-    var date = vals[0] || '';
-    var cals = parseInt(vals[1]) || 0;
-    var calGoal = parseInt(vals[2]) || 2350;
-    var protein = parseInt(vals[3]) || 0;
-    var proteinGoal = parseInt(vals[4]) || 160;
-    var carbs = parseInt(vals[5]) || 0;
-    var fat = parseInt(vals[6]) || 0;
-    var weight = parseFloat(vals[7]) || 0;
-    var steps = parseInt(vals[8]) || 0;
+    var vals = parseCSVRow(lines[1]);
+    // Columns: date(0) calories(1) calGoal(2) protein(3) proteinGoal(4) carbs(5) fat(6) weight(7) steps(8)
+    var date       = vals[0] || '';
+    var cals       = parseInt(vals[1]) || 0;
+    var calGoal    = parseInt(vals[2]) || 2350;  // v5 FIX: reads from Sheet col C (calGoal)
+    var protein    = parseInt(vals[3]) || 0;
+    var proteinGoal= parseInt(vals[4]) || 160;
+    var carbs      = parseInt(vals[5]) || 0;
+    var fat        = parseInt(vals[6]) || 0;
+    var weight     = parseFloat(vals[7]) || 0;
+    var steps      = parseInt(vals[8]) || 0;
 
     var pct = Math.min(100, Math.round((cals / calGoal) * 100));
     var remaining = calGoal - cals;
@@ -1254,7 +1382,6 @@ async function fetchLoseItData() {
     else if (pct >= 70) { badge.textContent = 'ON TRACK'; badge.className = 'badge by'; }
     else { badge.textContent = 'LOG MORE'; badge.className = 'badge bo'; }
 
-    // Update goal bars
     updateGoalBar('g-cals-val', 'g-fill-cals', cals, calGoal, 'kcal');
     updateGoalBar('g-protein-val', 'g-fill-protein', protein, proteinGoal, 'g');
 
@@ -1268,14 +1395,9 @@ async function fetchLoseItData() {
       wtCard.innerHTML = '<div class="empty-state">Weight not logged yesterday.<span class="hint">Check Lose It! app</span></div>';
     }
 
-    // Note on data source
-    var calNote = document.getElementById('dash-cal-date');
-    if (calNote) calNote.textContent = 'DATA FROM ' + date.toUpperCase();
-
   } catch(err) {
     var errMsg = '<div class="empty-state" style="color:var(--red)">Fetch failed — check Sheet URL.<span class="hint">' + err.message + '</span></div>';
-    calCard.innerHTML = errMsg;
-    wtCard.innerHTML = errMsg;
+    calCard.innerHTML = errMsg; wtCard.innerHTML = errMsg;
     document.getElementById('dash-cal-badge').textContent = 'ERROR';
     document.getElementById('dash-cal-badge').className = 'badge br';
   }
@@ -1289,45 +1411,218 @@ function updateGoalBar(valId, fillId, current, goal, unit) {
   if (fe) fe.style.width = pct + '%';
 }
 
-// ═══════════════════════════════════════════
-// OBSIDIAN / GITHUB MARKDOWN
-// ═══════════════════════════════════════════
-async function loadObsidian() {
-  var url = document.getElementById('gh-url-input').value.trim();
-  if (!url) return;
-  CFG.set('ghUrl', url);
-  await fetchObsidianIndex(url);
+// ═══════════════════════════════════════════════════════════
+// v5 PROJECTS — multi-file fetch + frontmatter parsing
+// ═══════════════════════════════════════════════════════════
+
+// The 4 project note filenames (URL-encoded)
+var PROJECT_FILES = [
+  'Varian%20Shipping%20Report.md',
+  'PostgreSQL%20Learning.md',
+  'Run%20Cycle%20Standardization.md',
+  'General%20Work%20Tasks.md'
+];
+
+// Frontmatter parser: extracts YAML front matter block
+function parseFrontmatter(md) {
+  var fm = {};
+  var match = md.match(/^---\s*\n([\s\S]*?)\n---/);
+  if (!match) return fm;
+  var block = match[1];
+  block.split('\n').forEach(function(line) {
+    var parts = line.match(/^(\w[\w_]*):\s*(.*)/);
+    if (parts) fm[parts[1].trim()] = parts[2].trim();
+  });
+  return fm;
 }
 
-async function loadObsidianDemo() {
-  var demoProjects = [
-    {
-      name: 'Mersen VBA System', badge: 'ACTIVE', badgeClass: 'bg',
-      tags: ['VBA','Excel','Power Automate'], updated: 'Today',
-      preview: 'HTML email digest live. Power Automate path confirmed. Next: wire file-change trigger.',
-      content: '# Mersen VBA Shipping System\n## Status: ACTIVE\n## Last session\n- HTML email digest live\n- Power Automate flow drafted\n- Next: SharePoint file-change trigger\n## Blockers\n- IT approval needed for connector'
-    },
-    {
-      name: 'Formula SAE Canard', badge: 'BUILD', badgeClass: 'bb',
-      tags: ['Arduino','IMU','Chassis'], updated: 'May 3',
-      preview: 'Arduino + GY-521 IMU wired. Servo mount in fab. Indoor demo replacing wind tunnel.',
-      content: '# Formula SAE — Canard Stabilization\n## Status: BUILD PHASE\n## Last session\n- GY-521 IMU reads tilt correctly\n- Servo bracket design finalized\n## Next session\n- Attach servo mount\n- Start PID tuning'
-    },
-    {
-      name: 'AI CNC Research', badge: 'DONE', badgeClass: 'by',
-      tags: ['Research','CNC'], updated: 'Apr 30',
-      preview: 'Excel workbook + PDF brief + PowerPoint delivered. Awaiting feedback round 2.',
-      content: '# Mersen AI CNC Research\n## Status: DELIVERED\n## Deliverables\n- Excel vendor comparison matrix\n- PDF executive brief (4 pages)\n- PowerPoint (12 slides)\n## Status\nAll deliverables accepted.'
+// Extract Waiting On items from markdown body
+function extractWaitingOn(md, projName) {
+  var items = [];
+  var inWaiting = false;
+  var lines = md.split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    if (/^#+\s*Waiting\s*On/i.test(line)) { inWaiting = true; continue; }
+    if (inWaiting && /^#+/.test(line)) { inWaiting = false; continue; }
+    if (inWaiting) {
+      var item = line.match(/^\s*-\s*\[[ x]\]\s*(.*)/i);
+      if (item && item[1].trim() && !/^\*\(none\)\*/.test(item[1])) {
+        items.push({ text: item[1].trim(), proj: projName });
+      }
     }
-  ];
-  renderProjectList(demoProjects);
-  document.getElementById('gh-status').textContent = 'Demo mode — enter your GitHub URL to load real notes';
+  }
+  return items;
 }
 
-async function fetchObsidianIndex(url) {
-  var status = document.getElementById('gh-status');
-  status.textContent = 'Fetching...';
+// Status → pill class + label
+function statusPill(status) {
+  var map = {
+    'in-progress': { cls: 'in-progress', label: 'IN PROGRESS' },
+    'waiting':     { cls: 'waiting',     label: 'WAITING' },
+    'completed':   { cls: 'completed',   label: 'COMPLETED' },
+    'paused':      { cls: 'paused',      label: 'PAUSED' }
+  };
+  var s = (status || '').toLowerCase().replace(/\s+/g, '-');
+  return map[s] || { cls: 'in-progress', label: (status || 'IN PROGRESS').toUpperCase() };
+}
+
+// Priority badge class
+function priorityClass(p) {
+  if (!p) return '';
+  var lp = p.toLowerCase();
+  if (lp === 'high') return 'high';
+  if (lp === 'medium') return 'medium';
+  return 'low';
+}
+
+// Render the v5 project cards + waiting on list
+function renderProjectsV5(projects) {
+  var totalActive = 0, totalWaiting = 0, totalCompleted = 0, totalPaused = 0;
+  var allWaiting = [];
+  var listHtml = '';
+
+  // Populate QC select
+  var qcSelect = document.getElementById('qc-proj-select');
+  if (qcSelect) {
+    qcSelect.innerHTML = '<option value="inbox">Inbox</option>';
+    projects.forEach(function(p) {
+      var opt = document.createElement('option');
+      opt.value = p.fm.name || p.name;
+      opt.textContent = p.fm.name || p.name;
+      qcSelect.appendChild(opt);
+    });
+  }
+
+  projects.forEach(function(p) {
+    var fm = p.fm;
+    var status = (fm.status || 'in-progress').toLowerCase().replace(/\s+/g, '-');
+    var pill = statusPill(status);
+    var prio = priorityClass(fm.priority);
+    var waitItems = extractWaitingOn(p.md, fm.name || p.name);
+    allWaiting = allWaiting.concat(waitItems);
+
+    // Count bar tallies
+    if (status === 'in-progress') totalActive++;
+    else if (status === 'waiting') totalWaiting++;
+    else if (status === 'completed') totalCompleted++;
+    else if (status === 'paused') totalPaused++;
+
+    listHtml += '<div class="v5-proj-card status-' + pill.cls + '">';
+    listHtml += '<div class="v5-proj-header">';
+    listHtml += '<div><div class="v5-proj-name">' + (fm.name || p.name) + '</div></div>';
+    listHtml += '<div style="display:flex;align-items:center;gap:6px;">';
+    if (prio) listHtml += '<span class="v5-proj-priority ' + prio + '">' + (fm.priority || '').toUpperCase() + '</span>';
+    listHtml += '<span class="status-pill ' + pill.cls + '">' + pill.label + '</span>';
+    listHtml += '</div></div>';
+
+    if (fm.goal) {
+      listHtml += '<div class="v5-proj-goal">' + fm.goal + '</div>';
+    }
+
+    if (fm.next_action) {
+      listHtml += '<div class="v5-proj-next">';
+      listHtml += '<div class="v5-proj-next-label">NEXT →</div>';
+      listHtml += '<div class="v5-proj-next-text">' + fm.next_action + '</div>';
+      listHtml += '</div>';
+    }
+
+    listHtml += '<div class="v5-proj-footer">';
+    listHtml += '<div class="v5-proj-updated">Updated ' + (fm.last_updated || '—') + '</div>';
+    if (fm.drive_url) {
+      listHtml += '<a href="' + fm.drive_url + '" target="_blank" class="v5-proj-drive">📄 Drive</a>';
+    }
+    listHtml += '</div></div>';
+  });
+
+  document.getElementById('proj-list-inner').innerHTML = listHtml;
+
+  // Count bar
+  var countBar = document.getElementById('proj-count-bar');
+  countBar.style.display = 'flex';
+  var parts = [];
+  if (totalActive)    parts.push('<div class="pcs"><div class="pcs-dot" style="background:var(--accent)"></div><span>' + totalActive + '</span> active</div>');
+  if (totalWaiting)   parts.push('<div class="pcs"><div class="pcs-dot" style="background:var(--yellow)"></div><span>' + totalWaiting + '</span> waiting</div>');
+  if (totalCompleted) parts.push('<div class="pcs"><div class="pcs-dot" style="background:var(--green)"></div><span>' + totalCompleted + '</span> completed</div>');
+  if (totalPaused)    parts.push('<div class="pcs"><div class="pcs-dot" style="background:var(--t3)"></div><span>' + totalPaused + '</span> paused</div>');
+  countBar.innerHTML = parts.join('<span style="opacity:0.3">·</span>');
+
+  document.getElementById('proj-count-badge').textContent = projects.length + ' PROJECTS';
+
+  // Waiting On panel
+  var waitPanel = document.getElementById('waiting-on-list');
+  var waitBadge = document.getElementById('waiting-count-badge');
+  if (allWaiting.length === 0) {
+    waitPanel.innerHTML = '<div class="empty-state">No active blockers.<span class="hint">Waiting On items from each project appear here.</span></div>';
+    waitBadge.textContent = '0';
+  } else {
+    var wHtml = '';
+    allWaiting.forEach(function(w) {
+      wHtml += '<div class="waiting-item">';
+      wHtml += '<div class="waiting-item-dot"></div>';
+      wHtml += '<div><div class="waiting-item-text">' + w.text + '</div>';
+      wHtml += '<div class="waiting-item-proj">' + w.proj + '</div></div>';
+      wHtml += '</div>';
+    });
+    waitPanel.innerHTML = wHtml;
+    waitBadge.textContent = allWaiting.length + ' BLOCKED';
+  }
+
+  // Update home tab dashboard strip
+  renderDashProjectsV5(projects);
+}
+
+function renderDashProjectsV5(projects) {
+  var strip = document.getElementById('dash-projects-strip');
+  if (!strip || !projects.length) return;
+
+  // Show up to 4 projects, split into columns
+  var shown = projects.slice(0, 4);
+  var colCls = shown.length >= 4 ? 'c3' : shown.length === 3 ? 'c4' : shown.length === 2 ? 'c6' : 'c12';
+  var html = '';
+
+  shown.forEach(function(p) {
+    var fm = p.fm;
+    var status = (fm.status || 'in-progress').toLowerCase().replace(/\s+/g, '-');
+    var pill = statusPill(status);
+    var projLink = document.querySelector('.nl[data-page="projects"]');
+
+    html += '<div class="dash-proj-mini ' + 'status-' + pill.cls + ' ' + colCls + '" data-navprojects="1">';
+    html += '<div class="dpm-header">';
+    html += '<div class="dpm-name">' + (fm.name || p.name) + '</div>';
+    html += '<span class="status-pill ' + pill.cls + '">' + pill.label + '</span>';
+    html += '</div>';
+    if (fm.next_action) {
+      html += '<div class="dpm-next">→ ' + fm.next_action + '</div>';
+    } else if (fm.goal) {
+      html += '<div class="dpm-next">' + fm.goal + '</div>';
+    }
+    html += '<div class="dpm-footer"><div class="dpm-updated">Updated ' + (fm.last_updated || '—') + '</div></div>';
+    html += '</div>';
+  });
+
+  strip.innerHTML = html;
+  strip.querySelectorAll('[data-navprojects]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      var projectsLink = document.querySelector('.nl[data-page="projects"]');
+      showPage('projects', projectsLink);
+    });
+  });
+}
+
+async function loadProjectsV5() {
+  var baseUrl = document.getElementById('proj-base-url-input').value.trim();
+  if (!baseUrl) { toast('Enter a base URL first'); return; }
+
+  // Strip trailing slash
+  baseUrl = baseUrl.replace(/\/$/, '');
+  CFG.set('projBaseUrl', baseUrl);
+
+  var status = document.getElementById('proj-load-status');
+  status.textContent = 'Fetching ' + PROJECT_FILES.length + ' project files...';
   status.style.color = 'var(--t3)';
+
+  document.getElementById('proj-list-inner').innerHTML = '<div class="proj-loading">Fetching project notes...</div>';
 
   if (IS_FILE_PROTOCOL) {
     status.textContent = 'GitHub fetch requires hosting on GitHub Pages (not file://)';
@@ -1336,25 +1631,34 @@ async function fetchObsidianIndex(url) {
   }
 
   try {
-    var resp = await fetch(url);
-    if (!resp.ok) throw new Error('HTTP ' + resp.status + ' — check that your repo is public');
-    var md = await resp.text();
-    document.getElementById('proj-detail-panel').innerHTML = '<div class="md-viewer">' + marked.parse(md) + '</div>';
-    status.textContent = 'Loaded from GitHub · ' + new Date().toLocaleTimeString();
-
-    var projects = [];
-    md.split('\n').forEach(function(line) {
-      var match = line.match(/\[(.+?)\]\((.+?)\)/);
-      if (match) projects.push({ name: match[1], url: match[2] });
+    var fetches = PROJECT_FILES.map(function(file) {
+      var url = baseUrl + '/' + file + '?_t=' + Date.now();
+      return fetch(url).then(function(r) {
+        if (!r.ok) throw new Error(file + ': HTTP ' + r.status);
+        return r.text().then(function(md) {
+          return { name: decodeURIComponent(file).replace('.md',''), md: md, fm: parseFrontmatter(md) };
+        });
+      }).catch(function(err) {
+        return { name: decodeURIComponent(file).replace('.md',''), md: '', fm: {}, error: err.message };
+      });
     });
 
-    if (projects.length) {
-      renderProjectLinks(projects);
-      document.getElementById('proj-count-badge').textContent = projects.length + ' FILES';
-    } else {
-      document.getElementById('proj-count-badge').textContent = '1 FILE';
+    var projects = await Promise.all(fetches);
+    var loaded = projects.filter(function(p) { return !p.error; });
+    var failed = projects.filter(function(p) { return p.error; });
+
+    if (loaded.length === 0) {
+      status.style.color = 'var(--red)';
+      status.textContent = 'All fetches failed — check your base URL and ensure the vault repo is public.';
+      return;
     }
-    updateDashProjects(projects.slice(0,3).map(function(p) { return { name: p.name, preview: '', updated: 'synced' }; }));
+
+    renderProjectsV5(loaded);
+
+    var msg = 'Loaded ' + loaded.length + '/' + PROJECT_FILES.length + ' projects · ' + new Date().toLocaleTimeString();
+    if (failed.length) msg += ' · ' + failed.length + ' failed';
+    status.textContent = msg;
+    status.style.color = failed.length ? 'var(--orange)' : 'var(--green)';
 
   } catch(err) {
     status.style.color = 'var(--red)';
@@ -1362,87 +1666,35 @@ async function fetchObsidianIndex(url) {
   }
 }
 
-function renderProjectList(projects) {
-  var panel = document.getElementById('proj-list-panel');
-  var html = '';
-  projects.forEach(function(p, i) {
-    var tags = (p.tags || []).map(function(t) { return '<span class="ptag">' + t + '</span>'; }).join('');
-    html += '<div class="proj-card" data-projidx="' + i + '" id="pc-' + i + '">';
-    html += '<div class="ph"><div class="pn">' + p.name + '</div><span class="badge ' + p.badgeClass + '">' + p.badge + '</span></div>';
-    html += '<div class="pp">' + p.preview + '</div>';
-    html += '<div class="ptags">' + tags + '</div>';
-    html += '<div class="pd">Updated ' + p.updated + '</div>';
-    html += '</div>';
-  });
-  panel.innerHTML = html;
-  panel.querySelectorAll('.proj-card[data-projidx]').forEach(function(card) {
-    card.addEventListener('click', function() { openProject(parseInt(card.getAttribute('data-projidx'))); });
-  });
-  document.getElementById('proj-count-badge').textContent = projects.length + ' PROJECTS';
-  window._demoProjects = projects;
-  updateDashProjects(projects.slice(0,3));
-}
+// ═══════════════════════════════════════════
+// QUICK CAPTURE
+// ═══════════════════════════════════════════
+function quickCapture() {
+  var task = document.getElementById('qc-task-input').value.trim();
+  var proj = document.getElementById('qc-proj-select').value;
+  var qcStatus = document.getElementById('qc-status');
 
-function renderProjectLinks(links) {
-  var panel = document.getElementById('proj-list-panel');
-  var html = '';
-  links.forEach(function(p) {
-    html += '<div class="proj-card" data-projurl="' + p.url.replace(/"/g,'&quot;') + '" data-projname="' + p.name.replace(/"/g,'&quot;') + '">';
-    html += '<div class="ph"><div class="pn">' + p.name + '</div></div>';
-    html += '</div>';
-  });
-  panel.innerHTML = html;
-  panel.querySelectorAll('.proj-card[data-projurl]').forEach(function(card) {
-    card.addEventListener('click', function() {
-      loadProjectFile(card.getAttribute('data-projurl'), card.getAttribute('data-projname'), card);
+  if (!task) { toast('Type a task first'); return; }
+
+  // For now, copy to clipboard with formatted text since GitHub API write requires a PAT token
+  var timestamp = new Date().toISOString().split('T')[0];
+  var line = '- [ ] ' + task + (proj !== 'inbox' ? ' [' + proj + ']' : '') + ' — ' + timestamp;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(line).then(function() {
+      toast('Copied to clipboard — paste into Obsidian Inbox');
+      qcStatus.textContent = 'Copied: ' + line;
+      qcStatus.style.color = 'var(--accent)';
+      document.getElementById('qc-task-input').value = '';
+    }).catch(function() {
+      qcStatus.textContent = 'Task: ' + line;
+      qcStatus.style.color = 'var(--t2)';
     });
-  });
-}
-
-function openProject(i) {
-  document.querySelectorAll('.proj-card').forEach(function(c) { c.classList.remove('active'); });
-  var card = document.getElementById('pc-'+i);
-  if (card) card.classList.add('active');
-  var p = window._demoProjects && window._demoProjects[i];
-  if (!p) return;
-  document.getElementById('proj-active-badge').textContent = p.name.toUpperCase();
-  document.getElementById('proj-detail-panel').innerHTML = '<div class="md-viewer">' + marked.parse(p.content) + '</div>';
-}
-
-async function loadProjectFile(url, name, card) {
-  document.querySelectorAll('.proj-card').forEach(function(c) { c.classList.remove('active'); });
-  card.classList.add('active');
-  document.getElementById('proj-active-badge').textContent = name.toUpperCase();
-  document.getElementById('proj-detail-panel').innerHTML = '<div class="loading-state">Loading note...</div>';
-  try {
-    var resp = await fetch(url);
-    var md = await resp.text();
-    document.getElementById('proj-detail-panel').innerHTML = '<div class="md-viewer">' + marked.parse(md) + '</div>';
-  } catch(e) {
-    document.getElementById('proj-detail-panel').innerHTML = '<div class="empty-state" style="color:var(--red)">Could not load: ' + e.message + '</div>';
+  } else {
+    qcStatus.textContent = 'Task ready: ' + line;
+    qcStatus.style.color = 'var(--t2)';
+    document.getElementById('qc-task-input').value = '';
   }
-}
-
-function updateDashProjects(projects) {
-  var strip = document.getElementById('dash-projects-strip');
-  if (!strip || !projects.length) return;
-  var colMap = { 3: 'c4', 2: 'c6', 1: 'c12' };
-  var cols = colMap[projects.length] || 'c4';
-  var html = '';
-  projects.forEach(function(p) {
-    html += '<div class="card ' + cols + ' obs-proj-card" data-navprojects="1">';
-    html += '<div class="ct">' + p.name.toUpperCase() + ' <span class="badge bp">OBSIDIAN</span></div>';
-    html += '<div style="font-size:12px;color:var(--t2);line-height:1.6">' + (p.preview || 'Click to open full notes') + '</div>';
-    html += '<div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-top:8px">Updated ' + p.updated + ' · click to open</div>';
-    html += '</div>';
-  });
-  strip.innerHTML = html;
-  strip.querySelectorAll('[data-navprojects]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      var projectsLink = document.querySelector('.nl[data-page="projects"]');
-      showPage('projects', projectsLink);
-    });
-  });
 }
 
 // ═══════════════════════════════════════════
@@ -1459,12 +1711,6 @@ function ck(el) {
   document.getElementById('routine-pct').textContent = pct + '%';
   document.getElementById('routine-count').textContent = done + ' / ' + all + ' done';
 }
-
-// Wire checklist items via event delegation
-document.addEventListener('click', function(e) {
-  var item = e.target.closest('.ck-item');
-  if (item) ck(item);
-});
 
 // ═══════════════════════════════════════════
 // SETUP — save/load config
@@ -1505,15 +1751,15 @@ function applyGoals(g) {
   if (g.bench)  setGoalEl('g-bench-val',  'g-bench-bar',  g.bench,  225,  'lbs');
   if (g.ohp)    setGoalEl('g-ohp-val',    'g-ohp-bar',    g.ohp,    145,  'lbs');
   if (g.squat)  setGoalEl('g-squat-val',  'g-squat-bar',  g.squat,  315,  'lbs');
-  if (g.streak) { setGoalEl('g-streak-val','g-streak-bar', g.streak, 30,  'days'); CFG.set('streak', g.streak); }
+  if (g.streak) { setGoalEl('g-streak-val','g-streak-bar', g.streak, 30,   'days'); CFG.set('streak', g.streak); }
   if (g.lawn)   setGoalEl('g-lawn-val',   'g-lawn-bar',   g.lawn,   2000, 'revenue');
 
   var grid = document.getElementById('dash-goals-grid');
   if (!grid) return;
   var parts = [];
-  if (g.bench) parts.push(goalMiniCard('Bench', g.bench, 225, 'lbs', 'var(--blue)'));
+  if (g.bench)  parts.push(goalMiniCard('Bench', g.bench, 225, 'lbs', 'var(--blue)'));
   if (g.streak) parts.push(goalMiniCard('Streak', g.streak, 30, 'days', 'var(--accent)'));
-  if (g.lawn) parts.push(goalMiniCard('Lawn Revenue', '$' + parseInt(g.lawn || 0).toLocaleString(), 2000, '', 'var(--orange)', g.lawn));
+  if (g.lawn)   parts.push(goalMiniCard('Lawn Revenue', '$' + parseInt(g.lawn || 0).toLocaleString(), 2000, '', 'var(--orange)', g.lawn));
   grid.innerHTML = parts.join('') || '<div class="empty-state" style="grid-column:span 3">Enter your current numbers in the Setup tab.<span class="hint">Goals will appear here</span></div>';
 }
 
@@ -1529,8 +1775,7 @@ function goalMiniCard(label, display, goal, unit, color, rawVal) {
 
 function setGoalEl(valId, fillId, current, goal, unit) {
   var pct = Math.min(100, Math.round((+current / goal) * 100));
-  var ve = document.getElementById(valId);
-  var fe = document.getElementById(fillId);
+  var ve = document.getElementById(valId); var fe = document.getElementById(fillId);
   if (ve) ve.textContent = current + ' ' + unit + ' · ' + pct + '%';
   if (fe) fe.style.width = pct + '%';
 }
@@ -1549,7 +1794,6 @@ function toast(msg) {
 // INIT
 // ═══════════════════════════════════════════
 function init() {
-  // File protocol warning banner
   if (IS_FILE_PROTOCOL) {
     var banner = document.createElement('div');
     banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#f59e0b;color:#000;font-family:monospace;font-size:11px;padding:6px 14px;text-align:center;';
@@ -1574,17 +1818,16 @@ function init() {
     if (sv) sv.textContent = 'Saved: ' + scriptUrl.slice(0,50) + '...';
   }
 
-  var ghUrl = CFG.get('ghUrl');
-  if (ghUrl) {
-    var gi = document.getElementById('gh-url-input');
-    if (gi) gi.value = ghUrl;
-    if (!IS_FILE_PROTOCOL) fetchObsidianIndex(ghUrl);
+  var projBaseUrl = CFG.get('projBaseUrl');
+  if (projBaseUrl) {
+    var pbi = document.getElementById('proj-base-url-input');
+    if (pbi) pbi.value = projBaseUrl;
+    if (!IS_FILE_PROTOCOL) loadProjectsV5();
   }
 
   var goals = CFG.get('goals');
   if (goals) {
-    var fields = ['bench','ohp','squat','streak','lawn'];
-    fields.forEach(function(f) {
+    ['bench','ohp','squat','streak','lawn'].forEach(function(f) {
       var el = document.getElementById('inp-' + f);
       if (el) el.value = goals[f] || '';
     });
@@ -1592,53 +1835,7 @@ function init() {
   }
 
   renderLog();
-
-  // Wire buttons that have no data-page but need event listeners
-  var finishBtns = document.querySelectorAll('[onclick*="finishWorkout"]');
-  finishBtns.forEach(function(btn) {
-    btn.removeAttribute('onclick');
-    btn.addEventListener('click', function() { finishWorkout(btn); });
-  });
-  var clearBtn = document.querySelector('[onclick*="clearDay"]');
-  if (clearBtn) {
-    clearBtn.removeAttribute('onclick');
-    clearBtn.addEventListener('click', clearDay);
-  }
-  var loadBtn = document.querySelector('[onclick*="loadObsidian()"]');
-  if (loadBtn) {
-    loadBtn.removeAttribute('onclick');
-    loadBtn.addEventListener('click', loadObsidian);
-  }
-  var demoBtn = document.querySelector('[onclick*="loadObsidianDemo"]');
-  if (demoBtn) {
-    demoBtn.removeAttribute('onclick');
-    demoBtn.addEventListener('click', loadObsidianDemo);
-  }
-  var saveSheetBtn = document.querySelector('[onclick*="saveSheetURL"]');
-  if (saveSheetBtn) {
-    saveSheetBtn.removeAttribute('onclick');
-    saveSheetBtn.addEventListener('click', saveSheetURL);
-  }
-  var saveScriptBtn = document.querySelector('[onclick*="saveScriptURL"]');
-  if (saveScriptBtn) {
-    saveScriptBtn.removeAttribute('onclick');
-    saveScriptBtn.addEventListener('click', saveScriptURL);
-  }
-  var saveGoalsBtn = document.querySelector('[onclick*="saveGoals"]');
-  if (saveGoalsBtn) {
-    saveGoalsBtn.removeAttribute('onclick');
-    saveGoalsBtn.addEventListener('click', saveGoals);
-  }
-  var openLoggerBtn = document.querySelector('[onclick*="showPage(\'workout\'"]');
-  if (openLoggerBtn) {
-    openLoggerBtn.removeAttribute('onclick');
-    openLoggerBtn.addEventListener('click', function() {
-      var workoutLink = document.querySelector('.nl[data-page="workout"]');
-      showPage('workout', workoutLink);
-    });
-  }
 }
-
 </script>
 </body>
 </html>
