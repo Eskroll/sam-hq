@@ -1198,9 +1198,20 @@ async function fetchLoseItData() {
     if (lines.length < 2) throw new Error('Sheet has no data rows');
 
     // Skip header row (row 1), read data row (row 2)
-    var dataRow = lines[1];
-    // Handle quoted CSV values
-    var vals = dataRow.split(',').map(function(v) { return v.trim().replace(/^"|"$/g,''); });
+    // Parse CSV row properly — handles quoted fields containing commas
+    // e.g. "Tue, May 5" must stay as one field, not be split into two pieces
+    function parseCSVRow(line) {
+      var fields = [], current = '', inQuote = false;
+      for (var ci = 0; ci < line.length; ci++) {
+        var ch = line[ci];
+        if (ch === '"') { inQuote = !inQuote; }
+        else if (ch === ',' && !inQuote) { fields.push(current.trim()); current = ''; }
+        else { current += ch; }
+      }
+      fields.push(current.trim());
+      return fields;
+    }
+    var vals = parseCSVRow(lines[1]);
 
     // Column order: date(0) calories(1) calGoal(2) protein(3) proteinGoal(4) carbs(5) fat(6) weight(7) steps(8)
     var date = vals[0] || '';
@@ -1251,7 +1262,7 @@ async function fetchLoseItData() {
       wtCard.innerHTML =
         '<div class="data-val" style="color:var(--accent)">' + weight.toFixed(1) + '</div>' +
         '<div class="data-sub">LBS — ' + date + '</div>' +
-        '<div class="data-delta" style="margin-top:8px;color:var(--t2)">' + steps.toLocaleString() + ' steps yesterday</div>';
+        '<div class="data-delta" style="margin-top:8px;color:var(--t2)">' + (steps > 0 ? steps.toLocaleString() + ' steps yesterday' : 'No tracker connected') + '</div>';
       updateGoalBar('g-weight-val', 'g-fill-weight', weight, 175, 'lbs');
     } else {
       wtCard.innerHTML = '<div class="empty-state">Weight not logged yesterday.<span class="hint">Check Lose It! app</span></div>';
