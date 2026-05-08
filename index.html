@@ -1686,14 +1686,7 @@ async function fetchWeightSheetData() {
 }
 
 // Renders the dashboard weight card from the sheet data
-// Fetch weight from Sheet only if API didn't already populate it
-  // (fetchLoseItData runs first and calls renderDashWeightFromApi if API has weight)
-  setTimeout(function() {
-    var badge = document.getElementById('wt-dash-badge');
-    if (badge && badge.textContent === 'LOADING') {
-      fetchAndRenderDashWeight();
-    }
-  }, 2500);
+async function fetchAndRenderDashWeight() {
   var contentEl = document.getElementById('wt-dash-content');
   var badgeEl   = document.getElementById('wt-dash-badge');
   if (!contentEl) return;
@@ -1712,11 +1705,9 @@ async function fetchWeightSheetData() {
   var startW = 318, goalW = 290;
   var lbsLost = Math.max(0, startW - last.weight);
 
-  // Check if logged today
   var todayStr = new Date().toISOString().slice(0, 10);
   var loggedToday = last.date === todayStr;
 
-  // Format the date nicely
   var d = new Date(last.date + 'T12:00:00');
   var dateLabel = loggedToday ? 'TODAY' : d.toLocaleDateString('en-US', { month:'short', day:'numeric' }).toUpperCase();
 
@@ -1730,7 +1721,6 @@ async function fetchWeightSheetData() {
     else { badgeEl.textContent = 'LOG TODAY'; badgeEl.className = 'badge bo'; }
   }
 
-  // Update goals page weight bar
   updateGoalBar('g-weight-val', 'g-fill-weight', last.weight, goalW, 'lbs');
 }
 
@@ -2439,9 +2429,13 @@ function init() {
   }
   fetchLoseItData();
 
-  // Fetch weight from hardcoded weights tab URL
-  fetchAndRenderDashWeight();
-
+  // Fetch weight from Sheet only if API didn't already populate it
+  setTimeout(function() {
+    var badge = document.getElementById('wt-dash-badge');
+    if (badge && badge.textContent === 'LOADING') {
+      fetchAndRenderDashWeight();
+    }
+  }, 2500);
   // Restore script URL
   var scriptUrl = CFG.get(SCRIPT_URL_KEY);
   if (scriptUrl) {
