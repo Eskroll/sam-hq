@@ -1245,12 +1245,24 @@ document.addEventListener('DOMContentLoaded', function() {
         renderWorkoutHistoryPage();
         setTimeout(function() { renderWorkoutChart(getWorkoutHistory()); }, 100);
       }
+      if (pageId === 'notes') {
+        renderNotes();
+      }
     });
   });
   document.querySelectorAll('#wkt-tabs .tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
       var day = tab.getAttribute('data-day');
       if (day) switchDay(day, tab);
+    });
+  });
+  // Notes filter buttons
+  document.querySelectorAll('#notes-filter-row .tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#notes-filter-row .tab').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.getAttribute('data-filter');
+      renderNotes();
     });
   });
   init();
@@ -2648,22 +2660,7 @@ function renderNotes() {
 }
 
 // Wire notes filter buttons
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelectorAll('#notes-filter-row .tab').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('#notes-filter-row .tab').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      activeFilter = btn.getAttribute('data-filter');
-      renderNotes();
-    });
-  });
-  // Init notes when page is opened
-  document.querySelectorAll('.nl[data-page]').forEach(function(el) {
-    if (el.getAttribute('data-page') === 'notes') {
-      el.addEventListener('click', function() { renderNotes(); });
-    }
-  });
-});
 
+</script>
 </body>
 </html>
