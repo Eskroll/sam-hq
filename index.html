@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sam's HQ — v5.2</title>
+<title>Sam's HQ — v4</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
@@ -47,7 +47,7 @@ body::after {
   z-index: 0;
 }
 .app { display: flex; min-height: 100vh; position: relative; z-index: 1; }
-
+ 
 /* ── SIDEBAR ── */
 nav {
   width: 210px; flex-shrink: 0;
@@ -76,10 +76,10 @@ nav {
 .nav-footer { padding: 14px 18px; border-top: 1px solid var(--border); }
 .df { font-family: var(--mono); font-size: 10px; color: var(--t3); line-height: 2; }
 .df strong { color: var(--t2); display: block; font-size: 12px; }
-
+ 
 /* ── MAIN ── */
 .main { margin-left: 210px; flex: 1; padding: 28px 28px 60px; }
-
+ 
 /* ── TOPBAR ── */
 .topbar { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; }
 .topbar h1 { font-size: 30px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
@@ -94,7 +94,7 @@ nav {
   white-space: nowrap;
 }
 .pill .dot { width: 5px; height: 5px; border-radius: 50%; }
-
+ 
 /* ── SECTION LABEL ── */
 .slabel {
   font-family: var(--mono); font-size: 9px;
@@ -103,7 +103,7 @@ nav {
   margin: 22px 0 11px;
 }
 .slabel::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
+ 
 /* ── GRID ── */
 .grid { display: grid; gap: 13px; }
 .g12 { grid-template-columns: repeat(12, 1fr); }
@@ -114,7 +114,7 @@ nav {
 .c7 { grid-column: span 7; }
 .c8 { grid-column: span 8; }
 .c12 { grid-column: span 12; }
-
+ 
 /* ── CARD ── */
 .card {
   background: var(--s1); border: 1px solid var(--border);
@@ -124,7 +124,7 @@ nav {
 }
 .card:hover { border-color: var(--border2); }
 @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-
+ 
 .ct {
   font-family: var(--mono); font-size: 9px;
   letter-spacing: 2.5px; color: var(--t3);
@@ -138,7 +138,7 @@ nav {
 .bb { background: rgba(64,196,255,0.1); color: var(--blue); border: 1px solid rgba(64,196,255,0.2); }
 .bp { background: rgba(179,136,255,0.1); color: var(--purple); border: 1px solid rgba(179,136,255,0.2); }
 .br { background: rgba(255,82,82,0.1); color: var(--red); border: 1px solid rgba(255,82,82,0.2); }
-
+ 
 /* ── DATA STATES ── */
 .loading-state {
   font-family: var(--mono); font-size: 11px;
@@ -146,27 +146,27 @@ nav {
   animation: pulse 1.5s ease infinite;
 }
 @keyframes pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
-
+ 
 .empty-state {
   font-family: var(--mono); font-size: 11px;
   color: var(--t3); padding: 16px 0; line-height: 1.8;
 }
 .empty-state .hint { color: var(--accent); margin-top: 6px; display: block; }
-
+ 
 .data-val {
   font-size: 40px; font-weight: 800;
   letter-spacing: -2px; line-height: 1;
 }
 .data-sub { font-family: var(--mono); font-size: 10px; color: var(--t3); margin-top: 4px; }
 .data-delta { font-family: var(--mono); font-size: 11px; margin-top: 10px; }
-
+ 
 /* ── RING ── */
 .ring-parent { position: relative; display: inline-flex; align-items: center; justify-content: center; }
 .ring-parent svg { transform: rotate(-90deg); }
 .ring-center { position: absolute; text-align: center; }
 .ring-num { font-size: 19px; font-weight: 800; line-height: 1; }
 .ring-unit { font-family: var(--mono); font-size: 9px; color: var(--t3); }
-
+ 
 /* ── MACRO ROWS ── */
 .macro-row {
   display: flex; justify-content: space-between; align-items: center;
@@ -175,25 +175,25 @@ nav {
 }
 .macro-row:last-child { border-bottom: none; }
 .macro-val { font-family: var(--mono); font-weight: 600; font-size: 12px; }
-
+ 
 /* ── MINI BARS ── */
 .mini-bars { display: flex; align-items: flex-end; gap: 3px; height: 34px; margin-top: 10px; }
 .mbar { flex: 1; border-radius: 2px 2px 0 0; min-height: 3px; }
-
+ 
 /* ── WORKOUT EXERCISES ── */
 .ex-block {
   border-bottom: 1px solid var(--border);
   padding: 0;
 }
 .ex-block:last-child { border-bottom: none; }
-
+ 
 .ex-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 0; cursor: pointer;
   user-select: none;
 }
 .ex-header:hover .ex-name { color: var(--accent); }
-
+ 
 .ex-name { font-size: 13px; font-weight: 700; transition: color 0.15s; }
 .ex-scheme { font-family: var(--mono); font-size: 10px; color: var(--t3); margin-top: 2px; }
 .ex-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -201,14 +201,14 @@ nav {
 .ex-top-set strong { color: var(--t1); display: block; font-size: 13px; }
 .ex-chevron { font-size: 10px; color: var(--t3); transition: transform 0.2s; }
 .ex-chevron.open { transform: rotate(180deg); }
-
+ 
 /* Set logger panel */
 .ex-panel {
   display: none; padding: 10px 0 14px;
   border-top: 1px solid var(--border);
 }
 .ex-panel.open { display: block; }
-
+ 
 .set-row { display: flex; gap: 8px; align-items: flex-end; margin-bottom: 8px; flex-wrap: wrap; }
 .set-field { display: flex; flex-direction: column; gap: 4px; }
 .set-field label { font-family: var(--mono); font-size: 9px; color: var(--t3); letter-spacing: 1px; }
@@ -227,7 +227,7 @@ nav {
 }
 .note-input:focus { border-color: var(--accent); }
 .note-input::placeholder { color: var(--t3); }
-
+ 
 .logged-chips { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
 .set-chip {
   background: var(--s3); border: 1px solid var(--border2);
@@ -237,7 +237,7 @@ nav {
 }
 .set-chip:hover { border-color: var(--red); color: var(--red); }
 .set-chip.pr { border-color: rgba(200,255,87,0.3); color: var(--accent); }
-
+ 
 .cardio-note {
   background: rgba(64,196,255,0.05);
   border: 1px solid rgba(64,196,255,0.15);
@@ -245,7 +245,7 @@ nav {
   font-family: var(--mono); font-size: 11px;
   color: var(--blue); margin-top: 10px;
 }
-
+ 
 /* ── CHECKLIST ── */
 .ck-group { margin-bottom: 2px; }
 .ck-label { font-family: var(--mono); font-size: 8px; letter-spacing: 2px; color: var(--t3); padding: 10px 0 4px; }
@@ -264,7 +264,7 @@ nav {
 .ck-item.done .ck-box { background: var(--accent); border-color: var(--accent); color: #000; }
 .ck-item.done .ck-text { text-decoration: line-through; color: var(--t3); }
 .ck-text { font-size: 12.5px; line-height: 1.35; }
-
+ 
 /* ── SCHEDULE ── */
 .srow { display: flex; gap: 11px; padding: 8px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
 .srow:last-child { border-bottom: none; }
@@ -272,7 +272,7 @@ nav {
 .sdot { width: 7px; height: 7px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
 .stitle { font-size: 13px; font-weight: 600; }
 .ssub { font-family: var(--mono); font-size: 10px; color: var(--t3); margin-top: 1px; }
-
+ 
 /* ── GOAL BARS ── */
 .goal-item { margin-bottom: 13px; }
 .goal-item:last-child { margin-bottom: 0; }
@@ -281,7 +281,7 @@ nav {
 .goal-val { font-family: var(--mono); font-size: 10px; color: var(--t3); }
 .goal-track { height: 3px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden; }
 .goal-fill { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(0.16,1,0.3,1); }
-
+ 
 /* ── PROJECT CARDS ── */
 .proj-card {
   background: var(--s2); border: 1px solid var(--border);
@@ -297,7 +297,7 @@ nav {
 .pp { font-size: 12px; color: var(--t2); line-height: 1.5; }
 .ptags { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
 .ptag { font-family: var(--mono); font-size: 9px; padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border2); color: var(--t3); }
-
+ 
 /* ── MARKDOWN VIEWER ── */
 .md-viewer { font-size: 13px; line-height: 1.75; color: var(--t2); }
 .md-viewer h1 { font-size: 18px; color: var(--t1); font-weight: 800; margin: 0 0 8px; }
@@ -309,7 +309,7 @@ nav {
 .md-viewer code { background: var(--s3); border-radius: 4px; padding: 1px 5px; font-family: var(--mono); font-size: 11px; color: var(--accent); }
 .md-viewer strong { color: var(--t1); }
 .md-viewer hr { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
-
+ 
 .obs-connect-msg {
   background: rgba(179,136,255,0.06);
   border: 1px solid rgba(179,136,255,0.2);
@@ -319,7 +319,7 @@ nav {
 }
 .obs-connect-msg .obs-title { color: var(--purple); font-size: 9px; letter-spacing: 2px; margin-bottom: 8px; }
 .obs-connect-msg code { color: var(--accent); background: var(--s3); padding: 1px 5px; border-radius: 3px; }
-
+ 
 /* ── BUTTONS ── */
 .btn {
   display: inline-flex; align-items: center; gap: 7px;
@@ -333,7 +333,7 @@ nav {
 .btn-ghost:hover { border-color: var(--t2); color: var(--t1); }
 .btn-sm { padding: 5px 10px; font-size: 11px; border-radius: 6px; }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
-
+ 
 /* ── EMAIL PREVIEW ── */
 .email-preview-box {
   background: var(--s2); border: 1px solid var(--border);
@@ -354,7 +354,7 @@ nav {
 .ep-line strong { color: var(--t1); }
 .ep-div { height: 1px; background: var(--border); margin: 8px 0; }
 .ep-total { color: var(--accent); font-weight: 600; }
-
+ 
 /* ── GITHUB CONNECT BOX ── */
 .gh-config {
   background: var(--s2); border: 1px solid rgba(200,255,87,0.15);
@@ -370,7 +370,7 @@ nav {
 }
 .gh-input:focus { border-color: var(--accent); }
 .gh-input::placeholder { color: var(--t3); }
-
+ 
 /* ── LOSE IT CONFIG ── */
 .loseit-config {
   background: var(--s2); border: 1px solid rgba(64,196,255,0.15);
@@ -379,7 +379,7 @@ nav {
 .loseit-config .li-title { font-family: var(--mono); font-size: 9px; letter-spacing: 2px; color: var(--blue); margin-bottom: 10px; }
 .li-desc { font-size: 12px; color: var(--t2); line-height: 1.7; margin-bottom: 10px; }
 .li-desc code { font-family: var(--mono); font-size: 11px; color: var(--accent); background: var(--s3); padding: 1px 5px; border-radius: 3px; }
-
+ 
 /* ── TABS ── */
 .tabs { display: flex; gap: 3px; margin-bottom: 13px; }
 .tab {
@@ -390,7 +390,7 @@ nav {
 }
 .tab.active { background: var(--s2); border-color: var(--border2); color: var(--t1); }
 .tab:hover:not(.active) { color: var(--t2); }
-
+ 
 /* ── TOAST ── */
 #toast {
   position: fixed; bottom: 22px; right: 22px;
@@ -401,11 +401,11 @@ nav {
   transition: all 0.3s ease; pointer-events: none;
 }
 #toast.show { opacity: 1; transform: translateY(0); }
-
+ 
 /* ── PAGES ── */
 .page { display: none; }
 .page.active { display: block; }
-
+ 
 /* ── WORKOUT SUMMARY (dashboard) ── */
 .dash-ex-row {
   display: flex; align-items: center; justify-content: space-between;
@@ -416,7 +416,7 @@ nav {
 .den { font-size: 13px; font-weight: 600; }
 .dem { font-family: var(--mono); font-size: 10px; color: var(--t3); margin-top: 2px; }
 .der { font-family: var(--mono); font-size: 11px; color: var(--t3); }
-
+ 
 /* ── OBSIDIAN STATUS CARDS (dashboard) ── */
 .obs-proj-card {
   background: var(--s2); border: 1px solid var(--border);
@@ -424,7 +424,7 @@ nav {
   transition: all 0.15s;
 }
 .obs-proj-card:hover { border-color: var(--border2); }
-
+ 
 @media (max-width: 900px) {
   nav { width: 58px; }
   .nav-logo .wm, .nav-logo .tg, .nl span:not(.ni), .ngl, .nav-footer { display: none; }
@@ -440,19 +440,17 @@ nav {
 <body>
 <div id="toast"></div>
 <div class="app">
-
+ 
 <!-- ══ SIDEBAR ══ -->
 <nav>
   <div class="nav-logo">
     <div class="wm">SAM<em>'s</em><br>HQ</div>
-    <div class="tg">PERSONAL OS · v5.2</div>
+    <div class="tg">PERSONAL OS · v4</div>
   </div>
   <div class="nav-links">
     <div class="ngl">MAIN</div>
     <div class="nl active" data-page="dashboard"><span class="ni">⌂</span><span>Dashboard</span></div>
     <div class="nl" data-page="workout"><span class="ni">🏋</span><span>Workout</span></div>
-    <div class="nl" data-page="weight"><span class="ni">⚖️</span><span>Body Weight</span></div>
-    <div class="nl" data-page="wkt-history"><span class="ni">📊</span><span>Wkt History</span></div>
     <div class="nl" data-page="routine"><span class="ni">🌅</span><span>Morning</span></div>
     <div class="nl" data-page="goals"><span class="ni">🎯</span><span>Goals</span></div>
     <div class="ngl">PROJECTS</div>
@@ -467,9 +465,9 @@ nav {
     </div>
   </div>
 </nav>
-
+ 
 <main class="main">
-
+ 
 <!-- ═══════════════ DASHBOARD ═══════════════ -->
 <div class="page active" id="page-dashboard">
   <div class="topbar">
@@ -483,36 +481,26 @@ nav {
       <div class="pill" style="border-color:rgba(200,255,87,0.3);color:var(--accent)"><div class="dot" style="background:var(--accent)"></div>Workout email on finish</div>
     </div>
   </div>
-
+ 
   <div class="slabel">HEALTH DATA — FROM LOSE IT! VIA GOOGLE SHEET</div>
   <div class="grid g12">
-
+ 
     <!-- CALORIES -->
     <div class="card c3" id="dash-cal-card">
       <div class="ct">CALORIES TODAY <span class="badge bb" id="dash-cal-badge">LOADING</span></div>
       <div id="dash-cal-content" class="loading-state">fetching data...</div>
     </div>
-
-    <!-- BODY WEIGHT — MANUAL LOG -->
+ 
+    <!-- BODY WEIGHT -->
     <div class="card c3" id="dash-weight-card">
-      <div class="ct">BODY WEIGHT <span class="badge bo" id="wt-badge">LOG TODAY</span></div>
-      <div id="dash-weight-content">
-        <div id="wt-today-display" style="display:none">
-          <div class="data-val" style="color:var(--accent)" id="wt-today-val">—</div>
-          <div class="data-sub">LBS — TODAY</div>
-          <div class="data-delta" style="margin-top:8px;color:var(--t2)" id="wt-today-note">logged today</div>
-        </div>
-        <div id="wt-log-form">
-          <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-bottom:8px;">ENTER TODAY'S WEIGHT</div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-            <input class="set-input" id="wt-input" type="number" placeholder="lbs" step="0.1" min="100" max="500" style="width:90px">
-            <button class="btn btn-accent btn-sm" id="wt-log-btn">Log</button>
-          </div>
-          <div id="wt-log-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:7px;"></div>
-        </div>
+      <div class="ct">BODY WEIGHT <span class="badge bo" id="dash-weight-badge">CUTTING</span></div>
+      <div id="dash-weight-content" class="loading-state">fetching data...</div>
+      <div id="dash-weight-logger" style="margin-top:14px;display:flex;gap:8px;align-items:center;">
+        <input id="wt-log-input" type="number" step="0.1" placeholder="lbs" class="set-input" style="width:90px;font-size:15px;" />
+        <button class="btn btn-accent btn-sm" id="wt-log-btn">Log</button>
       </div>
     </div>
-
+ 
     <!-- TODAY'S WORKOUT SNAPSHOT -->
     <div class="card c6">
       <div class="ct">TODAY'S WORKOUT — <span id="dash-workout-day-label">—</span> <span class="badge by" id="dash-workout-status">—</span></div>
@@ -525,7 +513,7 @@ nav {
       </div>
     </div>
   </div>
-
+ 
   <!-- PROJECT STATUS from Obsidian/GitHub -->
   <div class="slabel">PROJECT STATUS — FROM OBSIDIAN (VIA GITHUB)</div>
   <div class="grid g12" id="dash-projects-strip">
@@ -533,7 +521,7 @@ nav {
       <div class="empty-state">Connect your Obsidian vault on the <strong style="color:var(--accent)">Projects</strong> page to see status here.<span class="hint">→ Go to Projects tab and enter your GitHub raw URL</span></div>
     </div>
   </div>
-
+ 
   <div class="slabel">GOALS SNAPSHOT</div>
   <div class="grid g12">
     <div class="card c12">
@@ -543,7 +531,7 @@ nav {
     </div>
   </div>
 </div>
-
+ 
 <!-- ═══════════════ WORKOUT ═══════════════ -->
 <div class="page" id="page-workout">
   <div class="topbar">
@@ -556,7 +544,7 @@ nav {
     </div>
   </div>
   <div class="grid g12">
-
+ 
     <div class="card c7">
       <div class="ct">EXERCISE LOG <span id="wkt-day-badge" class="badge by">PUSH</span></div>
       <div class="tabs" id="wkt-tabs">
@@ -570,7 +558,7 @@ nav {
         <button class="btn btn-ghost btn-sm" onclick="clearDay()">Clear Day</button>
       </div>
     </div>
-
+ 
     <div class="card c5">
       <div class="ct">EMAIL PREVIEW <span class="badge by">SENDS ON FINISH</span></div>
       <div class="email-preview-box">
@@ -595,10 +583,10 @@ nav {
         </div>
       </div>
     </div>
-
+ 
   </div>
 </div>
-
+ 
 <!-- ═══════════════ MORNING ROUTINE ═══════════════ -->
 <div class="page" id="page-routine">
   <div class="topbar">
@@ -616,14 +604,14 @@ nav {
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Water bottle → brush teeth</div></div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Electric shaver → nose shaver</div></div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Contacts → shower</div></div>
-
+ 
       <div class="ct" style="margin-top:16px;">POST-SHOWER</div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Towel dry → sea salt spray (top + roots) → scrunch</div></div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Lotion → underwear → face → hair oil</div></div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Sunscreen tint (eye-bags, face)</div></div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Dry hair → comb → eyelash curl → men pen → chapstick</div></div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Outfit</div></div>
-
+ 
       <div class="ct" style="margin-top:16px;">LEAVE + MORNING</div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Light breakfast (protein / debloat / carbs)</div></div>
       <div class="ck-item" onclick="ck(this)"><div class="ck-box"></div><div class="ck-text">Caffeine — Monster or double espresso</div></div>
@@ -648,7 +636,7 @@ nav {
     </div>
   </div>
 </div>
-
+ 
 <!-- ═══════════════ GOALS ═══════════════ -->
 <div class="page" id="page-goals">
   <div class="topbar">
@@ -675,7 +663,7 @@ nav {
     </div>
   </div>
 </div>
-
+ 
 <!-- ═══════════════ PROJECTS ═══════════════ -->
 <div class="page" id="page-projects">
   <div class="topbar">
@@ -684,7 +672,7 @@ nav {
       <div class="sub">OBSIDIAN → GITHUB → DASHBOARD · AUTO-SYNCED</div>
     </div>
   </div>
-
+ 
   <div class="gh-config" id="gh-config-box">
     <div class="gh-title">GITHUB RAW URL — YOUR OBSIDIAN VAULT REPO</div>
     <div style="font-size:12px;color:var(--t2);margin-bottom:10px;line-height:1.7;">
@@ -698,7 +686,7 @@ nav {
     </div>
     <div id="gh-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:8px;"></div>
   </div>
-
+ 
   <div class="grid g12">
     <div class="card c4">
       <div class="ct">PROJECTS <span class="badge bp" id="proj-count-badge">0 FILES</span></div>
@@ -721,7 +709,7 @@ nav {
     </div>
   </div>
 </div>
-
+ 
 <!-- ═══════════════ SETUP ═══════════════ -->
 <div class="page" id="page-setup">
   <div class="topbar">
@@ -730,8 +718,8 @@ nav {
       <div class="sub">CONFIGURE DATA SOURCES · SCRIPT URLS · GOALS</div>
     </div>
   </div>
-
-
+ 
+ 
   <div class="slabel">GITHUB PAGES HOSTING — LIVE URL FOR PHONE + PC</div>
   <div class="card" style="margin-bottom:13px;">
     <div class="ct">DEPLOY DASHBOARD TO GITHUB PAGES (one-time, 5 minutes)</div>
@@ -747,7 +735,7 @@ nav {
       PRIVATE REPO OK: GitHub Pages works with private repos on free plans (repo is private, Pages URL is public unless you add auth).
     </div>
   </div>
-
+ 
   <div class="slabel">OBSIDIAN + GITHUB SYNC — LIVE PROJECT NOTES</div>
   <div class="card" style="margin-bottom:13px;">
     <div class="ct">OBSIDIAN GIT PLUGIN SETUP (one-time)</div>
@@ -761,7 +749,7 @@ nav {
       <strong style="color:var(--t1);">6.</strong> After any Claude session: ask "Generate a project status markdown" → paste into Obsidian → it syncs to dashboard in 5 min
     </div>
   </div>
-
+ 
   <div class="slabel">GOOGLE SHEET BRIDGE — LOSE IT DATA</div>
   <div class="card" style="margin-bottom:13px;">
     <div class="ct">SHEET SETUP + TRIGGER (one-time)</div>
@@ -777,7 +765,7 @@ nav {
       date | calories | calGoal | protein | proteinGoal | carbs | fat | weight | steps
     </div>
   </div>
-
+ 
   <!-- LOSE IT / GOOGLE SHEET -->
   <div class="slabel">CALORIE + WEIGHT DATA</div>
   <div class="loseit-config">
@@ -797,7 +785,19 @@ nav {
       Add to your calorie script: <code style="color:var(--accent);background:var(--s3);padding:1px 4px;border-radius:3px;">sheet.getRange("A1").setValue(calories); sheet.getRange("B1").setValue(weight);</code>
     </div>
   </div>
-
+ 
+  <!-- BODY WEIGHT CSV -->
+  <div class="slabel">BODY WEIGHT DATA</div>
+  <div class="loseit-config" style="border-color:rgba(105,240,174,0.15);">
+    <div class="li-title" style="color:var(--green);">WEIGHTS TAB — PUBLISHED CSV URL</div>
+    <div class="li-desc">Publish the <strong>weights</strong> tab separately: File → Share → Publish to web → select "weights" tab → CSV → Copy link. Paste here. Manual weight logs from the dashboard write directly to this tab via Script 3.</div>
+    <div class="gh-row" style="margin-bottom:8px;">
+      <input class="gh-input" id="weight-sheet-url-input" placeholder="Google Sheet weights tab CSV URL..." />
+      <button class="btn btn-accent btn-sm" id="save-weight-url-btn">Save</button>
+    </div>
+    <div id="weight-url-saved" style="font-family:var(--mono);font-size:10px;color:var(--t3);"></div>
+  </div>
+ 
   <!-- APPS SCRIPT URL -->
   <div class="slabel">POST-WORKOUT EMAIL — SCRIPT 3</div>
   <div class="loseit-config" style="border-color:rgba(200,255,87,0.15);">
@@ -809,7 +809,7 @@ nav {
     </div>
     <div id="script-url-saved" style="font-family:var(--mono);font-size:10px;color:var(--t3);"></div>
   </div>
-
+ 
   <!-- STRENGTH GOALS -->
   <div class="slabel">STRENGTH + HABIT GOALS (MANUAL)</div>
   <div class="card" style="margin-bottom:13px;">
@@ -841,7 +841,7 @@ nav {
     </div>
     <div id="goals-saved-msg" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:8px;"></div>
   </div>
-
+ 
   <!-- SCRIPT 3 INSTRUCTIONS -->
   <div class="slabel">SCRIPT 3 — FULL SETUP INSTRUCTIONS</div>
   <div class="card">
@@ -856,14 +856,14 @@ nav {
   var data = JSON.parse(e.postData.contents);
   var day = data.day || "Workout";
   var sets = data.sets || [];
-
+ 
   var html = '&lt;div style="font-family:sans-serif;max-width:480px"&gt;';
   html += '&lt;h2 style="color:#1a1a1a"&gt;💪 ' + day + ' Complete — ' + new Date().toDateString() + '&lt;/h2&gt;';
   html += '&lt;table style="width:100%;border-collapse:collapse"&gt;';
   html += '&lt;tr&gt;&lt;th align="left" style="padding:6px 0;border-bottom:2px solid #eee"&gt;Exercise&lt;/th&gt;';
   html += '&lt;th align="left" style="padding:6px 0;border-bottom:2px solid #eee"&gt;Sets&lt;/th&gt;';
   html += '&lt;th align="right" style="padding:6px 0;border-bottom:2px solid #eee"&gt;Top Set&lt;/th&gt;&lt;/tr&gt;';
-
+ 
   sets.forEach(function(s) {
     html += '&lt;tr style="border-bottom:1px solid #f0f0f0"&gt;';
     html += '&lt;td style="padding:8px 0"&gt;' + s.name + '&lt;/td&gt;';
@@ -872,191 +872,28 @@ nav {
     if (s.pr) html += ' 🔥';
     html += '&lt;/td&gt;&lt;/tr&gt;';
   });
-
+ 
   html += '&lt;/table&gt;';
   html += '&lt;p style="margin-top:16px;color:#666"&gt;Streak: &lt;strong&gt;' + (data.streak||0) + ' days 🔥&lt;/strong&gt;&lt;/p&gt;';
   html += '&lt;/div&gt;';
-
+ 
   GmailApp.sendEmail(
     Session.getActiveUser().getEmail(),
     "💪 " + day + " Complete — " + new Date().toDateString(),
     day + " complete. " + sets.length + " exercises logged.",
     { htmlBody: html }
   );
-
+ 
   return ContentService
     .createTextOutput(JSON.stringify({status:"ok"}))
     .setMimeType(ContentService.MimeType.JSON);
 }</div>
   </div>
 </div>
-
-<!-- ═══════════════ BODY WEIGHT PAGE ═══════════════ -->
-<div class="page" id="page-weight">
-  <div class="topbar">
-    <div>
-      <h1>BODY <span>WEIGHT</span></h1>
-      <div class="sub">MANUAL LOG · 290 LBS BY SEPT 4, 2026</div>
-    </div>
-    <div class="pill-row">
-      <div class="pill" style="border-color:rgba(200,255,87,0.3);color:var(--accent)"><div class="dot" style="background:var(--accent)"></div>18-week cut · Start: 318 lbs</div>
-    </div>
-  </div>
-
-  <!-- Goal Summary -->
-  <div class="grid g12" style="margin-bottom:0">
-    <div class="card c3">
-      <div class="ct">START WEIGHT</div>
-      <div class="data-val" style="color:var(--t2)">318</div>
-      <div class="data-sub">LBS — START OF CUT</div>
-    </div>
-    <div class="card c3">
-      <div class="ct">CURRENT</div>
-      <div class="data-val" style="color:var(--accent)" id="wt-page-current">—</div>
-      <div class="data-sub">LBS — LATEST LOGGED</div>
-    </div>
-    <div class="card c3">
-      <div class="ct">GOAL</div>
-      <div class="data-val" style="color:var(--orange)">290</div>
-      <div class="data-sub">LBS — SEPT 4, 2026</div>
-    </div>
-    <div class="card c3">
-      <div class="ct">REMAINING</div>
-      <div class="data-val" style="color:var(--blue)" id="wt-page-remaining">—</div>
-      <div class="data-sub">LBS TO GOAL</div>
-    </div>
-  </div>
-
-  <!-- Progress Bar -->
-  <div class="card" style="margin-top:13px;">
-    <div class="ct">PROGRESS TO GOAL <span class="badge by" id="wt-pace-badge">CALCULATING</span></div>
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
-      <span style="font-family:var(--mono);font-size:10px;color:var(--t3)">318 lbs</span>
-      <div class="goal-track" style="flex:1;height:6px;">
-        <div class="goal-fill" id="wt-prog-bar" style="width:0%;background:var(--accent);transition:width 1s ease"></div>
-      </div>
-      <span style="font-family:var(--mono);font-size:10px;color:var(--t3)">290 lbs</span>
-    </div>
-    <div style="font-family:var(--mono);font-size:11px;color:var(--t2)" id="wt-prog-detail">Log some weights to see pace analysis.</div>
-  </div>
-
-  <!-- Chart -->
-  <div class="slabel">WEIGHT OVER TIME</div>
-  <div class="card">
-    <div class="ct">BODYWEIGHT TREND — LOGGED ENTRIES <span class="badge bb" id="wt-entry-count">0 ENTRIES</span></div>
-    <div id="wt-chart-area" style="position:relative;height:200px;margin-top:8px;">
-      <canvas id="wt-canvas" style="width:100%;height:100%;"></canvas>
-      <div id="wt-chart-empty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--t3);">Log at least 2 entries to see the chart</div>
-    </div>
-  </div>
-
-  <!-- Log Entry -->
-  <div class="slabel">LOG WEIGHT</div>
-  <div class="card">
-    <div class="ct">ADD ENTRY — POSTS TO GOOGLE SHEET</div>
-    <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
-      <div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">DATE</div>
-        <input class="set-input" id="wt-date-input" type="date" style="width:150px;font-size:12px;">
-      </div>
-      <div>
-        <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">WEIGHT (lbs)</div>
-        <input class="set-input" id="wt-lbs-input" type="number" placeholder="e.g. 316.4" step="0.1" min="100" max="500" style="width:110px;">
-      </div>
-      <button class="btn btn-accent" id="wt-submit-btn">Log Weight</button>
-    </div>
-    <div id="wt-submit-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:10px;"></div>
-  </div>
-
-  <!-- History Table -->
-  <div class="slabel">WEIGHT LOG HISTORY</div>
-  <div class="card">
-    <div class="ct">ALL ENTRIES — STORED LOCALLY</div>
-    <div id="wt-history-table" style="font-family:var(--mono);font-size:11px;color:var(--t2);">
-      <div class="empty-state">No entries yet. Log your first weight above.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════ WORKOUT HISTORY PAGE ═══════════════ -->
-<div class="page" id="page-wkt-history">
-  <div class="topbar">
-    <div>
-      <h1>WORKOUT <span>HISTORY</span></h1>
-      <div class="sub">SESSION LOG · VOLUME OVER TIME · EXERCISE PRs</div>
-    </div>
-    <div class="pill-row">
-      <div class="pill"><div class="dot" style="background:var(--accent)"></div><span id="wkth-total-sessions">0 sessions logged</span></div>
-    </div>
-  </div>
-
-  <!-- Summary Stats -->
-  <div class="grid g12">
-    <div class="card c3">
-      <div class="ct">TOTAL SESSIONS</div>
-      <div class="data-val" style="color:var(--accent)" id="wkth-stat-sessions">0</div>
-      <div class="data-sub">ALL TIME</div>
-    </div>
-    <div class="card c3">
-      <div class="ct">TOTAL SETS</div>
-      <div class="data-val" style="color:var(--blue)" id="wkth-stat-sets">0</div>
-      <div class="data-sub">ALL TIME</div>
-    </div>
-    <div class="card c3">
-      <div class="ct">THIS WEEK</div>
-      <div class="data-val" style="color:var(--green)" id="wkth-stat-week">0</div>
-      <div class="data-sub">SESSIONS</div>
-    </div>
-    <div class="card c3">
-      <div class="ct">LAST WORKOUT</div>
-      <div class="data-val" style="font-size:20px;color:var(--orange)" id="wkth-stat-last">—</div>
-      <div class="data-sub">DATE</div>
-    </div>
-  </div>
-
-  <!-- Volume Chart -->
-  <div class="slabel">WEEKLY VOLUME TREND</div>
-  <div class="card">
-    <div class="ct">SETS PER SESSION <span class="badge by" id="wkth-chart-badge">LAST 10 SESSIONS</span></div>
-    <div style="position:relative;height:160px;margin-top:8px;">
-      <canvas id="wkth-canvas" style="width:100%;height:100%;"></canvas>
-      <div id="wkth-chart-empty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--t3);">Complete workouts via the Workout tab to see history</div>
-    </div>
-  </div>
-
-  <!-- Exercise PRs -->
-  <div class="slabel">EXERCISE PERSONAL RECORDS</div>
-  <div class="grid g12">
-    <div class="card c6">
-      <div class="ct">PUSH DAY PRs</div>
-      <div id="wkth-pr-push"><div class="empty-state">No push sessions logged yet.</div></div>
-    </div>
-    <div class="card c6">
-      <div class="ct">PULL + LEGS PRs</div>
-      <div id="wkth-pr-pulllegs"><div class="empty-state">No pull/legs sessions logged yet.</div></div>
-    </div>
-  </div>
-
-  <!-- Session Log -->
-  <div class="slabel">SESSION LOG</div>
-  <div class="card">
-    <div class="ct">RECENT SESSIONS <span class="badge bb">LAST 20</span></div>
-    <div id="wkth-session-log"><div class="empty-state">No sessions logged yet.<span class="hint">Use the Workout tab and click "Finish &amp; Send Email" to save sessions.</span></div></div>
-  </div>
-
-  <!-- Manual Post to Sheet -->
-  <div class="slabel">SAVE SESSION TO SHEET</div>
-  <div class="card">
-    <div class="ct">POST CURRENT SESSION TO GOOGLE SHEET</div>
-    <div style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:12px;">After finishing a workout, click below to also save the session data to your Google Sheet for long-term tracking.</div>
-    <button class="btn btn-accent" id="wkth-save-btn">📊 Save Session to Sheet</button>
-    <div id="wkth-save-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:10px;"></div>
-  </div>
-</div>
-
+ 
 </main>
 </div><!-- .app -->
-
+ 
 <script>
 // ═══════════════════════════════════════════
 // CONFIG — stored in localStorage
@@ -1065,19 +902,19 @@ const CFG = {
   get: function(k) { try { return JSON.parse(localStorage.getItem('samhq_'+k)); } catch(e) { return null; } },
   set: function(k,v) { localStorage.setItem('samhq_'+k, JSON.stringify(v)); }
 };
-
+ 
 // ═══════════════════════════════════════════
 // FILE:// PROTOCOL DETECTION
 // ═══════════════════════════════════════════
 const IS_FILE_PROTOCOL = location.protocol === 'file:';
-
+ 
 function safeFetch(url) {
   if (IS_FILE_PROTOCOL) {
     return Promise.reject(new Error('FILE_PROTOCOL'));
   }
   return fetch(url);
 }
-
+ 
 // ═══════════════════════════════════════════
 // NAVIGATION — uses data-page attrs, no inline onclick
 // ═══════════════════════════════════════════
@@ -1088,22 +925,12 @@ function showPage(id, el) {
   if (page) page.classList.add('active');
   if (el) el.classList.add('active');
 }
-
+ 
 document.addEventListener('DOMContentLoaded', function() {
   // Wire nav links via data-page attribute (avoids file:// CSP blocking inline onclick)
   document.querySelectorAll('.nl[data-page]').forEach(function(el) {
     el.addEventListener('click', function() {
-      var pageId = el.getAttribute('data-page');
-      showPage(pageId, el);
-      // Refresh page-specific content on nav
-      if (pageId === 'weight') {
-        initWeightPage();
-        setTimeout(function() { renderWeightChart(getWeightLog()); }, 100);
-      }
-      if (pageId === 'wkt-history') {
-        renderWorkoutHistoryPage();
-        setTimeout(function() { renderWorkoutChart(getWorkoutHistory()); }, 100);
-      }
+      showPage(el.getAttribute('data-page'), el);
     });
   });
   // Wire workout tabs
@@ -1115,7 +942,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   init();
 });
-
+ 
 // ═══════════════════════════════════════════
 // DATE + GREETING
 // ═══════════════════════════════════════════
@@ -1127,7 +954,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('live-day').textContent = DAYS[d.getDay()];
   document.getElementById('live-date').textContent = MONTHS[d.getMonth()] + ' ' + String(d.getDate()).padStart(2,'0') + ' · ' + d.getFullYear();
   document.getElementById('greeting-word').textContent = hr < 12 ? 'MORNING' : hr < 17 ? 'AFTERNOON' : 'EVENING';
-
+ 
   var wktMap = { 1:'PULL', 2:'LEGS', 3:'PUSH', 4:'PULL', 5:'LEGS', 6:'PUSH', 0:'REST' };
   var todayWkt = wktMap[d.getDay()] || 'REST';
   document.getElementById('dash-day-sub').textContent = todayWkt + ' DAY · ' + DAYS[d.getDay()].toUpperCase() + ' · ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
@@ -1135,7 +962,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('dash-workout-status').textContent = todayWkt === 'REST' ? 'REST DAY' : 'TODAY';
   document.getElementById('ep-date').textContent = d.toDateString();
 })();
-
+ 
 // ═══════════════════════════════════════════
 // WORKOUT DATA
 // ═══════════════════════════════════════════
@@ -1161,11 +988,11 @@ var WORKOUTS = {
     { name: 'Cable Ab Crunch',    scheme: '3 × 12', sets: [] }
   ]
 };
-
+ 
 var CARDIO_DAYS = ['push','pull'];
 var currentDay = 'push';
 var openExIdx = null;
-
+ 
 function switchDay(day, el) {
   currentDay = day;
   openExIdx = null;
@@ -1176,14 +1003,14 @@ function switchDay(day, el) {
   document.getElementById('ep-day').textContent = badges[day] + ' DAY';
   renderLog();
 }
-
+ 
 function renderLog() {
   var list = document.getElementById('exercise-log-list');
   var exs = WORKOUTS[currentDay];
   var totalSets = 0;
   exs.forEach(function(e) { totalSets += e.sets.length; });
   document.getElementById('wkt-set-count').textContent = totalSets + ' set' + (totalSets !== 1 ? 's' : '') + ' logged';
-
+ 
   var html = '';
   exs.forEach(function(ex, i) {
     var topSet = ex.sets.length ? ex.sets.reduce(function(a,b) {
@@ -1193,11 +1020,11 @@ function renderLog() {
       return '<div class="set-chip' + (s.pr ? ' pr' : '') + '" title="click to remove" data-day="' + currentDay + '" data-ex="' + i + '" data-set="' + si + '">' + s.w + '×' + s.r + (s.pr ? ' PR' : '') + '</div>';
     }).join('');
     var isOpen = openExIdx === i;
-
+ 
     var topSetHtml = topSet
       ? '<div class="ex-top-set"><strong>' + topSet.w + ' × ' + topSet.r + (topSet.pr ? ' PR' : '') + '</strong>' + ex.sets.length + ' set' + (ex.sets.length > 1 ? 's' : '') + '</div>'
       : '<div style="font-family:var(--mono);font-size:11px;color:var(--t3)">+ log</div>';
-
+ 
     html += '<div class="ex-block">';
     html += '<div class="ex-header" data-exidx="' + i + '">';
     html += '<div><div class="ex-name">' + ex.name + '</div><div class="ex-scheme">' + ex.scheme + '</div></div>';
@@ -1215,13 +1042,13 @@ function renderLog() {
     html += '<div class="logged-chips">' + chips + '</div>';
     html += '</div></div>';
   });
-
+ 
   if (CARDIO_DAYS.indexOf(currentDay) !== -1) {
     html += '<div class="cardio-note">NordicTrack Bike — 20-30 min cardio finisher after lifts</div>';
   }
-
+ 
   list.innerHTML = html;
-
+ 
   // Wire event listeners for dynamically rendered elements
   list.querySelectorAll('.ex-header[data-exidx]').forEach(function(el) {
     el.addEventListener('click', function() { toggleEx(parseInt(el.getAttribute('data-exidx'))); });
@@ -1237,16 +1064,16 @@ function renderLog() {
       removeSet(chip.getAttribute('data-day'), parseInt(chip.getAttribute('data-ex')), parseInt(chip.getAttribute('data-set')));
     });
   });
-
+ 
   updateEmailPreview();
   updateDashWorkout();
 }
-
+ 
 function toggleEx(i) {
   openExIdx = (openExIdx === i) ? null : i;
   renderLog();
 }
-
+ 
 function logSet(i) {
   var w = document.getElementById('w-'+i) ? document.getElementById('w-'+i).value.trim() : '';
   var r = document.getElementById('r-'+i) ? document.getElementById('r-'+i).value.trim() : '';
@@ -1259,18 +1086,18 @@ function logSet(i) {
   openExIdx = i;
   renderLog();
 }
-
+ 
 function removeSet(day, exIdx, setIdx) {
   WORKOUTS[day][exIdx].sets.splice(setIdx, 1);
   renderLog();
 }
-
+ 
 function clearDay() {
   WORKOUTS[currentDay].forEach(function(e) { e.sets = []; });
   openExIdx = null;
   renderLog();
 }
-
+ 
 function updateEmailPreview() {
   var exs = WORKOUTS[currentDay];
   var html = '';
@@ -1286,7 +1113,7 @@ function updateEmailPreview() {
   var tot = document.getElementById('ep-total-sets');
   if (tot) tot.textContent = total;
 }
-
+ 
 function updateDashWorkout() {
   var exs = WORKOUTS[currentDay];
   var anyLogged = exs.some(function(e) { return e.sets.length > 0; });
@@ -1304,12 +1131,12 @@ function updateDashWorkout() {
   });
   list.innerHTML = html;
 }
-
+ 
 // ═══════════════════════════════════════════
 // FINISH WORKOUT + EMAIL
 // ═══════════════════════════════════════════
 var SCRIPT_URL_KEY = 'scriptUrl';
-
+ 
 function finishWorkout(btn) {
   var scriptUrl = CFG.get(SCRIPT_URL_KEY);
   var exs = WORKOUTS[currentDay];
@@ -1321,11 +1148,11 @@ function finishWorkout(btn) {
       return { name: ex.name, totalSets: ex.sets.length, topSet: top.w + ' × ' + top.r, pr: !!top.pr };
     })
   };
-
+ 
   var orig = btn.textContent;
   btn.disabled = true;
   btn.textContent = 'Sending...';
-
+ 
   if (!scriptUrl) {
     setTimeout(function() {
       toast('Add your Apps Script URL in Setup first');
@@ -1334,7 +1161,7 @@ function finishWorkout(btn) {
     }, 600);
     return;
   }
-
+ 
   fetch(scriptUrl, { method: 'POST', body: JSON.stringify(payload), mode: 'no-cors' })
     .then(function() {
       toast('Workout email sent!');
@@ -1349,7 +1176,7 @@ function finishWorkout(btn) {
       setTimeout(function() { btn.textContent = orig; btn.style.background = ''; btn.disabled = false; }, 3000);
     });
 }
-
+ 
 // ═══════════════════════════════════════════
 // LOSE IT DATA — reads Google Sheet CSV
 // Sheet columns (row 1 = headers, row 2 = latest data):
@@ -1358,32 +1185,31 @@ function finishWorkout(btn) {
 async function fetchLoseItData() {
   var sheetUrl = CFG.get('sheetUrl');
   var calCard = document.getElementById('dash-cal-content');
-  var wtCard = null; // weight is now manual log — handled by renderWeightPage()
-
+ 
   if (IS_FILE_PROTOCOL) {
     var msg = '<div class="empty-state">Open via GitHub Pages to enable live data.<span class="hint">See Setup tab for deployment instructions.</span></div>';
     calCard.innerHTML = msg;
     document.getElementById('dash-cal-badge').textContent = 'FILE://';
     return;
   }
-
+ 
   if (!sheetUrl) {
     var placeholder = '<div class="empty-state">Not connected.<span class="hint">Add your Google Sheet URL in Setup</span></div>';
     calCard.innerHTML = placeholder;
     document.getElementById('dash-cal-badge').textContent = 'NOT SET';
     return;
   }
-
+ 
   try {
     // Add cache-buster to get fresh data
     var fetchUrl = sheetUrl + (sheetUrl.indexOf('?') === -1 ? '?' : '&') + '_t=' + Date.now();
     var resp = await fetch(fetchUrl);
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     var csv = await resp.text();
-
+ 
     var lines = csv.trim().split('\n');
     if (lines.length < 2) throw new Error('Sheet has no data rows');
-
+ 
     // Skip header row (row 1), read data row (row 2)
     // Parse CSV row properly — handles quoted fields containing commas
     // e.g. "Tue, May 5" must stay as one field, not be split into two pieces
@@ -1399,7 +1225,7 @@ async function fetchLoseItData() {
       return fields;
     }
     var vals = parseCSVRow(lines[1]);
-
+ 
     // Column order: date(0) calories(1) calGoal(2) protein(3) proteinGoal(4) carbs(5) fat(6) weight(7) steps(8)
     var date = vals[0] || '';
     var cals = parseInt(vals[1]) || 0;
@@ -1410,13 +1236,13 @@ async function fetchLoseItData() {
     var fat = parseInt(vals[6]) || 0;
     var weight = parseFloat(vals[7]) || 0;
     var steps = parseInt(vals[8]) || 0;
-
+ 
     var pct = Math.min(100, Math.round((cals / calGoal) * 100));
     var remaining = calGoal - cals;
     var circumference = 226;
     var strokeOffset = circumference - (pct / 100) * circumference;
     var ringColor = pct >= 90 ? 'var(--green)' : pct >= 70 ? 'var(--accent)' : 'var(--orange)';
-
+ 
     calCard.innerHTML =
       '<div style="display:flex;justify-content:center;margin-bottom:12px">' +
         '<div class="ring-parent">' +
@@ -1435,25 +1261,22 @@ async function fetchLoseItData() {
       '<div class="macro-row"><span style="color:var(--t2)">Fat</span><span class="macro-val">' + fat + 'g</span></div>' +
       '<div class="macro-row"><span style="color:var(--t2)">Steps</span><span class="macro-val" style="color:var(--purple)">' + (steps > 0 ? steps.toLocaleString() : '—') + '</span></div>' +
       '<div class="macro-row"><span style="color:var(--t2)">Left</span><span class="macro-val" style="color:var(--accent)">' + (remaining > 0 ? remaining.toLocaleString() : '0') + ' kcal</span></div>';
-
+ 
     var badge = document.getElementById('dash-cal-badge');
     if (pct >= 90) { badge.textContent = 'ON TARGET'; badge.className = 'badge bg'; }
     else if (pct >= 70) { badge.textContent = 'ON TRACK'; badge.className = 'badge by'; }
     else { badge.textContent = 'LOG MORE'; badge.className = 'badge bo'; }
-
+ 
     // Update goal bars
     updateGoalBar('g-cals-val', 'g-fill-cals', cals, calGoal, 'kcal');
     updateGoalBar('g-protein-val', 'g-fill-protein', protein, proteinGoal, 'g');
-
-    if (weight > 0) {
-      // Weight is now managed by manual log — just update goal bar if we still get it from sheet
-      updateGoalBar('g-weight-val', 'g-fill-weight', weight, 290, 'lbs');
-    }
-
+ 
+    // Weight is handled separately by fetchWeightData() — manual logs only
+ 
     // Note on data source
     var calNote = document.getElementById('dash-cal-date');
-    if (calNote) calNote.textContent = 'DATA FROM ' + (date || '').toUpperCase();
-
+    if (calNote) calNote.textContent = 'DATA FROM ' + date.toUpperCase();
+ 
   } catch(err) {
     var errMsg = '<div class="empty-state" style="color:var(--red)">Fetch failed — check Sheet URL.<span class="hint">' + err.message + '</span></div>';
     calCard.innerHTML = errMsg;
@@ -1461,7 +1284,100 @@ async function fetchLoseItData() {
     document.getElementById('dash-cal-badge').className = 'badge br';
   }
 }
-
+ 
+// ═══════════════════════════════════════════
+// WEIGHT DATA — reads weights tab CSV (manual logs only)
+// ═══════════════════════════════════════════
+async function fetchWeightData() {
+  var wtCard = document.getElementById('dash-weight-content');
+  var weightSheetUrl = CFG.get('weightSheetUrl');
+ 
+  if (IS_FILE_PROTOCOL || !weightSheetUrl) {
+    wtCard.innerHTML = '<div class="empty-state">No weight data.<span class="hint">Add weights CSV URL in Setup</span></div>';
+    return;
+  }
+ 
+  try {
+    var fetchUrl = weightSheetUrl + (weightSheetUrl.indexOf('?') === -1 ? '?' : '&') + '_t=' + Date.now();
+    var resp = await fetch(fetchUrl);
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    var csv = await resp.text();
+    var lines = csv.trim().split('\n').filter(function(l) { return l.trim(); });
+ 
+    // Find most recent row with a valid weight (skip header)
+    var latestDate = '', latestWeight = 0;
+    for (var i = lines.length - 1; i >= 1; i--) {
+      var cols = lines[i].split(',');
+      var d = (cols[0] || '').trim().replace(/"/g,'');
+      var w = parseFloat((cols[1] || '').trim());
+      if (d && w > 0) { latestDate = d; latestWeight = w; break; }
+    }
+ 
+    if (latestWeight > 0) {
+      var startWeight = 318, goalWeight = 290;
+      var lbsLost = Math.max(0, startWeight - latestWeight).toFixed(1);
+      wtCard.innerHTML =
+        '<div class="data-val" style="color:var(--accent)">' + latestWeight.toFixed(1) + '</div>' +
+        '<div class="data-sub">LBS — ' + latestDate.toUpperCase() + '</div>' +
+        '<div class="data-delta" style="margin-top:6px;color:var(--green);font-family:var(--mono);font-size:11px;">&#8595; ' + lbsLost + ' lbs lost</div>';
+      updateGoalBar('g-weight-val', 'g-fill-weight', latestWeight, goalWeight, 'lbs');
+      document.getElementById('dash-weight-badge').textContent = 'LOGGED';
+      document.getElementById('dash-weight-badge').className = 'badge bg';
+    } else {
+      wtCard.innerHTML = '<div class="empty-state">No weight logged yet.<span class="hint">Enter below to log</span></div>';
+    }
+  } catch(err) {
+    wtCard.innerHTML = '<div class="empty-state" style="color:var(--red)">Fetch failed.<span class="hint">' + err.message + '</span></div>';
+  }
+}
+ 
+// Posts weight to Script 3 → writes to weights tab in Sheet
+async function logWeight() {
+  var input = document.getElementById('wt-log-input');
+  var btn = document.getElementById('wt-log-btn');
+  var w = parseFloat(input.value);
+  if (!w || isNaN(w) || w < 100 || w > 500) { toast('Enter a valid weight (lbs)'); return; }
+ 
+  var scriptUrl = CFG.get(SCRIPT_URL_KEY);
+  if (!scriptUrl) { toast('Script URL not set in Setup'); return; }
+ 
+  var today = new Date();
+  var dateStr = today.getFullYear() + '-' +
+    String(today.getMonth()+1).padStart(2,'0') + '-' +
+    String(today.getDate()).padStart(2,'0');
+ 
+  btn.textContent = 'Saving...';
+  btn.disabled = true;
+ 
+  try {
+    fetch(scriptUrl, {
+      method: 'POST',
+      body: JSON.stringify({ type: 'weight', date: dateStr, weight: w }),
+      mode: 'no-cors'
+    });
+    // no-cors means we can't read the response — optimistically update UI
+    setTimeout(function() {
+      input.value = '';
+      btn.textContent = 'Logged!';
+      btn.style.background = 'var(--green)';
+      btn.style.color = '#000';
+      toast(w.toFixed(1) + ' lbs logged');
+      // Refresh weight display after short delay so Sheet has time to update
+      setTimeout(function() {
+        btn.textContent = 'Log';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+        fetchWeightData();
+      }, 3000);
+    }, 500);
+  } catch(err) {
+    btn.textContent = 'Log';
+    btn.disabled = false;
+    toast('Error: ' + err.message);
+  }
+}
+ 
 function updateGoalBar(valId, fillId, current, goal, unit) {
   var pct = Math.min(100, Math.round((current / goal) * 100));
   var ve = document.getElementById(valId);
@@ -1469,7 +1385,7 @@ function updateGoalBar(valId, fillId, current, goal, unit) {
   if (ve) ve.textContent = current + ' ' + unit + ' · ' + pct + '%';
   if (fe) fe.style.width = pct + '%';
 }
-
+ 
 // ═══════════════════════════════════════════
 // OBSIDIAN / GITHUB MARKDOWN
 // ═══════════════════════════════════════════
@@ -1479,7 +1395,7 @@ async function loadObsidian() {
   CFG.set('ghUrl', url);
   await fetchObsidianIndex(url);
 }
-
+ 
 async function loadObsidianDemo() {
   var demoProjects = [
     {
@@ -1504,54 +1420,45 @@ async function loadObsidianDemo() {
   renderProjectList(demoProjects);
   document.getElementById('gh-status').textContent = 'Demo mode — enter your GitHub URL to load real notes';
 }
-
+ 
 async function fetchObsidianIndex(url) {
   var status = document.getElementById('gh-status');
-  if (!status) return;
   status.textContent = 'Fetching...';
   status.style.color = 'var(--t3)';
-
+ 
   if (IS_FILE_PROTOCOL) {
     status.textContent = 'GitHub fetch requires hosting on GitHub Pages (not file://)';
     status.style.color = 'var(--orange)';
     return;
   }
-
+ 
   try {
     var resp = await fetch(url);
     if (!resp.ok) throw new Error('HTTP ' + resp.status + ' — check that your repo is public');
     var md = await resp.text();
-    var detailPanel = document.getElementById('proj-detail-panel');
-    if (detailPanel) {
-      detailPanel.innerHTML = '<div class="md-viewer">' + (typeof marked !== 'undefined' ? marked.parse(md) : '<pre>' + md + '</pre>') + '</div>';
-    }
+    document.getElementById('proj-detail-panel').innerHTML = '<div class="md-viewer">' + marked.parse(md) + '</div>';
     status.textContent = 'Loaded from GitHub · ' + new Date().toLocaleTimeString();
-
+ 
     var projects = [];
     md.split('\n').forEach(function(line) {
       var match = line.match(/\[(.+?)\]\((.+?)\)/);
       if (match) projects.push({ name: match[1], url: match[2] });
     });
-
-    var countBadge = document.getElementById('proj-count-badge');
+ 
     if (projects.length) {
       renderProjectLinks(projects);
-      if (countBadge) countBadge.textContent = projects.length + ' FILES';
+      document.getElementById('proj-count-badge').textContent = projects.length + ' FILES';
     } else {
-      if (countBadge) countBadge.textContent = '1 FILE';
+      document.getElementById('proj-count-badge').textContent = '1 FILE';
     }
     updateDashProjects(projects.slice(0,3).map(function(p) { return { name: p.name, preview: '', updated: 'synced' }; }));
-
+ 
   } catch(err) {
     status.style.color = 'var(--red)';
     status.textContent = 'Error: ' + err.message;
-    var detailPanel2 = document.getElementById('proj-detail-panel');
-    if (detailPanel2) {
-      detailPanel2.innerHTML = '<div class="empty-state" style="color:var(--red)">Could not load GitHub file.<span class="hint">' + err.message + '</span></div>';
-    }
   }
 }
-
+ 
 function renderProjectList(projects) {
   var panel = document.getElementById('proj-list-panel');
   var html = '';
@@ -1572,7 +1479,7 @@ function renderProjectList(projects) {
   window._demoProjects = projects;
   updateDashProjects(projects.slice(0,3));
 }
-
+ 
 function renderProjectLinks(links) {
   var panel = document.getElementById('proj-list-panel');
   var html = '';
@@ -1588,7 +1495,7 @@ function renderProjectLinks(links) {
     });
   });
 }
-
+ 
 function openProject(i) {
   document.querySelectorAll('.proj-card').forEach(function(c) { c.classList.remove('active'); });
   var card = document.getElementById('pc-'+i);
@@ -1598,23 +1505,21 @@ function openProject(i) {
   document.getElementById('proj-active-badge').textContent = p.name.toUpperCase();
   document.getElementById('proj-detail-panel').innerHTML = '<div class="md-viewer">' + marked.parse(p.content) + '</div>';
 }
-
+ 
 async function loadProjectFile(url, name, card) {
   document.querySelectorAll('.proj-card').forEach(function(c) { c.classList.remove('active'); });
   card.classList.add('active');
-  var activeBadge = document.getElementById('proj-active-badge');
-  var detailPanel = document.getElementById('proj-detail-panel');
-  if (activeBadge) activeBadge.textContent = name.toUpperCase();
-  if (detailPanel) detailPanel.innerHTML = '<div class="loading-state">Loading note...</div>';
+  document.getElementById('proj-active-badge').textContent = name.toUpperCase();
+  document.getElementById('proj-detail-panel').innerHTML = '<div class="loading-state">Loading note...</div>';
   try {
     var resp = await fetch(url);
     var md = await resp.text();
-    if (detailPanel) detailPanel.innerHTML = '<div class="md-viewer">' + (typeof marked !== 'undefined' ? marked.parse(md) : '<pre>' + md + '</pre>') + '</div>';
+    document.getElementById('proj-detail-panel').innerHTML = '<div class="md-viewer">' + marked.parse(md) + '</div>';
   } catch(e) {
-    if (detailPanel) detailPanel.innerHTML = '<div class="empty-state" style="color:var(--red)">Could not load: ' + e.message + '</div>';
+    document.getElementById('proj-detail-panel').innerHTML = '<div class="empty-state" style="color:var(--red)">Could not load: ' + e.message + '</div>';
   }
 }
-
+ 
 function updateDashProjects(projects) {
   var strip = document.getElementById('dash-projects-strip');
   if (!strip || !projects.length) return;
@@ -1636,7 +1541,7 @@ function updateDashProjects(projects) {
     });
   });
 }
-
+ 
 // ═══════════════════════════════════════════
 // CHECKLIST
 // ═══════════════════════════════════════════
@@ -1651,13 +1556,13 @@ function ck(el) {
   document.getElementById('routine-pct').textContent = pct + '%';
   document.getElementById('routine-count').textContent = done + ' / ' + all + ' done';
 }
-
+ 
 // Wire checklist items via event delegation
 document.addEventListener('click', function(e) {
   var item = e.target.closest('.ck-item');
   if (item) ck(item);
 });
-
+ 
 // ═══════════════════════════════════════════
 // SETUP — save/load config
 // ═══════════════════════════════════════════
@@ -1668,7 +1573,7 @@ function saveSheetURL() {
   toast('Sheet URL saved');
   fetchLoseItData();
 }
-
+ 
 function saveScriptURL() {
   var url = document.getElementById('script-url-input').value.trim();
   if (!url) return;
@@ -1677,7 +1582,16 @@ function saveScriptURL() {
   document.getElementById('script3-status').innerHTML = '<span style="color:var(--green)">Configured</span><br>' + url.slice(0,50) + '...';
   toast('Script URL saved');
 }
-
+ 
+function saveWeightURL() {
+  var url = document.getElementById('weight-sheet-url-input').value.trim();
+  if (!url) return;
+  CFG.set('weightSheetUrl', url);
+  document.getElementById('weight-url-saved').textContent = 'Saved: ' + url.slice(0,60) + '...';
+  toast('Weight sheet URL saved');
+  fetchWeightData();
+}
+ 
 function saveGoals() {
   var goals = {
     bench:  document.getElementById('inp-bench').value,
@@ -1691,7 +1605,7 @@ function saveGoals() {
   toast('Goals saved');
   document.getElementById('goals-saved-msg').textContent = 'Saved at ' + new Date().toLocaleTimeString();
 }
-
+ 
 function applyGoals(g) {
   if (!g) return;
   if (g.bench)  setGoalEl('g-bench-val',  'g-bench-bar',  g.bench,  225,  'lbs');
@@ -1699,7 +1613,7 @@ function applyGoals(g) {
   if (g.squat)  setGoalEl('g-squat-val',  'g-squat-bar',  g.squat,  315,  'lbs');
   if (g.streak) { setGoalEl('g-streak-val','g-streak-bar', g.streak, 30,  'days'); CFG.set('streak', g.streak); }
   if (g.lawn)   setGoalEl('g-lawn-val',   'g-lawn-bar',   g.lawn,   2000, 'revenue');
-
+ 
   var grid = document.getElementById('dash-goals-grid');
   if (!grid) return;
   var parts = [];
@@ -1708,7 +1622,7 @@ function applyGoals(g) {
   if (g.lawn) parts.push(goalMiniCard('Lawn Revenue', '$' + parseInt(g.lawn || 0).toLocaleString(), 2000, '', 'var(--orange)', g.lawn));
   grid.innerHTML = parts.join('') || '<div class="empty-state" style="grid-column:span 3">Enter your current numbers in the Setup tab.<span class="hint">Goals will appear here</span></div>';
 }
-
+ 
 function goalMiniCard(label, display, goal, unit, color, rawVal) {
   var val = rawVal !== undefined ? rawVal : display;
   var pct = Math.min(100, Math.round((parseFloat(val) / goal) * 100));
@@ -1718,7 +1632,7 @@ function goalMiniCard(label, display, goal, unit, color, rawVal) {
     '<div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:3px">' + display + ' · ' + pct + '%</div>' +
   '</div>';
 }
-
+ 
 function setGoalEl(valId, fillId, current, goal, unit) {
   var pct = Math.min(100, Math.round((+current / goal) * 100));
   var ve = document.getElementById(valId);
@@ -1726,7 +1640,7 @@ function setGoalEl(valId, fillId, current, goal, unit) {
   if (ve) ve.textContent = current + ' ' + unit + ' · ' + pct + '%';
   if (fe) fe.style.width = pct + '%';
 }
-
+ 
 // ═══════════════════════════════════════════
 // TOAST
 // ═══════════════════════════════════════════
@@ -1736,7 +1650,7 @@ function toast(msg) {
   t.classList.add('show');
   setTimeout(function() { t.classList.remove('show'); }, 3000);
 }
-
+ 
 // ═══════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════
@@ -1748,14 +1662,23 @@ function init() {
     banner.textContent = 'Running from file:// — live data disabled. Host on GitHub Pages for full functionality. See Setup tab.';
     document.body.prepend(banner);
   }
-
+ 
   var sheetUrl = CFG.get('sheetUrl');
   if (sheetUrl) {
     var sheetInput = document.getElementById('sheet-url-input');
     if (sheetInput) sheetInput.value = sheetUrl;
   }
   fetchLoseItData();
-
+ 
+  var weightSheetUrl = CFG.get('weightSheetUrl');
+  if (weightSheetUrl) {
+    var wsi = document.getElementById('weight-sheet-url-input');
+    if (wsi) wsi.value = weightSheetUrl;
+    var wsd = document.getElementById('weight-url-saved');
+    if (wsd) wsd.textContent = 'Saved: ' + weightSheetUrl.slice(0,60) + '...';
+  }
+  fetchWeightData();
+ 
   var scriptUrl = CFG.get(SCRIPT_URL_KEY);
   if (scriptUrl) {
     var si = document.getElementById('script-url-input');
@@ -1765,14 +1688,14 @@ function init() {
     if (ss) ss.innerHTML = '<span style="color:var(--green)">Configured</span>';
     if (sv) sv.textContent = 'Saved: ' + scriptUrl.slice(0,50) + '...';
   }
-
+ 
   var ghUrl = CFG.get('ghUrl');
   if (ghUrl) {
     var gi = document.getElementById('gh-url-input');
     if (gi) gi.value = ghUrl;
     if (!IS_FILE_PROTOCOL) fetchObsidianIndex(ghUrl);
   }
-
+ 
   var goals = CFG.get('goals');
   if (goals) {
     var fields = ['bench','ohp','squat','streak','lawn'];
@@ -1782,9 +1705,9 @@ function init() {
     });
     applyGoals(goals);
   }
-
+ 
   renderLog();
-
+ 
   // Wire buttons that have no data-page but need event listeners
   var finishBtns = document.querySelectorAll('[onclick*="finishWorkout"]');
   finishBtns.forEach(function(btn) {
@@ -1816,6 +1739,12 @@ function init() {
     saveScriptBtn.removeAttribute('onclick');
     saveScriptBtn.addEventListener('click', saveScriptURL);
   }
+  var saveWeightBtn = document.getElementById('save-weight-url-btn');
+  if (saveWeightBtn) saveWeightBtn.addEventListener('click', saveWeightURL);
+  var wtLogBtn = document.getElementById('wt-log-btn');
+  if (wtLogBtn) wtLogBtn.addEventListener('click', logWeight);
+  var wtInput = document.getElementById('wt-log-input');
+  if (wtInput) wtInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') logWeight(); });
   var saveGoalsBtn = document.querySelector('[onclick*="saveGoals"]');
   if (saveGoalsBtn) {
     saveGoalsBtn.removeAttribute('onclick');
@@ -1829,490 +1758,8 @@ function init() {
       showPage('workout', workoutLink);
     });
   }
-
-  // Wire weight log dashboard button
-  var wtLogBtn = document.getElementById('wt-log-btn');
-  if (wtLogBtn) wtLogBtn.addEventListener('click', logWeightFromDash);
-
-  // Wire weight page submit button
-  var wtSubmitBtn = document.getElementById('wt-submit-btn');
-  if (wtSubmitBtn) wtSubmitBtn.addEventListener('click', submitWeightLog);
-
-  // Wire workout history save button
-  var wkthSaveBtn = document.getElementById('wkth-save-btn');
-  if (wkthSaveBtn) {
-    wkthSaveBtn.addEventListener('click', function() {
-      var exs = WORKOUTS[currentDay];
-      var sets = exs.filter(function(e) { return e.sets.length; }).map(function(ex) {
-        var top = ex.sets.reduce(function(a,b) { return +b.w > +a.w ? b : a; });
-        return { name: ex.name, totalSets: ex.sets.length, topSet: top.w + ' × ' + top.r, pr: !!top.pr };
-      });
-      if (!sets.length) { toast('No sets logged yet on current day'); return; }
-      saveSessionToHistory(currentDay, sets);
-      var statusEl = document.getElementById('wkth-save-status');
-      if (statusEl) statusEl.textContent = 'Session saved to history ✓';
-      toast('Session saved to history');
-    });
-  }
-
-  // Init new pages
-  initWeightPage();
-  renderWorkoutHistoryPage();
-
-  // Patch finishWorkout to also log to history
-  patchFinishWorkout();
 }
-
-// ═══════════════════════════════════════════
-// WEIGHT LOG — manual entry, localStorage + POST to sheet
-// Sheet columns for weight tab: date | weight
-// ═══════════════════════════════════════════
-var WT_LOG_KEY = 'samhq_weight_log';
-
-function getWeightLog() {
-  try { return JSON.parse(localStorage.getItem(WT_LOG_KEY)) || []; } catch(e) { return []; }
-}
-function saveWeightLog(log) {
-  localStorage.setItem(WT_LOG_KEY, JSON.stringify(log));
-}
-
-function logWeightEntry(dateStr, lbs) {
-  var log = getWeightLog();
-  // Remove existing entry for same date
-  log = log.filter(function(e) { return e.date !== dateStr; });
-  log.push({ date: dateStr, weight: lbs });
-  log.sort(function(a,b) { return a.date.localeCompare(b.date); });
-  saveWeightLog(log);
-}
-
-function initWeightPage() {
-  // Set date input to today
-  var di = document.getElementById('wt-date-input');
-  if (di) {
-    var today = new Date();
-    di.value = today.toISOString().slice(0,10);
-  }
-  renderWeightPage();
-}
-
-function renderWeightPage() {
-  var log = getWeightLog();
-  var countBadge = document.getElementById('wt-entry-count');
-  if (countBadge) countBadge.textContent = log.length + ' ENTRIES';
-
-  // Update dashboard card
-  var todayStr = new Date().toISOString().slice(0,10);
-  var todayEntry = log.filter(function(e) { return e.date === todayStr; })[0];
-  var lastEntry = log.length ? log[log.length - 1] : null;
-  var displayEntry = todayEntry || lastEntry;
-
-  var todayDisplay = document.getElementById('wt-today-display');
-  var logForm = document.getElementById('wt-log-form');
-  var badge = document.getElementById('wt-badge');
-  if (todayEntry && todayDisplay && logForm) {
-    todayDisplay.style.display = 'block';
-    logForm.style.display = 'none';
-    var tv = document.getElementById('wt-today-val');
-    if (tv) tv.textContent = todayEntry.weight.toFixed(1);
-    if (badge) { badge.textContent = 'LOGGED'; badge.className = 'badge bg'; }
-  } else {
-    if (todayDisplay) todayDisplay.style.display = 'none';
-    if (logForm) logForm.style.display = 'block';
-    if (badge) { badge.textContent = 'LOG TODAY'; badge.className = 'badge bo'; }
-  }
-
-  // Weight page stats
-  var startW = 318, goalW = 290;
-  var curr = displayEntry ? displayEntry.weight : null;
-  var pageCurrentEl = document.getElementById('wt-page-current');
-  var pageRemainingEl = document.getElementById('wt-page-remaining');
-  var progBar = document.getElementById('wt-prog-bar');
-  var progDetail = document.getElementById('wt-prog-detail');
-  var paceBadge = document.getElementById('wt-pace-badge');
-
-  if (curr && pageCurrentEl) {
-    pageCurrentEl.textContent = curr.toFixed(1);
-    var remaining = Math.max(0, curr - goalW);
-    if (pageRemainingEl) pageRemainingEl.textContent = remaining.toFixed(1);
-
-    var lost = startW - curr;
-    var totalToLose = startW - goalW; // 28 lbs
-    var progPct = Math.max(0, Math.min(100, Math.round((lost / totalToLose) * 100)));
-    if (progBar) progBar.style.width = progPct + '%';
-
-    // Pace calc: goal date Sept 4, 2026
-    var goalDate = new Date('2026-09-04');
-    var today2 = new Date();
-    var weeksLeft = Math.max(0, (goalDate - today2) / (7 * 24 * 60 * 60 * 1000));
-    var lbsPerWeekNeeded = weeksLeft > 0 ? (remaining / weeksLeft) : 0;
-
-    if (progDetail) {
-      progDetail.innerHTML = progPct + '% of goal complete · ' + lost.toFixed(1) + ' lbs lost · ' + remaining.toFixed(1) + ' lbs to go · ' +
-        'Need ' + lbsPerWeekNeeded.toFixed(2) + ' lbs/week · ' + Math.round(weeksLeft) + ' weeks left';
-    }
-
-    // Pace status
-    if (log.length >= 2 && paceBadge) {
-      var recentLoss = log[log.length-1].weight - log[log.length - Math.min(log.length, 8)].weight;
-      var recentWeeks = 0;
-      try {
-        var d1 = new Date(log[log.length - Math.min(log.length, 8)].date);
-        var d2 = new Date(log[log.length-1].date);
-        recentWeeks = (d2 - d1) / (7 * 24 * 60 * 60 * 1000);
-      } catch(e) {}
-      var actualRate = recentWeeks > 0 ? recentLoss / recentWeeks : 0;
-      if (actualRate <= -lbsPerWeekNeeded * 0.8) {
-        paceBadge.textContent = 'ON PACE'; paceBadge.className = 'badge bg';
-      } else if (actualRate <= -lbsPerWeekNeeded * 0.4) {
-        paceBadge.textContent = 'SLIGHTLY OFF'; paceBadge.className = 'badge by';
-      } else {
-        paceBadge.textContent = 'NEEDS FOCUS'; paceBadge.className = 'badge bo';
-      }
-    } else if (paceBadge) {
-      paceBadge.textContent = 'LOG MORE DATA'; paceBadge.className = 'badge bb';
-    }
-  } else {
-    if (pageCurrentEl) pageCurrentEl.textContent = '—';
-    if (pageRemainingEl) pageRemainingEl.textContent = '—';
-    if (progDetail) progDetail.textContent = 'Log your first weight entry to see pace analysis.';
-  }
-
-  renderWeightChart(log);
-  renderWeightHistory(log);
-}
-
-function renderWeightChart(log) {
-  var canvas = document.getElementById('wt-canvas');
-  var emptyMsg = document.getElementById('wt-chart-empty');
-  if (!canvas) return;
-
-  if (log.length < 2) {
-    canvas.style.display = 'none';
-    if (emptyMsg) emptyMsg.style.display = 'flex';
-    return;
-  }
-  canvas.style.display = 'block';
-  if (emptyMsg) emptyMsg.style.display = 'none';
-
-  var dpr = window.devicePixelRatio || 1;
-  var rect = canvas.parentElement.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  var ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  var W = rect.width, H = rect.height;
-  var pad = { top: 16, right: 20, bottom: 28, left: 40 };
-
-  var weights = log.map(function(e) { return e.weight; });
-  var minW = Math.min.apply(null, weights) - 2;
-  var maxW = Math.max.apply(null, [318, Math.max.apply(null, weights) + 2]);
-
-  function xPos(i) { return pad.left + (i / (log.length - 1)) * (W - pad.left - pad.right); }
-  function yPos(w) { return pad.top + ((maxW - w) / (maxW - minW)) * (H - pad.top - pad.bottom); }
-
-  ctx.clearRect(0, 0, W, H);
-
-  // Grid lines
-  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-  ctx.lineWidth = 1;
-  for (var g = 0; g <= 4; g++) {
-    var gy = pad.top + g * ((H - pad.top - pad.bottom) / 4);
-    ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(W - pad.right, gy); ctx.stroke();
-    var gw = maxW - g * ((maxW - minW) / 4);
-    ctx.fillStyle = 'rgba(90,90,101,0.9)';
-    ctx.font = '9px JetBrains Mono, monospace';
-    ctx.textAlign = 'right';
-    ctx.fillText(gw.toFixed(0), pad.left - 5, gy + 3);
-  }
-
-  // Goal line at 290
-  var goalY = yPos(290);
-  if (goalY >= pad.top && goalY <= H - pad.bottom) {
-    ctx.strokeStyle = 'rgba(255,112,67,0.5)';
-    ctx.setLineDash([4, 4]);
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(pad.left, goalY); ctx.lineTo(W - pad.right, goalY); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(255,112,67,0.8)'; ctx.textAlign = 'right';
-    ctx.fillText('GOAL 290', W - pad.right, goalY - 3);
-  }
-
-  // Fill area
-  var grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
-  grad.addColorStop(0, 'rgba(200,255,87,0.18)');
-  grad.addColorStop(1, 'rgba(200,255,87,0.01)');
-  ctx.beginPath();
-  ctx.moveTo(xPos(0), yPos(log[0].weight));
-  for (var i = 1; i < log.length; i++) { ctx.lineTo(xPos(i), yPos(log[i].weight)); }
-  ctx.lineTo(xPos(log.length-1), H - pad.bottom);
-  ctx.lineTo(xPos(0), H - pad.bottom);
-  ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
-
-  // Line
-  ctx.beginPath();
-  ctx.moveTo(xPos(0), yPos(log[0].weight));
-  for (var j = 1; j < log.length; j++) { ctx.lineTo(xPos(j), yPos(log[j].weight)); }
-  ctx.strokeStyle = '#c8ff57'; ctx.lineWidth = 2; ctx.stroke();
-
-  // Dots + labels
-  log.forEach(function(e, i) {
-    ctx.beginPath();
-    ctx.arc(xPos(i), yPos(e.weight), 3.5, 0, 2 * Math.PI);
-    ctx.fillStyle = '#c8ff57'; ctx.fill();
-    // X axis labels (only show a few)
-    if (i === 0 || i === log.length - 1 || log.length <= 6) {
-      ctx.fillStyle = 'rgba(90,90,101,0.9)';
-      ctx.font = '8px JetBrains Mono, monospace';
-      ctx.textAlign = 'center';
-      var d = new Date(e.date + 'T12:00:00');
-      ctx.fillText((d.getMonth()+1) + '/' + d.getDate(), xPos(i), H - pad.bottom + 12);
-    }
-  });
-}
-
-function renderWeightHistory(log) {
-  var el = document.getElementById('wt-history-table');
-  if (!el) return;
-  if (!log.length) { el.innerHTML = '<div class="empty-state">No entries yet. Log your first weight above.</div>'; return; }
-  var rows = log.slice().reverse().map(function(e) {
-    var d = new Date(e.date + 'T12:00:00');
-    var label = d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-    return '<div class="dash-ex-row"><div class="den">' + label + '</div><div class="der" style="color:var(--accent)">' + e.weight.toFixed(1) + ' lbs</div></div>';
-  }).join('');
-  el.innerHTML = rows;
-}
-
-function submitWeightLog() {
-  var dateVal = document.getElementById('wt-lbs-input') ? null : null; // page form
-  var dateInput = document.getElementById('wt-date-input');
-  var lbsInput = document.getElementById('wt-lbs-input');
-  var statusEl = document.getElementById('wt-submit-status');
-  if (!dateInput || !lbsInput) return;
-
-  var dateStr = dateInput.value;
-  var lbs = parseFloat(lbsInput.value);
-  if (!dateStr || isNaN(lbs) || lbs < 100 || lbs > 500) {
-    if (statusEl) statusEl.textContent = 'Enter a valid date and weight (100–500 lbs)';
-    return;
-  }
-
-  logWeightEntry(dateStr, lbs);
-  if (statusEl) statusEl.textContent = 'Logged locally! Posting to sheet...';
-
-  // POST to Apps Script
-  var scriptUrl = CFG.get(SCRIPT_URL_KEY);
-  if (scriptUrl) {
-    var payload = JSON.stringify({ type: 'weight', date: dateStr, weight: lbs });
-    fetch(scriptUrl, { method: 'POST', body: payload, mode: 'no-cors' })
-      .then(function() { if (statusEl) statusEl.textContent = 'Saved locally + posted to sheet ✓ (' + dateStr + ' · ' + lbs + ' lbs)'; })
-      .catch(function() { if (statusEl) statusEl.textContent = 'Saved locally. Sheet post may have failed — check script URL in Setup.'; });
-  } else {
-    if (statusEl) statusEl.textContent = 'Saved locally ✓ · Add Apps Script URL in Setup to also post to sheet';
-  }
-
-  renderWeightPage();
-}
-
-function logWeightFromDash() {
-  var inp = document.getElementById('wt-input');
-  var statusEl = document.getElementById('wt-log-status');
-  if (!inp) return;
-  var lbs = parseFloat(inp.value);
-  if (isNaN(lbs) || lbs < 100 || lbs > 500) { toast('Enter a valid weight (lbs)'); return; }
-  var todayStr = new Date().toISOString().slice(0,10);
-  logWeightEntry(todayStr, lbs);
-  toast('Weight logged: ' + lbs.toFixed(1) + ' lbs');
-  renderWeightPage();
-
-  var scriptUrl = CFG.get(SCRIPT_URL_KEY);
-  if (scriptUrl) {
-    fetch(scriptUrl, { method:'POST', body: JSON.stringify({ type:'weight', date: todayStr, weight: lbs }), mode:'no-cors' })
-      .then(function() { if (statusEl) statusEl.textContent = 'Sent to sheet ✓'; })
-      .catch(function() { if (statusEl) statusEl.textContent = 'Local only — check Script URL in Setup'; });
-  }
-}
-
-// ═══════════════════════════════════════════
-// WORKOUT HISTORY — stores completed sessions in localStorage
-// ═══════════════════════════════════════════
-var WKT_HIST_KEY = 'samhq_wkt_history';
-
-function getWorkoutHistory() {
-  try { return JSON.parse(localStorage.getItem(WKT_HIST_KEY)) || []; } catch(e) { return []; }
-}
-function saveWorkoutHistory(h) {
-  localStorage.setItem(WKT_HIST_KEY, JSON.stringify(h));
-}
-
-function saveSessionToHistory(dayType, sets) {
-  var hist = getWorkoutHistory();
-  var today = new Date().toISOString().slice(0,10);
-  hist.push({ date: today, day: dayType, sets: sets, totalSets: sets.reduce(function(s,e){ return s + e.totalSets; }, 0) });
-  // Keep last 100 sessions
-  if (hist.length > 100) hist = hist.slice(-100);
-  saveWorkoutHistory(hist);
-  renderWorkoutHistoryPage();
-}
-
-function renderWorkoutHistoryPage() {
-  var hist = getWorkoutHistory();
-  var totalSessions = hist.length;
-  var totalSets = hist.reduce(function(s, h) { return s + (h.totalSets || 0); }, 0);
-
-  // This week
-  var weekStart = new Date(); weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-  var weekStr = weekStart.toISOString().slice(0,10);
-  var thisWeek = hist.filter(function(h) { return h.date >= weekStr; }).length;
-
-  var lastDate = hist.length ? hist[hist.length - 1].date : '—';
-
-  var el = function(id) { return document.getElementById(id); };
-  if (el('wkth-total-sessions')) el('wkth-total-sessions').textContent = totalSessions + ' sessions logged';
-  if (el('wkth-stat-sessions')) el('wkth-stat-sessions').textContent = totalSessions;
-  if (el('wkth-stat-sets')) el('wkth-stat-sets').textContent = totalSets;
-  if (el('wkth-stat-week')) el('wkth-stat-week').textContent = thisWeek;
-  if (el('wkth-stat-last')) {
-    if (lastDate !== '—') {
-      var d = new Date(lastDate + 'T12:00:00');
-      el('wkth-stat-last').textContent = (d.getMonth()+1) + '/' + d.getDate();
-    } else {
-      el('wkth-stat-last').textContent = '—';
-    }
-  }
-
-  // Chart
-  renderWorkoutChart(hist);
-
-  // PRs
-  renderWorkoutPRs(hist);
-
-  // Session log
-  var sessionLog = el('wkth-session-log');
-  if (sessionLog) {
-    if (!hist.length) {
-      sessionLog.innerHTML = '<div class="empty-state">No sessions logged yet.<span class="hint">Use the Workout tab and click "Finish &amp; Send Email" to save sessions.</span></div>';
-    } else {
-      var rows = hist.slice().reverse().slice(0,20).map(function(h) {
-        var d = new Date(h.date + 'T12:00:00');
-        var label = d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-        var exerciseSummary = (h.sets || []).map(function(s) { return s.name + ' ' + s.topSet; }).join(' · ');
-        return '<div class="dash-ex-row">' +
-          '<div><div class="den">' + label + ' — ' + (h.day||'Workout').toUpperCase() + '</div><div class="dem" style="color:var(--t3);font-size:10px;">' + exerciseSummary + '</div></div>' +
-          '<div class="der" style="color:var(--accent)">' + (h.totalSets||0) + ' sets</div></div>';
-      }).join('');
-      sessionLog.innerHTML = rows;
-    }
-  }
-}
-
-function renderWorkoutChart(hist) {
-  var canvas = document.getElementById('wkth-canvas');
-  var emptyMsg = document.getElementById('wkth-chart-empty');
-  if (!canvas) return;
-
-  var recent = hist.slice(-10);
-  if (recent.length < 2) {
-    canvas.style.display = 'none';
-    if (emptyMsg) emptyMsg.style.display = 'flex';
-    return;
-  }
-  canvas.style.display = 'block';
-  if (emptyMsg) emptyMsg.style.display = 'none';
-
-  var dpr = window.devicePixelRatio || 1;
-  var rect = canvas.parentElement.getBoundingClientRect();
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  var ctx = canvas.getContext('2d');
-  ctx.scale(dpr, dpr);
-  var W = rect.width, H = rect.height;
-  var pad = { top: 12, right: 16, bottom: 28, left: 30 };
-
-  var sets = recent.map(function(h) { return h.totalSets || 0; });
-  var maxS = Math.max.apply(null, sets) + 3;
-  var barW = (W - pad.left - pad.right) / recent.length;
-
-  ctx.clearRect(0, 0, W, H);
-
-  // Grid
-  ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
-  [0.25, 0.5, 0.75, 1].forEach(function(f) {
-    var gy = pad.top + (1-f) * (H - pad.top - pad.bottom);
-    ctx.beginPath(); ctx.moveTo(pad.left, gy); ctx.lineTo(W - pad.right, gy); ctx.stroke();
-    ctx.fillStyle = 'rgba(90,90,101,0.9)'; ctx.font = '9px JetBrains Mono, monospace'; ctx.textAlign = 'right';
-    ctx.fillText(Math.round(f * maxS), pad.left - 4, gy + 3);
-  });
-
-  var dayColors = { push: '#40c4ff', pull: '#b388ff', legs: '#ff7043' };
-
-  recent.forEach(function(h, i) {
-    var x = pad.left + i * barW + barW * 0.15;
-    var bw = barW * 0.7;
-    var bh = (h.totalSets / maxS) * (H - pad.top - pad.bottom);
-    var by = H - pad.bottom - bh;
-    var color = dayColors[h.day] || '#c8ff57';
-
-    // Rounded bar
-    ctx.fillStyle = color + '33';
-    ctx.fillRect(x, by, bw, bh);
-    ctx.fillStyle = color;
-    ctx.fillRect(x, by, bw, Math.min(3, bh));
-
-    ctx.fillStyle = color; ctx.font = '10px JetBrains Mono, monospace'; ctx.textAlign = 'center';
-    ctx.fillText(h.totalSets, x + bw/2, by - 4);
-
-    ctx.fillStyle = 'rgba(90,90,101,0.9)'; ctx.font = '8px JetBrains Mono, monospace';
-    var d = new Date(h.date + 'T12:00:00');
-    ctx.fillText((d.getMonth()+1) + '/' + d.getDate(), x + bw/2, H - pad.bottom + 12);
-  });
-}
-
-function renderWorkoutPRs(hist) {
-  var prMap = {};
-  hist.forEach(function(h) {
-    (h.sets || []).forEach(function(s) {
-      var topW = parseInt((s.topSet || '').split('×')[0]) || 0;
-      if (!prMap[s.name] || topW > prMap[s.name]) prMap[s.name] = topW;
-    });
-  });
-
-  var pushEx = ['Bench Press','Standing Shoulder Press','Incline Bench Press','DB Lateral Raise','Tricep Rope Pushdown'];
-  var otherEx = ['Negative Pull-ups','Barbell Rows','Lat Pulldown','Seated DB Rear Delt Flyes','DB Bicep Curls','Barbell Squat','Romanian Deadlift','Calf Raises','Cable Ab Crunch'];
-
-  function buildPRHtml(exList) {
-    var html = '';
-    exList.forEach(function(name) {
-      if (prMap[name]) {
-        html += '<div class="dash-ex-row"><div class="den">' + name + '</div><div class="der" style="color:var(--accent)">' + prMap[name] + ' lbs</div></div>';
-      }
-    });
-    return html || '<div class="empty-state">No data yet.</div>';
-  }
-
-  var pushEl = document.getElementById('wkth-pr-push');
-  var otherEl = document.getElementById('wkth-pr-pulllegs');
-  if (pushEl) pushEl.innerHTML = buildPRHtml(pushEx);
-  if (otherEl) otherEl.innerHTML = buildPRHtml(otherEx);
-}
-
-// ═══════════════════════════════════════════
-// PATCH finishWorkout to also save to local history
-// ═══════════════════════════════════════════
-var _origFinishWorkout = null;
-function patchFinishWorkout() {
-  var origFn = finishWorkout;
-  finishWorkout = function(btn) {
-    // Save to local history first
-    var exs = WORKOUTS[currentDay];
-    var sets = exs.filter(function(e) { return e.sets.length; }).map(function(ex) {
-      var top = ex.sets.reduce(function(a,b) { return +b.w > +a.w ? b : a; });
-      return { name: ex.name, totalSets: ex.sets.length, topSet: top.w + ' × ' + top.r, pr: !!top.pr };
-    });
-    if (sets.length) saveSessionToHistory(currentDay, sets);
-    origFn.call(this, btn);
-  };
-}
-
+ 
 </script>
 </body>
 </html>
