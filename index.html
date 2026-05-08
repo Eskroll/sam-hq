@@ -485,7 +485,7 @@ nav {
     </div>
   </div>
 
-  <div class="slabel">HEALTH DATA — FROM LOSE IT! VIA GOOGLE SHEET</div>
+  <div class="slabel">HEALTH DATA — SQLITE API · SHEET FALLBACK</div>
   <div class="grid g12">
 
     <!-- CALORIES -->
@@ -1205,6 +1205,7 @@ nav {
 // HARDCODED URLS — no setup needed for these
 // ═══════════════════════════════════════════
 var WEIGHTS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTCJmlNFbxmBp0Q8rL8I12VwdpVjtQySxrEncSfBuqaeN0gyRf7bhPBeK675wkOtrECLxEmenUzGW5n/pub?gid=796153409&single=true&output=csv';
+var API_URL = 'http://164.152.111.208:5000';
 
 // ═══════════════════════════════════════════
 // CONFIG — stored in localStorage
@@ -1502,10 +1503,10 @@ function finishWorkout(btn) {
 }
 
 // ═══════════════════════════════════════════
-// CALORIE DATA — reads Sheet1 CSV
+// CALORIE DATA — reads from SQLite API (/api/today)
+// Falls back to Google Sheet CSV if API unreachable
 // ═══════════════════════════════════════════
 async function fetchLoseItData() {
-  var sheetUrl = CFG.get('sheetUrl');
   var calCard = document.getElementById('dash-cal-content');
 
   if (IS_FILE_PROTOCOL) {
@@ -1514,18 +1515,50 @@ async function fetchLoseItData() {
     return;
   }
 
+  // ── Try SQLite API first ──────────────────
+  try {
+    var resp = await fetch(API_URL + '/api/today?_t=' + Date.now());
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    var d = await resp.json();
+
+    // d keys: date, weight_lbs, calories_consumed, calorie_budget,
+    //         protein_g, carbs_g, fat_g, steps, active_calories, etc.
+    var cals       = Math.round(d.calories_consumed || 0);
+    var calGoal    = Math.round(d.calorie_budget)   || 2190;
+    var protein    = Math.round(d.protein_g || 0);
+    var carbs      = Math.round(d.carbs_g   || 0);
+    var fat        = Math.round(d.fat_g     || 0);
+    var steps      = Math.round(d.steps     || 0);
+    var weightLbs  = d.weight_lbs ? parseFloat(d.weight_lbs) : null;
+
+    renderCalCard(cals, calGoal, protein, carbs, fat, steps);
+
+    // If API has weight for today, also update the weight card
+    if (weightLbs && weightLbs > 0) {
+      renderDashWeightFromApi(weightLbs, d.date);
+    }
+
+    document.getElementById('dash-cal-badge').dataset.source = 'api';
+    return;
+
+  } catch(apiErr) {
+    console.warn('SQLite API unreachable, falling back to Sheet:', apiErr.message);
+  }
+
+  // ── Fallback: Google Sheet CSV ────────────
+  var sheetUrl = CFG.get('sheetUrl');
   if (!sheetUrl) {
-    calCard.innerHTML = '<div class="empty-state">Not connected.<span class="hint">Add your Sheet1 CSV URL in Setup</span></div>';
-    document.getElementById('dash-cal-badge').textContent = 'NOT SET';
+    calCard.innerHTML = '<div class="empty-state">API offline + no Sheet URL set.<span class="hint">Add Sheet1 CSV URL in Setup, or check server.</span></div>';
+    document.getElementById('dash-cal-badge').textContent = 'OFFLINE';
+    document.getElementById('dash-cal-badge').className = 'badge br';
     return;
   }
 
   try {
     var fetchUrl = sheetUrl + (sheetUrl.indexOf('?') === -1 ? '?' : '&') + '_t=' + Date.now();
-    var resp = await fetch(fetchUrl);
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    var csv = await resp.text();
-
+    var sheetResp = await fetch(fetchUrl);
+    if (!sheetResp.ok) throw new Error('HTTP ' + sheetResp.status);
+    var csv = await sheetResp.text();
     var lines = csv.trim().split('\n');
     if (lines.length < 2) throw new Error('Sheet has no data rows');
 
@@ -1540,55 +1573,87 @@ async function fetchLoseItData() {
       fields.push(current.trim());
       return fields;
     }
-    var vals = parseCSVRow(lines[1]);
+    var vals    = parseCSVRow(lines[1]);
+    var cals    = parseInt(vals[1]) || 0;
+    var calGoal = parseInt(vals[2]) || 2350;
+    var protein = parseInt(vals[3]) || 0;
+    var carbs   = parseInt(vals[5]) || 0;
+    var fat     = parseInt(vals[6]) || 0;
+    var steps   = parseInt(vals[8]) || 0;
 
-    var date    = vals[0] || '';
-    var cals    = parseInt(vals[1])  || 0;
-    var calGoal = parseInt(vals[2])  || 2350;
-    var protein = parseInt(vals[3])  || 0;
-    var proteinGoal = parseInt(vals[4]) || 160;
-    var carbs   = parseInt(vals[5])  || 0;
-    var fat     = parseInt(vals[6])  || 0;
-    var steps   = parseInt(vals[8])  || 0;
+    renderCalCard(cals, calGoal, protein, carbs, fat, steps);
+    document.getElementById('dash-cal-badge').dataset.source = 'sheet';
 
-    var pct = Math.min(100, Math.round((cals / calGoal) * 100));
-    var remaining = calGoal - cals;
-    var circumference = 226;
-    var strokeOffset = circumference - (pct / 100) * circumference;
-    var ringColor = pct >= 90 ? 'var(--green)' : pct >= 70 ? 'var(--accent)' : 'var(--orange)';
-
-    calCard.innerHTML =
-      '<div style="display:flex;justify-content:center;margin-bottom:12px">' +
-        '<div class="ring-parent">' +
-          '<svg width="86" height="86" viewBox="0 0 86 86" style="transform:rotate(-90deg)">' +
-            '<circle cx="43" cy="43" r="36" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="6"/>' +
-            '<circle cx="43" cy="43" r="36" fill="none" stroke="' + ringColor + '" stroke-width="6" stroke-dasharray="226" stroke-dashoffset="' + strokeOffset + '" stroke-linecap="round"/>' +
-          '</svg>' +
-          '<div class="ring-center">' +
-            '<div class="ring-num" style="color:' + ringColor + '">' + cals.toLocaleString() + '</div>' +
-            '<div class="ring-unit">/ ' + calGoal.toLocaleString() + '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="macro-row"><span style="color:var(--t2)">Protein</span><span class="macro-val" style="color:var(--blue)">' + protein + 'g</span></div>' +
-      '<div class="macro-row"><span style="color:var(--t2)">Carbs</span><span class="macro-val">' + carbs + 'g</span></div>' +
-      '<div class="macro-row"><span style="color:var(--t2)">Fat</span><span class="macro-val">' + fat + 'g</span></div>' +
-      '<div class="macro-row"><span style="color:var(--t2)">Steps</span><span class="macro-val" style="color:var(--purple)">' + (steps > 0 ? steps.toLocaleString() : '—') + '</span></div>' +
-      '<div class="macro-row"><span style="color:var(--t2)">Left</span><span class="macro-val" style="color:var(--accent)">' + (remaining > 0 ? remaining.toLocaleString() : '0') + ' kcal</span></div>';
-
-    var badge = document.getElementById('dash-cal-badge');
-    if (pct >= 90) { badge.textContent = 'ON TARGET'; badge.className = 'badge bg'; }
-    else if (pct >= 70) { badge.textContent = 'ON TRACK'; badge.className = 'badge by'; }
-    else { badge.textContent = 'LOG MORE'; badge.className = 'badge bo'; }
-
-    updateGoalBar('g-cals-val', 'g-fill-cals', cals, calGoal, 'kcal');
-    updateGoalBar('g-protein-val', 'g-fill-protein', protein, proteinGoal, 'g');
-
-  } catch(err) {
-    calCard.innerHTML = '<div class="empty-state" style="color:var(--red)">Fetch failed — check Sheet URL.<span class="hint">' + err.message + '</span></div>';
+  } catch(sheetErr) {
+    calCard.innerHTML = '<div class="empty-state" style="color:var(--red)">API + Sheet both failed.<span class="hint">' + sheetErr.message + '</span></div>';
     document.getElementById('dash-cal-badge').textContent = 'ERROR';
     document.getElementById('dash-cal-badge').className = 'badge br';
   }
+}
+
+// Shared renderer — called by both API and Sheet paths
+function renderCalCard(cals, calGoal, protein, carbs, fat, steps) {
+  var calCard = document.getElementById('dash-cal-content');
+  var proteinGoal = 160;
+  var pct = Math.min(100, Math.round((cals / calGoal) * 100));
+  var remaining = calGoal - cals;
+  var circumference = 226;
+  var strokeOffset = circumference - (pct / 100) * circumference;
+  var ringColor = pct >= 90 ? 'var(--green)' : pct >= 70 ? 'var(--accent)' : 'var(--orange)';
+
+  calCard.innerHTML =
+    '<div style="display:flex;justify-content:center;margin-bottom:12px">' +
+      '<div class="ring-parent">' +
+        '<svg width="86" height="86" viewBox="0 0 86 86" style="transform:rotate(-90deg)">' +
+          '<circle cx="43" cy="43" r="36" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="6"/>' +
+          '<circle cx="43" cy="43" r="36" fill="none" stroke="' + ringColor + '" stroke-width="6" stroke-dasharray="226" stroke-dashoffset="' + strokeOffset + '" stroke-linecap="round"/>' +
+        '</svg>' +
+        '<div class="ring-center">' +
+          '<div class="ring-num" style="color:' + ringColor + '">' + cals.toLocaleString() + '</div>' +
+          '<div class="ring-unit">/ ' + calGoal.toLocaleString() + '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="macro-row"><span style="color:var(--t2)">Protein</span><span class="macro-val" style="color:var(--blue)">' + protein + 'g</span></div>' +
+    '<div class="macro-row"><span style="color:var(--t2)">Carbs</span><span class="macro-val">' + carbs + 'g</span></div>' +
+    '<div class="macro-row"><span style="color:var(--t2)">Fat</span><span class="macro-val">' + fat + 'g</span></div>' +
+    '<div class="macro-row"><span style="color:var(--t2)">Steps</span><span class="macro-val" style="color:var(--purple)">' + (steps > 0 ? steps.toLocaleString() : '—') + '</span></div>' +
+    '<div class="macro-row"><span style="color:var(--t2)">Left</span><span class="macro-val" style="color:var(--accent)">' + (remaining > 0 ? remaining.toLocaleString() : '0') + ' kcal</span></div>' +
+    '<div style="font-family:var(--mono);font-size:8px;color:var(--t3);margin-top:8px;text-align:right" id="cal-source-label">via API</div>';
+
+  var badge = document.getElementById('dash-cal-badge');
+  if (pct >= 90) { badge.textContent = 'ON TARGET'; badge.className = 'badge bg'; }
+  else if (pct >= 70) { badge.textContent = 'ON TRACK'; badge.className = 'badge by'; }
+  else { badge.textContent = 'LOG MORE'; badge.className = 'badge bo'; }
+
+  updateGoalBar('g-cals-val', 'g-fill-cals', cals, calGoal, 'kcal');
+  updateGoalBar('g-protein-val', 'g-fill-protein', protein, proteinGoal, 'g');
+}
+
+// Called when API returns weight — bypasses Sheet fetch for the weight card
+function renderDashWeightFromApi(weightLbs, dateStr) {
+  var contentEl = document.getElementById('wt-dash-content');
+  var badgeEl   = document.getElementById('wt-dash-badge');
+  if (!contentEl) return;
+
+  var startW = 318, goalW = 290;
+  var lbsLost = Math.max(0, startW - weightLbs);
+  var todayStr = new Date().toISOString().slice(0, 10);
+  var loggedToday = dateStr && dateStr.slice(0, 10) === todayStr;
+  var dateLabel = loggedToday ? 'TODAY' : (dateStr ? new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric' }).toUpperCase() : 'LAST LOG');
+
+  contentEl.innerHTML =
+    '<div class="data-val" style="color:var(--accent)">' + weightLbs.toFixed(1) + '</div>' +
+    '<div class="data-sub">LBS — ' + dateLabel + '</div>' +
+    '<div class="data-delta" style="margin-top:6px;color:var(--green);font-family:var(--mono);font-size:11px;">&#8595; ' + lbsLost.toFixed(1) + ' lbs from start</div>' +
+    '<div style="font-family:var(--mono);font-size:8px;color:var(--t3);margin-top:6px;">via SQLite API</div>';
+
+  if (badgeEl) {
+    if (loggedToday) { badgeEl.textContent = 'LOGGED'; badgeEl.className = 'badge bg'; }
+    else { badgeEl.textContent = 'LOG TODAY'; badgeEl.className = 'badge bo'; }
+  }
+
+  updateGoalBar('g-weight-val', 'g-fill-weight', weightLbs, goalW, 'lbs');
 }
 
 // ═══════════════════════════════════════════
@@ -1621,7 +1686,14 @@ async function fetchWeightSheetData() {
 }
 
 // Renders the dashboard weight card from the sheet data
-async function fetchAndRenderDashWeight() {
+// Fetch weight from Sheet only if API didn't already populate it
+  // (fetchLoseItData runs first and calls renderDashWeightFromApi if API has weight)
+  setTimeout(function() {
+    var badge = document.getElementById('wt-dash-badge');
+    if (badge && badge.textContent === 'LOADING') {
+      fetchAndRenderDashWeight();
+    }
+  }, 2500);
   var contentEl = document.getElementById('wt-dash-content');
   var badgeEl   = document.getElementById('wt-dash-badge');
   if (!contentEl) return;
