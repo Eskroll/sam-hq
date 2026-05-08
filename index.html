@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sam's HQ — v5.3</title>
+<title>Sam's HQ — v5.4</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
@@ -445,7 +445,7 @@ nav {
 <nav>
   <div class="nav-logo">
     <div class="wm">SAM<em>'s</em><br>HQ</div>
-    <div class="tg">PERSONAL OS · v5.3</div>
+    <div class="tg">PERSONAL OS · v5.4</div>
   </div>
   <div class="nav-links">
     <div class="ngl">MAIN</div>
@@ -457,6 +457,7 @@ nav {
     <div class="nl" data-page="goals"><span class="ni">🎯</span><span>Goals</span></div>
     <div class="ngl">PROJECTS</div>
     <div class="nl" data-page="projects"><span class="ni">📁</span><span>Projects</span></div>
+    <div class="nl" data-page="notes"><span class="ni">📝</span><span>Notes</span></div>
     <div class="ngl">SYSTEM</div>
     <div class="nl" data-page="setup"><span class="ni">⚙️</span><span>Setup</span></div>
   </div>
@@ -591,6 +592,60 @@ nav {
     </div>
 
   </div>
+
+  <!-- TIMERS ROW -->
+  <div class="slabel">REST TIMERS</div>
+  <div class="grid g12">
+    <!-- SET TIMER: 1:15 -->
+    <div class="card c6" id="timer-set-card">
+      <div class="ct">BETWEEN SETS <span class="badge by">1:15</span></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:8px 0;">
+        <div style="position:relative;width:140px;height:140px;">
+          <svg width="140" height="140" viewBox="0 0 140 140" style="transform:rotate(-90deg);position:absolute;top:0;left:0;">
+            <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8"/>
+            <circle id="timer-set-ring" cx="70" cy="70" r="60" fill="none" stroke="var(--accent)" stroke-width="8"
+              stroke-dasharray="377" stroke-dashoffset="0" stroke-linecap="round"
+              style="transition:stroke-dashoffset 0.25s linear,stroke 0.3s;"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <div id="timer-set-display" style="font-size:32px;font-weight:800;letter-spacing:-1px;font-family:var(--mono);color:var(--accent);">1:15</div>
+            <div id="timer-set-label" style="font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:2px;margin-top:2px;">SET REST</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn btn-accent" id="timer-set-start" onclick="timerAction('set','start')">Start</button>
+          <button class="btn btn-ghost btn-sm" id="timer-set-reset" onclick="timerAction('set','reset')">Reset</button>
+          <button class="btn btn-ghost btn-sm" onclick="timerAction('set','add15')">+15s</button>
+        </div>
+        <div id="timer-set-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);text-align:center;min-height:16px;"></div>
+      </div>
+    </div>
+
+    <!-- LIFT TIMER: 2:00 -->
+    <div class="card c6" id="timer-lift-card">
+      <div class="ct">BETWEEN LIFTS <span class="badge bp">2:00</span></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px;padding:8px 0;">
+        <div style="position:relative;width:140px;height:140px;">
+          <svg width="140" height="140" viewBox="0 0 140 140" style="transform:rotate(-90deg);position:absolute;top:0;left:0;">
+            <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8"/>
+            <circle id="timer-lift-ring" cx="70" cy="70" r="60" fill="none" stroke="var(--purple)" stroke-width="8"
+              stroke-dasharray="377" stroke-dashoffset="0" stroke-linecap="round"
+              style="transition:stroke-dashoffset 0.25s linear,stroke 0.3s;"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+            <div id="timer-lift-display" style="font-size:32px;font-weight:800;letter-spacing:-1px;font-family:var(--mono);color:var(--purple);">2:00</div>
+            <div id="timer-lift-label" style="font-family:var(--mono);font-size:9px;color:var(--t3);letter-spacing:2px;margin-top:2px;">LIFT REST</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn btn-accent" id="timer-lift-start" style="background:var(--purple);" onclick="timerAction('lift','start')">Start</button>
+          <button class="btn btn-ghost btn-sm" id="timer-lift-reset" onclick="timerAction('lift','reset')">Reset</button>
+          <button class="btn btn-ghost btn-sm" onclick="timerAction('lift','add15')">+15s</button>
+        </div>
+        <div id="timer-lift-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);text-align:center;min-height:16px;"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ═══════════════ MORNING ROUTINE ═══════════════ -->
@@ -711,6 +766,75 @@ nav {
           4. Dashboard fetches and renders the markdown live<br><br>
           After a session with Claude, ask: <em style="color:var(--accent)">"Generate a project status markdown for today"</em> — paste it into Obsidian, and it syncs here automatically.
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ NOTES ═══════════════ -->
+<div class="page" id="page-notes">
+  <div class="topbar">
+    <div>
+      <h1>SESSION <span>NOTES</span></h1>
+      <div class="sub">QUICK CAPTURE · FILTER BY PROJECT · SEARCH</div>
+    </div>
+    <div class="pill-row">
+      <div class="pill"><div class="dot" style="background:var(--accent)"></div><span id="notes-count-pill">0 notes</span></div>
+    </div>
+  </div>
+
+  <!-- Filters + New Note -->
+  <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;">
+    <!-- Project filter -->
+    <div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">FILTER BY PROJECT</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;" id="notes-filter-row">
+        <button class="tab active" data-filter="all" id="nf-all">All</button>
+        <button class="tab" data-filter="Live Dashboard">Live Dashboard</button>
+        <button class="tab" data-filter="Varian Shipping">Varian Shipping</button>
+        <button class="tab" data-filter="Run Cycle">Run Cycle</button>
+        <button class="tab" data-filter="Formula SAE">Formula SAE</button>
+        <button class="tab" data-filter="General">General</button>
+      </div>
+    </div>
+    <!-- Search -->
+    <div style="flex:1;min-width:200px;">
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">SEARCH</div>
+      <input class="gh-input" id="notes-search" placeholder="Search notes..." style="width:100%;" oninput="renderNotes()">
+    </div>
+  </div>
+
+  <div class="grid g12">
+    <!-- New note form -->
+    <div class="card c5">
+      <div class="ct">NEW NOTE <span class="badge by">QUICK CAPTURE</span></div>
+      <div style="margin-bottom:10px;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">PROJECT TAG</div>
+        <select id="note-project-select" style="background:var(--s3);border:1px solid var(--border2);border-radius:7px;color:var(--t1);font-family:var(--mono);font-size:12px;padding:7px 10px;width:100%;outline:none;">
+          <option value="General">General</option>
+          <option value="Live Dashboard">Live Dashboard</option>
+          <option value="Varian Shipping">Varian Shipping</option>
+          <option value="Run Cycle">Run Cycle</option>
+          <option value="Formula SAE">Formula SAE</option>
+        </select>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">TITLE (optional)</div>
+        <input class="gh-input" id="note-title-input" placeholder="e.g. Today's blockers..." style="width:100%;">
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">NOTE</div>
+        <textarea id="note-body-input" placeholder="Write anything — decisions, blockers, ideas, next steps..." style="width:100%;background:var(--s3);border:1px solid var(--border2);border-radius:7px;color:var(--t1);font-family:var(--mono);font-size:12px;padding:10px 12px;outline:none;resize:vertical;min-height:120px;line-height:1.7;transition:border-color 0.15s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border2)'"></textarea>
+      </div>
+      <button class="btn btn-accent" id="note-save-btn" onclick="saveNote()">Save Note</button>
+      <div id="note-save-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:8px;"></div>
+    </div>
+
+    <!-- Notes list -->
+    <div class="card c7">
+      <div class="ct">NOTES <span class="badge bb" id="notes-showing-badge">0 SHOWING</span></div>
+      <div id="notes-list">
+        <div class="empty-state">No notes yet.<span class="hint">Write your first note on the left →</span></div>
       </div>
     </div>
   </div>
@@ -879,6 +1003,120 @@ nav {
     <div class="ct">ALL ENTRIES — FROM GOOGLE SHEET (weights tab)</div>
     <div id="wt-history-table" style="font-family:var(--mono);font-size:11px;color:var(--t2);">
       <div class="empty-state">Loading from sheet...<span class="hint">Entries are stored in your Google Sheet weights tab</span></div>
+    </div>
+  </div>
+
+  <!-- BODY MEASUREMENTS -->
+  <div class="slabel">BODY MEASUREMENTS — PLACEHOLDER</div>
+  <div class="grid g12">
+
+    <!-- Human silhouette diagram -->
+    <div class="card c5">
+      <div class="ct">BODY DIAGRAM <span class="badge bb">VISUAL PLACEHOLDER</span></div>
+      <div style="display:flex;justify-content:center;padding:8px 0 4px;">
+        <div style="position:relative;width:200px;height:340px;">
+          <!-- SVG human silhouette with measurement callouts -->
+          <svg width="200" height="340" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
+            <!-- Body fill -->
+            <!-- Head -->
+            <ellipse cx="100" cy="32" rx="22" ry="25" fill="rgba(200,255,87,0.08)" stroke="rgba(200,255,87,0.35)" stroke-width="1.5"/>
+            <!-- Neck -->
+            <rect x="91" y="55" width="18" height="14" rx="4" fill="rgba(200,255,87,0.08)" stroke="rgba(200,255,87,0.35)" stroke-width="1.5"/>
+            <!-- Torso -->
+            <path d="M68,69 Q60,80 58,110 Q56,140 60,165 Q70,172 100,172 Q130,172 140,165 Q144,140 142,110 Q140,80 132,69 Q118,65 100,65 Q82,65 68,69Z"
+              fill="rgba(200,255,87,0.08)" stroke="rgba(200,255,87,0.35)" stroke-width="1.5"/>
+            <!-- Left arm -->
+            <path d="M68,72 Q52,85 46,110 Q43,125 46,145 Q50,148 56,145 Q60,125 64,110 Q70,88 74,75Z"
+              fill="rgba(200,255,87,0.06)" stroke="rgba(200,255,87,0.25)" stroke-width="1.5"/>
+            <!-- Right arm -->
+            <path d="M132,72 Q148,85 154,110 Q157,125 154,145 Q150,148 144,145 Q140,125 136,110 Q130,88 126,75Z"
+              fill="rgba(200,255,87,0.06)" stroke="rgba(200,255,87,0.25)" stroke-width="1.5"/>
+            <!-- Left leg -->
+            <path d="M80,170 Q72,200 70,230 Q68,255 70,285 Q74,292 84,290 Q90,260 92,230 Q94,200 96,172Z"
+              fill="rgba(200,255,87,0.06)" stroke="rgba(200,255,87,0.25)" stroke-width="1.5"/>
+            <!-- Right leg -->
+            <path d="M120,170 Q128,200 130,230 Q132,255 130,285 Q126,292 116,290 Q110,260 108,230 Q106,200 104,172Z"
+              fill="rgba(200,255,87,0.06)" stroke="rgba(200,255,87,0.25)" stroke-width="1.5"/>
+
+            <!-- NECK callout line + dot -->
+            <circle cx="100" cy="62" r="3" fill="var(--accent)" opacity="0.7"/>
+            <line x1="100" y1="62" x2="170" y2="55" stroke="rgba(200,255,87,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+            <text x="173" y="59" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(200,255,87,0.7)">NECK</text>
+
+            <!-- CHEST callout -->
+            <circle cx="100" cy="88" r="3" fill="var(--blue)" opacity="0.7"/>
+            <line x1="100" y1="88" x2="168" y2="88" stroke="rgba(64,196,255,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+            <text x="171" y="92" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(64,196,255,0.7)">CHEST</text>
+
+            <!-- WAIST callout -->
+            <circle cx="100" cy="128" r="3" fill="var(--orange)" opacity="0.7"/>
+            <line x1="100" y1="128" x2="168" y2="128" stroke="rgba(255,112,67,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+            <text x="171" y="132" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,112,67,0.7)">WAIST</text>
+
+            <!-- HIPS callout -->
+            <circle cx="100" cy="158" r="3" fill="var(--purple)" opacity="0.7"/>
+            <line x1="100" y1="158" x2="168" y2="158" stroke="rgba(179,136,255,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+            <text x="171" y="162" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(179,136,255,0.7)">HIPS</text>
+
+            <!-- BICEP callout (left) -->
+            <circle cx="52" cy="108" r="3" fill="var(--green)" opacity="0.7"/>
+            <line x1="52" y1="108" x2="10" y2="108" stroke="rgba(105,240,174,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+            <text x="2" y="112" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(105,240,174,0.7)" text-anchor="end">BICEP</text>
+
+            <!-- THIGH callout (left) -->
+            <circle cx="76" cy="210" r="3" fill="var(--accent)" opacity="0.7"/>
+            <line x1="76" y1="210" x2="10" y2="210" stroke="rgba(200,255,87,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
+            <text x="2" y="214" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(200,255,87,0.7)" text-anchor="end">THIGH</text>
+          </svg>
+        </div>
+      </div>
+      <div style="font-family:var(--mono);font-size:9px;color:var(--t3);text-align:center;margin-top:4px;">Tap a measurement to log · data entry coming soon</div>
+    </div>
+
+    <!-- Measurements data cards -->
+    <div class="c7" style="display:flex;flex-direction:column;gap:13px;">
+
+      <!-- START card -->
+      <div class="card" style="margin:0;">
+        <div class="ct">STARTING MEASUREMENTS <span class="badge bo">MAY 4, 2026</span></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          <div id="meas-neck-start"    style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">NECK</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-chest-start"   style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">CHEST</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-waist-start"   style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">WAIST</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-hips-start"    style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">HIPS</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-bicep-start"   style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">BICEP</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-thigh-start"   style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">THIGH</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+        </div>
+      </div>
+
+      <!-- CURRENT + CHANGE -->
+      <div class="card" style="margin:0;">
+        <div class="ct">CURRENT MEASUREMENTS <span class="badge bg">LATEST LOG</span></div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">NECK</div>    <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">CHEST</div>   <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">WAIST</div>   <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">HIPS</div>    <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">BICEP</div>   <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">THIGH</div>   <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+        </div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+          <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:8px;">CHANGE FROM START (↓ = reduction)</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(105,240,174,0.1);color:var(--green);border:1px solid rgba(105,240,174,0.2);">Waist — in</span>
+            <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(105,240,174,0.1);color:var(--green);border:1px solid rgba(105,240,174,0.2);">Hips — in</span>
+            <span style="font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:4px;background:rgba(105,240,174,0.1);color:var(--green);border:1px solid rgba(105,240,174,0.2);">Bicep + in</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER info card -->
+      <div style="background:rgba(64,196,255,0.05);border:1px solid rgba(64,196,255,0.15);border-radius:10px;padding:14px;">
+        <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--blue);margin-bottom:7px;">DATA ENTRY — COMING SOON</div>
+        <div style="font-size:12px;color:var(--t2);line-height:1.7;">Measurements will be logged manually on a set schedule (e.g. every 2 weeks). Once data entry is wired up, this widget will show arrows on the diagram from your starting dimensions to current — and a change-over-time chart for each measurement.</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:8px;">Started: May 4, 2026 · Next log: TBD</div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -2209,6 +2447,223 @@ function init() {
 
   patchFinishWorkout();
 }
-</script>
+
+// ═══════════════════════════════════════════
+// REST TIMERS
+// ═══════════════════════════════════════════
+var TIMERS = {
+  set:  { total: 75,  remaining: 75,  running: false, interval: null, color: 'var(--accent)',  ringId: 'timer-set-ring',  displayId: 'timer-set-display',  statusId: 'timer-set-status',  btnId: 'timer-set-start',  labelId: 'timer-set-label'  },
+  lift: { total: 120, remaining: 120, running: false, interval: null, color: 'var(--purple)', ringId: 'timer-lift-ring', displayId: 'timer-lift-display', statusId: 'timer-lift-status', btnId: 'timer-lift-start', labelId: 'timer-lift-label' }
+};
+
+function timerAction(which, action) {
+  var t = TIMERS[which];
+  if (action === 'start') {
+    if (t.running) {
+      // Pause
+      clearInterval(t.interval);
+      t.interval = null;
+      t.running = false;
+      document.getElementById(t.btnId).textContent = 'Resume';
+      document.getElementById(t.statusId).textContent = 'Paused';
+    } else {
+      // Start / Resume
+      if (t.remaining <= 0) { t.remaining = t.total; }
+      t.running = true;
+      document.getElementById(t.btnId).textContent = 'Pause';
+      document.getElementById(t.statusId).textContent = 'Running...';
+      t.interval = setInterval(function() { timerTick(which); }, 1000);
+      timerRender(which);
+    }
+  } else if (action === 'reset') {
+    clearInterval(t.interval);
+    t.interval = null;
+    t.running = false;
+    t.remaining = t.total;
+    document.getElementById(t.btnId).textContent = which === 'set' ? 'Start' : 'Start';
+    document.getElementById(t.statusId).textContent = '';
+    timerRender(which);
+  } else if (action === 'add15') {
+    t.remaining = Math.min(t.remaining + 15, t.total + 60);
+    timerRender(which);
+  }
+}
+
+function timerTick(which) {
+  var t = TIMERS[which];
+  t.remaining--;
+  if (t.remaining <= 0) {
+    t.remaining = 0;
+    clearInterval(t.interval);
+    t.interval = null;
+    t.running = false;
+    document.getElementById(t.btnId).textContent = 'Start';
+    document.getElementById(t.statusId).textContent = 'Done! Start next set.';
+    timerDoneAnim(which);
+    timerBeep();
+  }
+  timerRender(which);
+}
+
+function timerRender(which) {
+  var t = TIMERS[which];
+  var mins = Math.floor(t.remaining / 60);
+  var secs = t.remaining % 60;
+  var display = mins + ':' + String(secs).padStart(2, '0');
+  document.getElementById(t.displayId).textContent = display;
+
+  // Ring: circumference 2*pi*60 ≈ 377
+  var circ = 377;
+  var fraction = t.total > 0 ? t.remaining / t.total : 0;
+  var offset = circ - fraction * circ;
+  var ring = document.getElementById(t.ringId);
+  if (ring) {
+    ring.style.strokeDashoffset = offset;
+    // Color shift: green when >50%, yellow <50%, red <20%
+    if (fraction > 0.5)       ring.style.stroke = t.color;
+    else if (fraction > 0.2)  ring.style.stroke = 'var(--accent)';
+    else                       ring.style.stroke = 'var(--red)';
+    // Display color mirrors ring
+    var dispEl = document.getElementById(t.displayId);
+    if (dispEl) dispEl.style.color = ring.style.stroke;
+  }
+}
+
+function timerDoneAnim(which) {
+  var card = document.getElementById('timer-' + which + '-card');
+  if (!card) return;
+  card.style.transition = 'border-color 0.3s';
+  card.style.borderColor = 'rgba(105,240,174,0.6)';
+  var flashes = 0;
+  var flash = setInterval(function() {
+    card.style.borderColor = flashes % 2 === 0 ? 'rgba(105,240,174,0.6)' : 'var(--border)';
+    flashes++;
+    if (flashes >= 6) { clearInterval(flash); card.style.borderColor = 'var(--border)'; }
+  }, 300);
+}
+
+function timerBeep() {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    [0, 0.15, 0.3].forEach(function(delay) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.value = 880;
+      gain.gain.setValueAtTime(0.3, ctx.currentTime + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.12);
+      osc.start(ctx.currentTime + delay);
+      osc.stop(ctx.currentTime + delay + 0.13);
+    });
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════════
+// NOTES — stored in localStorage
+// ═══════════════════════════════════════════
+var NOTES_KEY = 'samhq_notes';
+var activeFilter = 'all';
+
+function getNotes() { try { return JSON.parse(localStorage.getItem(NOTES_KEY)) || []; } catch(e) { return []; } }
+function saveNotes(n) { localStorage.setItem(NOTES_KEY, JSON.stringify(n)); }
+
+function saveNote() {
+  var project = document.getElementById('note-project-select').value;
+  var title   = document.getElementById('note-title-input').value.trim();
+  var body    = document.getElementById('note-body-input').value.trim();
+  var statusEl= document.getElementById('note-save-status');
+  if (!body) { if (statusEl) statusEl.textContent = 'Write something first'; return; }
+
+  var notes = getNotes();
+  notes.unshift({
+    id: Date.now(),
+    project: project,
+    title: title || null,
+    body: body,
+    date: new Date().toISOString()
+  });
+  saveNotes(notes);
+
+  document.getElementById('note-title-input').value = '';
+  document.getElementById('note-body-input').value = '';
+  if (statusEl) { statusEl.textContent = 'Saved ✓'; setTimeout(function() { statusEl.textContent = ''; }, 2000); }
+  toast('Note saved');
+  renderNotes();
+}
+
+function deleteNote(id) {
+  var notes = getNotes().filter(function(n) { return n.id !== id; });
+  saveNotes(notes);
+  renderNotes();
+}
+
+function renderNotes() {
+  var notes = getNotes();
+  var search = (document.getElementById('notes-search') || {}).value || '';
+  search = search.toLowerCase();
+
+  var filtered = notes.filter(function(n) {
+    var matchFilter = activeFilter === 'all' || n.project === activeFilter;
+    var matchSearch = !search || (n.body + (n.title || '') + n.project).toLowerCase().includes(search);
+    return matchFilter && matchSearch;
+  });
+
+  var countPill = document.getElementById('notes-count-pill');
+  var showBadge = document.getElementById('notes-showing-badge');
+  if (countPill) countPill.textContent = notes.length + ' note' + (notes.length !== 1 ? 's' : '');
+  if (showBadge) showBadge.textContent = filtered.length + ' SHOWING';
+
+  var list = document.getElementById('notes-list');
+  if (!list) return;
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty-state">' + (notes.length ? 'No notes match this filter.' : 'No notes yet.') + '<span class="hint">Write your first note on the left</span></div>';
+    return;
+  }
+
+  var projColors = {
+    'Live Dashboard': 'var(--accent)', 'Varian Shipping': 'var(--blue)',
+    'Run Cycle': 'var(--orange)', 'Formula SAE': 'var(--purple)', 'General': 'var(--t3)'
+  };
+
+  list.innerHTML = filtered.map(function(n) {
+    var d = new Date(n.date);
+    var dateStr = d.toLocaleDateString('en-US', { month:'short', day:'numeric' }) + ' · ' + d.toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+    var color = projColors[n.project] || 'var(--t3)';
+    var bodyPreview = n.body.length > 300 ? n.body.slice(0, 300) + '...' : n.body;
+    return '<div style="border-bottom:1px solid var(--border);padding:13px 0;" class="note-item">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">' +
+        '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+          '<span style="font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,0.05);color:' + color + ';border:1px solid ' + color + '33;">' + n.project + '</span>' +
+          (n.title ? '<span style="font-weight:700;font-size:13px;">' + n.title + '</span>' : '') +
+        '</div>' +
+        '<div style="display:flex;gap:8px;align-items:center;">' +
+          '<span style="font-family:var(--mono);font-size:9px;color:var(--t3);">' + dateStr + '</span>' +
+          '<button onclick="deleteNote(' + n.id + ')" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:12px;padding:2px 5px;border-radius:4px;" title="Delete">✕</button>' +
+        '</div>' +
+      '</div>' +
+      '<div style="font-size:12.5px;color:var(--t2);line-height:1.75;white-space:pre-wrap;">' + bodyPreview + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// Wire notes filter buttons
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('#notes-filter-row .tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#notes-filter-row .tab').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeFilter = btn.getAttribute('data-filter');
+      renderNotes();
+    });
+  });
+  // Init notes when page is opened
+  document.querySelectorAll('.nl[data-page]').forEach(function(el) {
+    if (el.getAttribute('data-page') === 'notes') {
+      el.addEventListener('click', function() { renderNotes(); });
+    }
+  });
+});
+
 </body>
 </html>
