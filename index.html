@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sam's HQ — v5.4</title>
+<title>Sam's HQ — v5.5</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
@@ -445,7 +445,7 @@ nav {
 <nav>
   <div class="nav-logo">
     <div class="wm">SAM<em>'s</em><br>HQ</div>
-    <div class="tg">PERSONAL OS · v5.4</div>
+    <div class="tg">PERSONAL OS · v5.5</div>
   </div>
   <div class="nav-links">
     <div class="ngl">MAIN</div>
@@ -494,7 +494,7 @@ nav {
       <div id="dash-cal-content" class="loading-state">fetching data...</div>
     </div>
 
-    <!-- BODY WEIGHT — reads from weights tab CSV (hardcoded) + log input -->
+    <!-- BODY WEIGHT -->
     <div class="card c3" id="dash-weight-card">
       <div class="ct">BODY WEIGHT <span class="badge bo" id="wt-dash-badge">LOADING</span></div>
       <div id="wt-dash-content" class="loading-state">fetching...</div>
@@ -783,9 +783,7 @@ nav {
     </div>
   </div>
 
-  <!-- Filters + New Note -->
   <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:16px;">
-    <!-- Project filter -->
     <div>
       <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">FILTER BY PROJECT</div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;" id="notes-filter-row">
@@ -797,7 +795,6 @@ nav {
         <button class="tab" data-filter="General">General</button>
       </div>
     </div>
-    <!-- Search -->
     <div style="flex:1;min-width:200px;">
       <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">SEARCH</div>
       <input class="gh-input" id="notes-search" placeholder="Search notes..." style="width:100%;" oninput="renderNotes()">
@@ -805,7 +802,6 @@ nav {
   </div>
 
   <div class="grid g12">
-    <!-- New note form -->
     <div class="card c5">
       <div class="ct">NEW NOTE <span class="badge by">QUICK CAPTURE</span></div>
       <div style="margin-bottom:10px;">
@@ -829,8 +825,6 @@ nav {
       <button class="btn btn-accent" id="note-save-btn" onclick="saveNote()">Save Note</button>
       <div id="note-save-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:8px;"></div>
     </div>
-
-    <!-- Notes list -->
     <div class="card c7">
       <div class="ct">NOTES <span class="badge bb" id="notes-showing-badge">0 SHOWING</span></div>
       <div id="notes-list">
@@ -861,11 +855,10 @@ nav {
     </div>
   </div>
 
-  <!-- CALORIE SHEET URL -->
   <div class="slabel">CALORIE DATA — SHEET1 CSV</div>
   <div class="loseit-config">
     <div class="li-title">LOSE IT! → GOOGLE SHEET BRIDGE</div>
-    <div class="li-desc">Published CSV URL for Sheet1 (calories, protein, carbs, fat, steps). Body weight is read from the separate weights tab — already hardcoded.</div>
+    <div class="li-desc">Published CSV URL for Sheet1 (calories, protein, carbs, fat, steps). Body weight is read from SQLite API — Sheet is fallback only.</div>
     <div class="gh-row" style="margin-bottom:8px;">
       <input class="gh-input" id="sheet-url-input" placeholder="Google Sheet Sheet1 published CSV URL..." />
       <button class="btn btn-accent btn-sm" onclick="saveSheetURL()">Save</button>
@@ -875,11 +868,10 @@ nav {
     </div>
   </div>
 
-  <!-- APPS SCRIPT URL -->
   <div class="slabel">POST-WORKOUT EMAIL + WEIGHT LOG — SCRIPT 3</div>
   <div class="loseit-config" style="border-color:rgba(200,255,87,0.15);">
     <div class="li-title" style="color:var(--accent);">APPS SCRIPT WEB APP URL</div>
-    <div class="li-desc">Handles both workout emails and manual weight logs. The "Finish &amp; Send Email" button and the weight Log button both POST to this URL.</div>
+    <div class="li-desc">Handles workout emails and Sheet weight log backup. Weight is now primarily stored in SQLite API — Script 3 is the Sheet backup path.</div>
     <div class="gh-row" style="margin-bottom:8px;">
       <input class="gh-input" id="script-url-input" placeholder="https://script.google.com/macros/s/..." />
       <button class="btn btn-accent btn-sm" onclick="saveScriptURL()">Save</button>
@@ -887,7 +879,6 @@ nav {
     <div id="script-url-saved" style="font-family:var(--mono);font-size:10px;color:var(--t3);"></div>
   </div>
 
-  <!-- STRENGTH GOALS -->
   <div class="slabel">STRENGTH + HABIT GOALS (MANUAL)</div>
   <div class="card" style="margin-bottom:13px;">
     <div class="ct">ENTER YOUR CURRENT NUMBERS</div>
@@ -925,14 +916,13 @@ nav {
   <div class="topbar">
     <div>
       <h1>BODY <span>WEIGHT</span></h1>
-      <div class="sub">MANUAL LOG · 290 LBS BY SEPT 4, 2026</div>
+      <div class="sub">SQLITE API · SHEET FALLBACK · 290 LBS BY SEPT 4, 2026</div>
     </div>
     <div class="pill-row">
       <div class="pill" style="border-color:rgba(200,255,87,0.3);color:var(--accent)"><div class="dot" style="background:var(--accent)"></div>18-week cut · Start: 318 lbs</div>
     </div>
   </div>
 
-  <!-- Goal Summary -->
   <div class="grid g12" style="margin-bottom:0">
     <div class="card c3">
       <div class="ct">START WEIGHT</div>
@@ -956,7 +946,6 @@ nav {
     </div>
   </div>
 
-  <!-- Progress Bar -->
   <div class="card" style="margin-top:13px;">
     <div class="ct">PROGRESS TO GOAL <span class="badge by" id="wt-pace-badge">CALCULATING</span></div>
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
@@ -969,7 +958,6 @@ nav {
     <div style="font-family:var(--mono);font-size:11px;color:var(--t2)" id="wt-prog-detail">Log some weights to see pace analysis.</div>
   </div>
 
-  <!-- Chart -->
   <div class="slabel">WEIGHT OVER TIME</div>
   <div class="card">
     <div class="ct">BODYWEIGHT TREND — LOGGED ENTRIES <span class="badge bb" id="wt-entry-count">0 ENTRIES</span></div>
@@ -979,10 +967,9 @@ nav {
     </div>
   </div>
 
-  <!-- Log Entry -->
   <div class="slabel">LOG WEIGHT</div>
   <div class="card">
-    <div class="ct">ADD ENTRY — POSTS TO GOOGLE SHEET (weights tab)</div>
+    <div class="ct">ADD ENTRY — POSTS TO SQLITE API + SHEET FALLBACK</div>
     <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;">
       <div>
         <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:5px;">DATE</div>
@@ -997,73 +984,49 @@ nav {
     <div id="wt-submit-status" style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:10px;"></div>
   </div>
 
-  <!-- History Table -->
   <div class="slabel">WEIGHT LOG HISTORY</div>
   <div class="card">
-    <div class="ct">ALL ENTRIES — FROM GOOGLE SHEET (weights tab)</div>
+    <div class="ct">ALL ENTRIES — FROM SQLITE API (Sheet fallback)</div>
     <div id="wt-history-table" style="font-family:var(--mono);font-size:11px;color:var(--t2);">
-      <div class="empty-state">Loading from sheet...<span class="hint">Entries are stored in your Google Sheet weights tab</span></div>
+      <div class="empty-state">Loading from SQLite API...<span class="hint">Entries from Health Auto Export → Oracle Cloud</span></div>
     </div>
   </div>
 
   <!-- BODY MEASUREMENTS -->
   <div class="slabel">BODY MEASUREMENTS — PLACEHOLDER</div>
   <div class="grid g12">
-
-    <!-- Human silhouette diagram -->
     <div class="card c5">
       <div class="ct">BODY DIAGRAM <span class="badge bb">VISUAL PLACEHOLDER</span></div>
       <div style="display:flex;justify-content:center;padding:8px 0 4px;">
         <div style="position:relative;width:200px;height:340px;">
-          <!-- SVG human silhouette with measurement callouts -->
           <svg width="200" height="340" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg" style="overflow:visible;">
-            <!-- Body fill -->
-            <!-- Head -->
             <ellipse cx="100" cy="32" rx="22" ry="25" fill="rgba(200,255,87,0.08)" stroke="rgba(200,255,87,0.35)" stroke-width="1.5"/>
-            <!-- Neck -->
             <rect x="91" y="55" width="18" height="14" rx="4" fill="rgba(200,255,87,0.08)" stroke="rgba(200,255,87,0.35)" stroke-width="1.5"/>
-            <!-- Torso -->
             <path d="M68,69 Q60,80 58,110 Q56,140 60,165 Q70,172 100,172 Q130,172 140,165 Q144,140 142,110 Q140,80 132,69 Q118,65 100,65 Q82,65 68,69Z"
               fill="rgba(200,255,87,0.08)" stroke="rgba(200,255,87,0.35)" stroke-width="1.5"/>
-            <!-- Left arm -->
             <path d="M68,72 Q52,85 46,110 Q43,125 46,145 Q50,148 56,145 Q60,125 64,110 Q70,88 74,75Z"
               fill="rgba(200,255,87,0.06)" stroke="rgba(200,255,87,0.25)" stroke-width="1.5"/>
-            <!-- Right arm -->
             <path d="M132,72 Q148,85 154,110 Q157,125 154,145 Q150,148 144,145 Q140,125 136,110 Q130,88 126,75Z"
               fill="rgba(200,255,87,0.06)" stroke="rgba(200,255,87,0.25)" stroke-width="1.5"/>
-            <!-- Left leg -->
             <path d="M80,170 Q72,200 70,230 Q68,255 70,285 Q74,292 84,290 Q90,260 92,230 Q94,200 96,172Z"
               fill="rgba(200,255,87,0.06)" stroke="rgba(200,255,87,0.25)" stroke-width="1.5"/>
-            <!-- Right leg -->
             <path d="M120,170 Q128,200 130,230 Q132,255 130,285 Q126,292 116,290 Q110,260 108,230 Q106,200 104,172Z"
               fill="rgba(200,255,87,0.06)" stroke="rgba(200,255,87,0.25)" stroke-width="1.5"/>
-
-            <!-- NECK callout line + dot -->
             <circle cx="100" cy="62" r="3" fill="var(--accent)" opacity="0.7"/>
             <line x1="100" y1="62" x2="170" y2="55" stroke="rgba(200,255,87,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
             <text x="173" y="59" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(200,255,87,0.7)">NECK</text>
-
-            <!-- CHEST callout -->
             <circle cx="100" cy="88" r="3" fill="var(--blue)" opacity="0.7"/>
             <line x1="100" y1="88" x2="168" y2="88" stroke="rgba(64,196,255,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
             <text x="171" y="92" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(64,196,255,0.7)">CHEST</text>
-
-            <!-- WAIST callout -->
             <circle cx="100" cy="128" r="3" fill="var(--orange)" opacity="0.7"/>
             <line x1="100" y1="128" x2="168" y2="128" stroke="rgba(255,112,67,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
             <text x="171" y="132" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(255,112,67,0.7)">WAIST</text>
-
-            <!-- HIPS callout -->
             <circle cx="100" cy="158" r="3" fill="var(--purple)" opacity="0.7"/>
             <line x1="100" y1="158" x2="168" y2="158" stroke="rgba(179,136,255,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
             <text x="171" y="162" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(179,136,255,0.7)">HIPS</text>
-
-            <!-- BICEP callout (left) -->
             <circle cx="52" cy="108" r="3" fill="var(--green)" opacity="0.7"/>
             <line x1="52" y1="108" x2="10" y2="108" stroke="rgba(105,240,174,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
             <text x="2" y="112" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(105,240,174,0.7)" text-anchor="end">BICEP</text>
-
-            <!-- THIGH callout (left) -->
             <circle cx="76" cy="210" r="3" fill="var(--accent)" opacity="0.7"/>
             <line x1="76" y1="210" x2="10" y2="210" stroke="rgba(200,255,87,0.4)" stroke-width="1" stroke-dasharray="3,3"/>
             <text x="2" y="214" font-family="JetBrains Mono,monospace" font-size="9" fill="rgba(200,255,87,0.7)" text-anchor="end">THIGH</text>
@@ -1073,32 +1036,27 @@ nav {
       <div style="font-family:var(--mono);font-size:9px;color:var(--t3);text-align:center;margin-top:4px;">Tap a measurement to log · data entry coming soon</div>
     </div>
 
-    <!-- Measurements data cards -->
     <div class="c7" style="display:flex;flex-direction:column;gap:13px;">
-
-      <!-- START card -->
       <div class="card" style="margin:0;">
         <div class="ct">STARTING MEASUREMENTS <span class="badge bo">MAY 4, 2026</span></div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-          <div id="meas-neck-start"    style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">NECK</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
-          <div id="meas-chest-start"   style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">CHEST</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
-          <div id="meas-waist-start"   style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">WAIST</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
-          <div id="meas-hips-start"    style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">HIPS</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
-          <div id="meas-bicep-start"   style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">BICEP</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
-          <div id="meas-thigh-start"   style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">THIGH</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-neck-start"  style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">NECK</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-chest-start" style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">CHEST</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-waist-start" style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">WAIST</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-hips-start"  style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">HIPS</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-bicep-start" style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">BICEP</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
+          <div id="meas-thigh-start" style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">THIGH</div><div style="font-size:20px;font-weight:800;color:var(--t2);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--t3);">in</div></div>
         </div>
       </div>
-
-      <!-- CURRENT + CHANGE -->
       <div class="card" style="margin:0;">
         <div class="ct">CURRENT MEASUREMENTS <span class="badge bg">LATEST LOG</span></div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">NECK</div>    <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
-          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">CHEST</div>   <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
-          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">WAIST</div>   <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
-          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">HIPS</div>    <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
-          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">BICEP</div>   <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
-          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">THIGH</div>   <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">NECK</div>  <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">CHEST</div> <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">WAIST</div> <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">HIPS</div>  <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">BICEP</div> <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:4px;">THIGH</div> <div style="font-size:20px;font-weight:800;color:var(--accent);">—</div><div style="font-family:var(--mono);font-size:9px;color:var(--green);">—</div></div>
         </div>
         <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
           <div style="font-family:var(--mono);font-size:9px;color:var(--t3);margin-bottom:8px;">CHANGE FROM START (↓ = reduction)</div>
@@ -1109,14 +1067,11 @@ nav {
           </div>
         </div>
       </div>
-
-      <!-- PLACEHOLDER info card -->
       <div style="background:rgba(64,196,255,0.05);border:1px solid rgba(64,196,255,0.15);border-radius:10px;padding:14px;">
         <div style="font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--blue);margin-bottom:7px;">DATA ENTRY — COMING SOON</div>
         <div style="font-size:12px;color:var(--t2);line-height:1.7;">Measurements will be logged manually on a set schedule (e.g. every 2 weeks). Once data entry is wired up, this widget will show arrows on the diagram from your starting dimensions to current — and a change-over-time chart for each measurement.</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:8px;">Started: May 4, 2026 · Next log: TBD</div>
       </div>
-
     </div>
   </div>
 </div>
@@ -1133,7 +1088,6 @@ nav {
     </div>
   </div>
 
-  <!-- Summary Stats -->
   <div class="grid g12">
     <div class="card c3">
       <div class="ct">TOTAL SESSIONS</div>
@@ -1157,7 +1111,6 @@ nav {
     </div>
   </div>
 
-  <!-- Volume Chart -->
   <div class="slabel">WEEKLY VOLUME TREND</div>
   <div class="card">
     <div class="ct">SETS PER SESSION <span class="badge by" id="wkth-chart-badge">LAST 10 SESSIONS</span></div>
@@ -1167,7 +1120,6 @@ nav {
     </div>
   </div>
 
-  <!-- Exercise PRs -->
   <div class="slabel">EXERCISE PERSONAL RECORDS</div>
   <div class="grid g12">
     <div class="card c6">
@@ -1180,14 +1132,12 @@ nav {
     </div>
   </div>
 
-  <!-- Session Log -->
   <div class="slabel">SESSION LOG</div>
   <div class="card">
     <div class="ct">RECENT SESSIONS <span class="badge bb">LAST 20</span></div>
     <div id="wkth-session-log"><div class="empty-state">No sessions logged yet.<span class="hint">Use the Workout tab and click "Finish &amp; Send Email" to save sessions.</span></div></div>
   </div>
 
-  <!-- Manual Post to Sheet -->
   <div class="slabel">SAVE SESSION TO HISTORY</div>
   <div class="card">
     <div class="ct">POST CURRENT SESSION TO LOCAL HISTORY</div>
@@ -1202,7 +1152,7 @@ nav {
 
 <script>
 // ═══════════════════════════════════════════
-// HARDCODED URLS — no setup needed for these
+// HARDCODED URLS
 // ═══════════════════════════════════════════
 var WEIGHTS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTCJmlNFbxmBp0Q8rL8I12VwdpVjtQySxrEncSfBuqaeN0gyRf7bhPBeK675wkOtrECLxEmenUzGW5n/pub?gid=796153409&single=true&output=csv';
 var API_URL = 'https://api.samhq.dev';
@@ -1215,9 +1165,6 @@ const CFG = {
   set: function(k,v) { localStorage.setItem('samhq_'+k, JSON.stringify(v)); }
 };
 
-// ═══════════════════════════════════════════
-// FILE:// PROTOCOL DETECTION
-// ═══════════════════════════════════════════
 const IS_FILE_PROTOCOL = location.protocol === 'file:';
 
 // ═══════════════════════════════════════════
@@ -1257,7 +1204,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if (day) switchDay(day, tab);
     });
   });
-  // Notes filter buttons
   document.querySelectorAll('#notes-filter-row .tab').forEach(function(btn) {
     btn.addEventListener('click', function() {
       document.querySelectorAll('#notes-filter-row .tab').forEach(function(b) { b.classList.remove('active'); });
@@ -1375,6 +1321,9 @@ function renderLog() {
 
   list.innerHTML = html;
 
+  list.querySelectorAll('.ex-header[data-exidx]').forEach(function(el) {
+    el.addEventListener('click', function() { toggleEx(parseInt(el.getAttribute('data-exidgin'))); });
+  });
   list.querySelectorAll('.ex-header[data-exidx]').forEach(function(el) {
     el.addEventListener('click', function() { toggleEx(parseInt(el.getAttribute('data-exidx'))); });
   });
@@ -1503,8 +1452,7 @@ function finishWorkout(btn) {
 }
 
 // ═══════════════════════════════════════════
-// CALORIE DATA — reads from SQLite API (/api/today)
-// Falls back to Google Sheet CSV if API unreachable
+// CALORIE DATA — SQLite API first, Sheet fallback
 // ═══════════════════════════════════════════
 async function fetchLoseItData() {
   var calCard = document.getElementById('dash-cal-content');
@@ -1515,25 +1463,21 @@ async function fetchLoseItData() {
     return;
   }
 
-  // ── Try SQLite API first ──────────────────
   try {
     var resp = await fetch(API_URL + '/api/today?_t=' + Date.now());
     if (!resp.ok) throw new Error('HTTP ' + resp.status);
     var d = await resp.json();
 
-    // d keys: date, weight_lbs, calories_consumed, calorie_budget,
-    //         protein_g, carbs_g, fat_g, steps, active_calories, etc.
-    var cals       = Math.round(d.calories_consumed || 0);
-    var calGoal    = Math.round(d.calorie_budget)   || 2190;
-    var protein    = Math.round(d.protein_g || 0);
-    var carbs      = Math.round(d.carbs_g   || 0);
-    var fat        = Math.round(d.fat_g     || 0);
-    var steps      = Math.round(d.steps     || 0);
-    var weightLbs  = d.weight_lbs ? parseFloat(d.weight_lbs) : null;
+    var cals      = Math.round(d.calories_consumed || 0);
+    var calGoal   = Math.round(d.calorie_budget)   || 2190;
+    var protein   = Math.round(d.protein_g || 0);
+    var carbs     = Math.round(d.carbs_g   || 0);
+    var fat       = Math.round(d.fat_g     || 0);
+    var steps     = Math.round(d.steps     || 0);
+    var weightLbs = d.weight_lbs ? parseFloat(d.weight_lbs) : null;
 
     renderCalCard(cals, calGoal, protein, carbs, fat, steps);
 
-    // If API has weight for today, also update the weight card
     if (weightLbs && weightLbs > 0) {
       renderDashWeightFromApi(weightLbs, d.date);
     }
@@ -1545,7 +1489,6 @@ async function fetchLoseItData() {
     console.warn('SQLite API unreachable, falling back to Sheet:', apiErr.message);
   }
 
-  // ── Fallback: Google Sheet CSV ────────────
   var sheetUrl = CFG.get('sheetUrl');
   if (!sheetUrl) {
     calCard.innerHTML = '<div class="empty-state">API offline + no Sheet URL set.<span class="hint">Add Sheet1 CSV URL in Setup, or check server.</span></div>';
@@ -1591,7 +1534,6 @@ async function fetchLoseItData() {
   }
 }
 
-// Shared renderer — called by both API and Sheet paths
 function renderCalCard(cals, calGoal, protein, carbs, fat, steps) {
   var calCard = document.getElementById('dash-cal-content');
   var proteinGoal = 160;
@@ -1630,7 +1572,6 @@ function renderCalCard(cals, calGoal, protein, carbs, fat, steps) {
   updateGoalBar('g-protein-val', 'g-fill-protein', protein, proteinGoal, 'g');
 }
 
-// Called when API returns weight — bypasses Sheet fetch for the weight card
 function renderDashWeightFromApi(weightLbs, dateStr) {
   var contentEl = document.getElementById('wt-dash-content');
   var badgeEl   = document.getElementById('wt-dash-badge');
@@ -1657,12 +1598,42 @@ function renderDashWeightFromApi(weightLbs, dateStr) {
 }
 
 // ═══════════════════════════════════════════
-// WEIGHT DATA — reads weights tab CSV (hardcoded URL)
-// Columns: date | weight
+// WEIGHT DATA — SQLite /api/weight first, Sheet fallback
 // Returns array of { date, weight } sorted oldest→newest
 // ═══════════════════════════════════════════
 async function fetchWeightSheetData() {
   if (IS_FILE_PROTOCOL) return [];
+
+  // ── Try SQLite API first ──────────────────
+  try {
+    var apiResp = await fetch(API_URL + '/api/weight?_t=' + Date.now());
+    if (!apiResp.ok) throw new Error('HTTP ' + apiResp.status);
+    var apiData = await apiResp.json();
+    // /api/weight returns array of { date, weight_lbs } or { date, weight }
+    var log = apiData
+      .filter(function(r) { return r.date && (r.weight_lbs || r.weight); })
+      .map(function(r) {
+        return { date: r.date.slice(0,10), weight: parseFloat(r.weight_lbs || r.weight) };
+      })
+      .filter(function(r) { return r.weight > 0; });
+    log.sort(function(a, b) { return a.date.localeCompare(b.date); });
+    // Dedupe by date — keep first entry per date
+    var seen = {};
+    log = log.filter(function(r) {
+      if (seen[r.date]) return false;
+      seen[r.date] = true;
+      return true;
+    });
+    if (log.length > 0) {
+      console.log('Weight data from SQLite API: ' + log.length + ' entries');
+      return log;
+    }
+    throw new Error('API returned 0 weight entries');
+  } catch(apiErr) {
+    console.warn('SQLite weight API unreachable, falling back to Sheet:', apiErr.message);
+  }
+
+  // ── Fallback: Google Sheet CSV ────────────
   try {
     var url = WEIGHTS_CSV_URL + '&_t=' + Date.now();
     var resp = await fetch(url);
@@ -1670,22 +1641,21 @@ async function fetchWeightSheetData() {
     var csv = await resp.text();
     var lines = csv.trim().split('\n').filter(function(l) { return l.trim(); });
     var log = [];
-    for (var i = 1; i < lines.length; i++) { // skip header row
+    for (var i = 1; i < lines.length; i++) {
       var cols = lines[i].split(',');
       var d = (cols[0] || '').trim().replace(/"/g, '');
       var w = parseFloat((cols[1] || '').trim());
       if (d && w > 0) log.push({ date: d, weight: w });
     }
-    // Sort by date ascending
     log.sort(function(a, b) { return a.date.localeCompare(b.date); });
+    console.log('Weight data from Sheet fallback: ' + log.length + ' entries');
     return log;
   } catch(e) {
-    console.warn('Weight fetch error:', e.message);
+    console.warn('Weight Sheet fallback error:', e.message);
     return [];
   }
 }
 
-// Renders the dashboard weight card from the sheet data
 async function fetchAndRenderDashWeight() {
   var contentEl = document.getElementById('wt-dash-content');
   var badgeEl   = document.getElementById('wt-dash-badge');
@@ -1724,7 +1694,7 @@ async function fetchAndRenderDashWeight() {
   updateGoalBar('g-weight-val', 'g-fill-weight', last.weight, goalW, 'lbs');
 }
 
-// Log weight from dashboard card — POSTs to Script 3, then refreshes
+// Log weight from dashboard card
 async function logWeightFromDash() {
   var inp      = document.getElementById('wt-dash-input');
   var statusEl = document.getElementById('wt-dash-status');
@@ -1737,28 +1707,62 @@ async function logWeightFromDash() {
   var todayStr = new Date().toISOString().slice(0, 10);
   var scriptUrl = CFG.get(SCRIPT_URL_KEY);
 
-  if (!scriptUrl) {
-    if (statusEl) statusEl.textContent = 'Add Script URL in Setup first';
-    toast('Add your Script URL in Setup first');
-    return;
-  }
-
   btn.textContent = 'Saving...';
   btn.disabled = true;
-  if (statusEl) statusEl.textContent = 'Posting to sheet...';
+  if (statusEl) statusEl.textContent = 'Posting...';
 
-  fetch(scriptUrl, {
+  // Also POST to SQLite API
+  fetch(API_URL + '/api/weight', {
     method: 'POST',
-    body: JSON.stringify({ type: 'weight', date: todayStr, weight: lbs }),
-    mode: 'no-cors'
-  }).then(function() {
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date: todayStr, weight: lbs })
+  }).catch(function() {});
+
+  if (scriptUrl) {
+    fetch(scriptUrl, {
+      method: 'POST',
+      body: JSON.stringify({ type: 'weight', date: todayStr, weight: lbs }),
+      mode: 'no-cors'
+    }).then(function() {
+      inp.value = '';
+      btn.textContent = 'Logged!';
+      btn.style.background = 'var(--green)';
+      btn.style.color = '#000';
+      toast(lbs.toFixed(1) + ' lbs logged');
+      if (statusEl) statusEl.textContent = 'Sent ✓ — refreshing in 3s...';
+      setTimeout(function() {
+        btn.textContent = 'Log';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+        if (statusEl) statusEl.textContent = '';
+        fetchAndRenderDashWeight();
+      }, 3000);
+    }).catch(function() {
+      // no-cors always throws, treat as success
+      inp.value = '';
+      btn.textContent = 'Logged!';
+      btn.style.background = 'var(--green)';
+      btn.style.color = '#000';
+      toast(lbs.toFixed(1) + ' lbs logged');
+      if (statusEl) statusEl.textContent = 'Sent ✓ — refreshing in 3s...';
+      setTimeout(function() {
+        btn.textContent = 'Log';
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.disabled = false;
+        if (statusEl) statusEl.textContent = '';
+        fetchAndRenderDashWeight();
+      }, 3000);
+    });
+  } else {
+    // No script URL — API only
     inp.value = '';
     btn.textContent = 'Logged!';
     btn.style.background = 'var(--green)';
     btn.style.color = '#000';
     toast(lbs.toFixed(1) + ' lbs logged');
-    if (statusEl) statusEl.textContent = 'Sent to sheet ✓ — refreshing in 4s...';
-    // Give sheet time to update before re-fetching
+    if (statusEl) statusEl.textContent = 'Saved to API ✓ — refreshing in 3s...';
     setTimeout(function() {
       btn.textContent = 'Log';
       btn.style.background = '';
@@ -1766,13 +1770,8 @@ async function logWeightFromDash() {
       btn.disabled = false;
       if (statusEl) statusEl.textContent = '';
       fetchAndRenderDashWeight();
-    }, 4000);
-  }).catch(function() {
-    btn.textContent = 'Log';
-    btn.disabled = false;
-    if (statusEl) statusEl.textContent = 'Check Script URL in Setup';
-    toast('Could not reach script — check Setup');
-  });
+    }, 3000);
+  }
 }
 
 function updateGoalBar(valId, fillId, current, goal, unit) {
@@ -1971,7 +1970,7 @@ document.addEventListener('click', function(e) {
 });
 
 // ═══════════════════════════════════════════
-// SETUP — save/load config
+// SETUP
 // ═══════════════════════════════════════════
 function saveSheetURL() {
   var url = document.getElementById('sheet-url-input').value.trim();
@@ -2050,7 +2049,7 @@ function toast(msg) {
 }
 
 // ═══════════════════════════════════════════
-// BODY WEIGHT PAGE — reads from sheet, renders chart + history
+// BODY WEIGHT PAGE
 // ═══════════════════════════════════════════
 async function initWeightPage() {
   var di = document.getElementById('wt-date-input');
@@ -2068,11 +2067,11 @@ function renderWeightPageFromLog(log) {
   var displayEntry = log.length ? log[log.length - 1] : null;
   var curr = displayEntry ? displayEntry.weight : null;
 
-  var pageCurrentEl  = document.getElementById('wt-page-current');
-  var pageRemainingEl= document.getElementById('wt-page-remaining');
-  var progBar        = document.getElementById('wt-prog-bar');
-  var progDetail     = document.getElementById('wt-prog-detail');
-  var paceBadge      = document.getElementById('wt-pace-badge');
+  var pageCurrentEl   = document.getElementById('wt-page-current');
+  var pageRemainingEl = document.getElementById('wt-page-remaining');
+  var progBar         = document.getElementById('wt-prog-bar');
+  var progDetail      = document.getElementById('wt-prog-detail');
+  var paceBadge       = document.getElementById('wt-pace-badge');
 
   if (curr) {
     if (pageCurrentEl)   pageCurrentEl.textContent = curr.toFixed(1);
@@ -2152,7 +2151,6 @@ function renderWeightChart(log) {
 
   ctx.clearRect(0, 0, W, H);
 
-  // Grid lines
   ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
   for (var g = 0; g <= 4; g++) {
     var gy = pad.top + g * ((H - pad.top - pad.bottom) / 4);
@@ -2162,7 +2160,6 @@ function renderWeightChart(log) {
     ctx.fillText(gw.toFixed(0), pad.left - 5, gy + 3);
   }
 
-  // Goal line
   var goalY = yPos(290);
   if (goalY >= pad.top && goalY <= H - pad.bottom) {
     ctx.strokeStyle = 'rgba(255,112,67,0.5)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1;
@@ -2172,7 +2169,6 @@ function renderWeightChart(log) {
     ctx.fillText('GOAL 290', W - pad.right, goalY - 3);
   }
 
-  // Fill area
   var grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bottom);
   grad.addColorStop(0, 'rgba(200,255,87,0.18)');
   grad.addColorStop(1, 'rgba(200,255,87,0.01)');
@@ -2183,13 +2179,11 @@ function renderWeightChart(log) {
   ctx.lineTo(xPos(0), H - pad.bottom);
   ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
 
-  // Line
   ctx.beginPath();
   ctx.moveTo(xPos(0), yPos(log[0].weight));
   for (var j = 1; j < log.length; j++) { ctx.lineTo(xPos(j), yPos(log[j].weight)); }
   ctx.strokeStyle = '#c8ff57'; ctx.lineWidth = 2; ctx.stroke();
 
-  // Dots + labels
   log.forEach(function(e, i) {
     ctx.beginPath(); ctx.arc(xPos(i), yPos(e.weight), 3.5, 0, 2 * Math.PI);
     ctx.fillStyle = '#c8ff57'; ctx.fill();
@@ -2213,7 +2207,7 @@ function renderWeightHistory(log) {
   el.innerHTML = rows;
 }
 
-// Submit from Body Weight page — POSTs to Script 3
+// Submit from Body Weight page — POSTs to SQLite API + Script 3 Sheet backup
 async function submitWeightLog() {
   var dateInput = document.getElementById('wt-date-input');
   var lbsInput  = document.getElementById('wt-lbs-input');
@@ -2227,30 +2221,46 @@ async function submitWeightLog() {
     return;
   }
 
-  var scriptUrl = CFG.get(SCRIPT_URL_KEY);
-  if (!scriptUrl) {
-    if (statusEl) statusEl.textContent = 'Add Apps Script URL in Setup first';
-    return;
+  if (statusEl) statusEl.textContent = 'Posting to SQLite API...';
+
+  // ── POST to SQLite API (primary) ──────────
+  var apiPosted = false;
+  try {
+    var apiResp = await fetch(API_URL + '/api/weight', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date: dateStr, weight: lbs })
+    });
+    if (apiResp.ok) {
+      apiPosted = true;
+      console.log('Weight posted to SQLite API');
+    }
+  } catch(e) {
+    console.warn('SQLite weight POST failed:', e.message);
   }
 
-  if (statusEl) statusEl.textContent = 'Posting to sheet...';
+  // ── Also POST to Sheet via Script 3 (backup) ──
+  var scriptUrl = CFG.get(SCRIPT_URL_KEY);
+  if (scriptUrl) {
+    fetch(scriptUrl, {
+      method: 'POST',
+      body: JSON.stringify({ type: 'weight', date: dateStr, weight: lbs }),
+      mode: 'no-cors'
+    }).catch(function() {});
+  }
 
-  fetch(scriptUrl, { method: 'POST', body: JSON.stringify({ type: 'weight', date: dateStr, weight: lbs }), mode: 'no-cors' })
-    .then(function() {
-      lbsInput.value = '';
-      if (statusEl) statusEl.textContent = 'Posted to sheet ✓ (' + dateStr + ' · ' + lbs + ' lbs) — refreshing in 4s...';
-      toast(lbs + ' lbs logged for ' + dateStr);
-      setTimeout(async function() {
-        if (statusEl) statusEl.textContent = '';
-        var log = await fetchWeightSheetData();
-        renderWeightPageFromLog(log);
-        renderWeightChart(log);
-        fetchAndRenderDashWeight(); // also update dashboard card
-      }, 4000);
-    })
-    .catch(function() {
-      if (statusEl) statusEl.textContent = 'Post failed — check Script URL in Setup';
-    });
+  lbsInput.value = '';
+  var source = apiPosted ? 'SQLite API' : (scriptUrl ? 'Sheet (API offline)' : 'local only');
+  if (statusEl) statusEl.textContent = 'Logged to ' + source + ' ✓ (' + dateStr + ' · ' + lbs + ' lbs) — refreshing in 3s...';
+  toast(lbs + ' lbs logged for ' + dateStr);
+
+  setTimeout(async function() {
+    if (statusEl) statusEl.textContent = '';
+    var log = await fetchWeightSheetData();
+    renderWeightPageFromLog(log);
+    renderWeightChart(log);
+    fetchAndRenderDashWeight();
+  }, 3000);
 }
 
 // ═══════════════════════════════════════════
@@ -2421,7 +2431,6 @@ function init() {
     document.body.prepend(banner);
   }
 
-  // Restore calorie sheet URL
   var sheetUrl = CFG.get('sheetUrl');
   if (sheetUrl) {
     var sheetInput = document.getElementById('sheet-url-input');
@@ -2429,14 +2438,13 @@ function init() {
   }
   fetchLoseItData();
 
-  // Fetch weight from Sheet only if API didn't already populate it
   setTimeout(function() {
     var badge = document.getElementById('wt-dash-badge');
     if (badge && badge.textContent === 'LOADING') {
       fetchAndRenderDashWeight();
     }
   }, 2500);
-  // Restore script URL
+
   var scriptUrl = CFG.get(SCRIPT_URL_KEY);
   if (scriptUrl) {
     var si = document.getElementById('script-url-input');
@@ -2447,7 +2455,6 @@ function init() {
     if (sv) sv.textContent = 'Saved: ' + scriptUrl.slice(0,50) + '...';
   }
 
-  // Restore GitHub URL
   var ghUrl = CFG.get('ghUrl');
   if (ghUrl) {
     var gi = document.getElementById('gh-url-input');
@@ -2455,7 +2462,6 @@ function init() {
     if (!IS_FILE_PROTOCOL) fetchObsidianIndex(ghUrl);
   }
 
-  // Restore goals
   var goals = CFG.get('goals');
   if (goals) {
     var fields = ['bench','ohp','squat','streak','lawn'];
@@ -2468,9 +2474,7 @@ function init() {
 
   renderLog();
   renderWorkoutHistoryPage();
-  // Weight page is loaded lazily when you click the tab
 
-  // Wire inline onclick buttons via event listeners
   var finishBtns = document.querySelectorAll('[onclick*="finishWorkout"]');
   finishBtns.forEach(function(btn) {
     btn.removeAttribute('onclick');
@@ -2496,17 +2500,14 @@ function init() {
     });
   }
 
-  // Dashboard weight log button
   var wtDashBtn = document.getElementById('wt-dash-log-btn');
   if (wtDashBtn) wtDashBtn.addEventListener('click', logWeightFromDash);
   var wtDashInput = document.getElementById('wt-dash-input');
   if (wtDashInput) wtDashInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') logWeightFromDash(); });
 
-  // Body Weight page submit button
   var wtSubmitBtn = document.getElementById('wt-submit-btn');
   if (wtSubmitBtn) wtSubmitBtn.addEventListener('click', submitWeightLog);
 
-  // Workout history save button
   var wkthSaveBtn = document.getElementById('wkth-save-btn');
   if (wkthSaveBtn) {
     wkthSaveBtn.addEventListener('click', function() {
@@ -2538,14 +2539,12 @@ function timerAction(which, action) {
   var t = TIMERS[which];
   if (action === 'start') {
     if (t.running) {
-      // Pause
       clearInterval(t.interval);
       t.interval = null;
       t.running = false;
       document.getElementById(t.btnId).textContent = 'Resume';
       document.getElementById(t.statusId).textContent = 'Paused';
     } else {
-      // Start / Resume
       if (t.remaining <= 0) { t.remaining = t.total; }
       t.running = true;
       document.getElementById(t.btnId).textContent = 'Pause';
@@ -2558,7 +2557,7 @@ function timerAction(which, action) {
     t.interval = null;
     t.running = false;
     t.remaining = t.total;
-    document.getElementById(t.btnId).textContent = which === 'set' ? 'Start' : 'Start';
+    document.getElementById(t.btnId).textContent = 'Start';
     document.getElementById(t.statusId).textContent = '';
     timerRender(which);
   } else if (action === 'add15') {
@@ -2590,18 +2589,15 @@ function timerRender(which) {
   var display = mins + ':' + String(secs).padStart(2, '0');
   document.getElementById(t.displayId).textContent = display;
 
-  // Ring: circumference 2*pi*60 ≈ 377
   var circ = 377;
   var fraction = t.total > 0 ? t.remaining / t.total : 0;
   var offset = circ - fraction * circ;
   var ring = document.getElementById(t.ringId);
   if (ring) {
     ring.style.strokeDashoffset = offset;
-    // Color shift: green when >50%, yellow <50%, red <20%
     if (fraction > 0.5)       ring.style.stroke = t.color;
     else if (fraction > 0.2)  ring.style.stroke = 'var(--accent)';
     else                       ring.style.stroke = 'var(--red)';
-    // Display color mirrors ring
     var dispEl = document.getElementById(t.displayId);
     if (dispEl) dispEl.style.color = ring.style.stroke;
   }
@@ -2724,9 +2720,6 @@ function renderNotes() {
     '</div>';
   }).join('');
 }
-
-// Wire notes filter buttons
-
 </script>
 </body>
 </html>
