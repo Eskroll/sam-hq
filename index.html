@@ -960,8 +960,12 @@ nav {
 
   <div class="slabel">WEIGHT OVER TIME</div>
   <div class="card">
-    <div class="ct">BODYWEIGHT TREND — LOGGED ENTRIES <span class="badge bb" id="wt-entry-count">0 ENTRIES</span></div>
-    <div id="wt-chart-area" style="position:relative;height:200px;margin-top:8px;">
+    <div class="ct">BODYWEIGHT TREND <span class="badge bb" id="wt-entry-count">0 ENTRIES</span></div>
+    <div style="display:flex;gap:4px;margin-bottom:10px;">
+      <div class="tab active" id="wt-tab-full" onclick="switchWeightChart('full')">Full Cut</div>
+      <div class="tab" id="wt-tab-2w" onclick="switchWeightChart('2w')">2 Weeks</div>
+    </div>
+    <div id="wt-chart-area" style="position:relative;height:200px;margin-top:0;">
       <canvas id="wt-canvas" style="width:100%;height:100%;"></canvas>
       <div id="wt-chart-empty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:var(--t3);">Log at least 2 entries to see the chart</div>
     </div>
@@ -986,7 +990,7 @@ nav {
 
   <div class="slabel">WEIGHT LOG HISTORY</div>
   <div class="card">
-    <div class="ct">ALL ENTRIES — FROM SQLITE API (Sheet fallback)</div>
+    <div class="ct">LAST 30 DAYS — FROM SQLITE API (Sheet fallback) <span class="badge bb" id="wt-hist-count">0 ENTRIES</span></div>
     <div id="wt-history-table" style="font-family:var(--mono);font-size:11px;color:var(--t2);">
       <div class="empty-state">Loading from SQLite API...<span class="hint">Entries from Health Auto Export → Oracle Cloud</span></div>
     </div>
@@ -1617,6 +1621,8 @@ async function fetchWeightSheetData() {
       })
       .filter(function(r) { return r.weight > 0; });
     log.sort(function(a, b) { return a.date.localeCompare(b.date); });
+    // Filter: only entries from May 4 2026 onward (start of cut)
+    log = log.filter(function(r) { return r.date >= '2026-05-04'; });
     // Dedupe by date — keep first entry per date
     var seen = {};
     log = log.filter(function(r) {
@@ -1648,6 +1654,8 @@ async function fetchWeightSheetData() {
       if (d && w > 0) log.push({ date: d, weight: w });
     }
     log.sort(function(a, b) { return a.date.localeCompare(b.date); });
+    // Filter: only entries from May 4 2026 onward
+    log = log.filter(function(r) { return r.date >= '2026-05-04'; });
     console.log('Weight data from Sheet fallback: ' + log.length + ' entries');
     return log;
   } catch(e) {
@@ -2125,6 +2133,20 @@ function renderWeightChart(log) {
   var emptyMsg = document.getElementById('wt-chart-empty');
   if (!canvas) return;
 
+  // Store full log for tab switching
+  _wtChartLog = log;
+
+  // Slice based on active tab
+  var displayLog = log;
+  if (_wtChartMode === '2w') {
+    var twoWeeksAgo = new Date();
+    twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+    var twoWStr = twoWeeksAgo.toISOString().slice(0, 10);
+    displayLog = log.filter(function(e) { return e.date >= twoWStr; });
+    if (displayLog.length < 2) displayLog = log.slice(-14);
+  }
+  log = displayLog;
+
   if (log.length < 2) {
     canvas.style.display = 'none';
     if (emptyMsg) emptyMsg.style.display = 'flex';
@@ -2195,11 +2217,33 @@ function renderWeightChart(log) {
   });
 }
 
+// Chart view state — 'full' or '2w'
+var _wtChartMode = 'full';
+var _wtChartLog  = [];
+
+function switchWeightChart(mode) {
+  _wtChartMode = mode;
+  document.getElementById('wt-tab-full').className = 'tab' + (mode === 'full' ? ' active' : '');
+  document.getElementById('wt-tab-2w').className  = 'tab' + (mode === '2w'   ? ' active' : '');
+  renderWeightChart(_wtChartLog);
+}
+
 function renderWeightHistory(log) {
   var el = document.getElementById('wt-history-table');
   if (!el) return;
   if (!log.length) { el.innerHTML = '<div class="empty-state">No entries yet. Log your first weight above.</div>'; return; }
-  var rows = log.slice().reverse().map(function(e) {
+
+  // Rolling 30-day window
+  var cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 30);
+  var cutoffStr = cutoff.toISOString().slice(0, 10);
+  var recent = log.filter(function(e) { return e.date >= cutoffStr; });
+  if (!recent.length) recent = log.slice(-14); // fallback: last 14 if window is empty
+
+  var countBadge = document.getElementById('wt-hist-count');
+  if (countBadge) countBadge.textContent = recent.length + ' ENTRIES';
+
+  var rows = recent.slice().reverse().map(function(e) {
     var d = new Date(e.date + 'T12:00:00');
     var label = d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
     return '<div class="dash-ex-row"><div class="den">' + label + '</div><div class="der" style="color:var(--accent)">' + e.weight.toFixed(1) + ' lbs</div></div>';
